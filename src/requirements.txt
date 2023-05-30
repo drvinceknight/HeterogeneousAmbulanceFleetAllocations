@@ -1,0 +1,3 @@
+# TODO Pin these to specific versions
+pytest
+numpy
