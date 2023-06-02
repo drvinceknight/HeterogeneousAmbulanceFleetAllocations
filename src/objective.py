@@ -65,3 +65,92 @@ def get_single_vehicle_patient_survival(
             ]
         )
     )
+
+
+def get_multiple_vehicle_patient_survival(
+    patient_type: int,
+    pickup_location: int,
+    ambulance_station: int,
+    survival_functions: Iterable[Callable],
+    primary_travel_times: npt.NDArray,
+    secondary_travel_times: npt.NDArray,
+    primary_vehicle_station_utilisation: Iterable,
+    secondary_vehicle_station_utilisation: Iterable,
+    vehicle_locations: Iterable,
+    primary_vehicle_allocation: npt.NDArray,
+    secondary_vehicle_allocation: npt.NDArray,
+    is_station_closer_to_pickup_location: dict,
+    is_vehicle_type_closer_to_pickup_location: dict,
+) -> float:
+    """
+    TODO Write docstring
+
+     s(t) -> the probability of surviving given that the second vehicle went to
+     the patient
+     (1 - pi...) -> that vehicle was available
+     \prod_{a \in \mathcal{A}} -> looking at all other potential vehicles
+         first term ->  All other secondary vehicles before vehicle in question
+         are busy
+         second term -> All other closer primary vehicles are busy
+    """
+    return (
+        survival_functions[patient_type](
+            secondary_travel_times[ambulance_station, pickup_location]
+        )
+        * (
+            1
+            - secondary_vehicle_station_utilisation[ambulance_station]
+            ** secondary_vehicle_allocation[ambulance_station]
+        )
+        * np.prod(
+            [
+                secondary_vehicle_station_utilisation[busy_station]
+                ** (
+                    secondary_vehicle_allocation[busy_station]
+                    * is_station_closer_to_pickup_location[
+                        (pickup_location, busy_station, ambulance_station)
+                    ]
+                )
+                * primary_vehicle_station_utilisation[busy_station]
+                ** (
+                    primary_vehicle_allocation[busy_station]
+                    * is_vehicle_type_closer_to_pickup_location[
+                        (pickup_location, busy_station, ambulance_station)
+                    ]
+                )
+                for busy_station in vehicle_locations
+            ]
+        )
+    )
+    +(
+        survival_functions[patient_type](
+            primary_travel_times[ambulance_station, pickup_location]
+        )
+        * (
+            1
+            - primary_vehicle_station_utilisation[ambulance_station]
+            ** primary_vehicle_allocation[ambulance_station]
+        )
+        * np.prod(
+            [
+                primary_vehicle_station_utilisation[busy_station]
+                ** (
+                    primary_vehicle_allocation[busy_station]
+                    * is_station_closer_to_pickup_location[
+                        (pickup_location, busy_station, ambulance_station)
+                    ]
+                )
+                * secondary_vehicle_station_utilisation[busy_station]
+                ** (
+                    secondary_vehicle_allocation[busy_station]
+                    * (
+                        1
+                        - is_vehicle_type_closer_to_pickup_location[
+                            (pickup_location, ambulance_station, busy_station)
+                        ]
+                    )
+                )
+                for busy_station in vehicle_locations
+            ]
+        )
+    )
