@@ -31,3 +31,7 @@ jobs:
       run: |
         cd src/
         python -m pytest .
+
+    - name: check code formatting
+      run: |
+        python -m black --check .
