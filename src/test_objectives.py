@@ -177,10 +177,10 @@ def test_get_objective_function():
     pickup_locations = (0, 1, 2, 3)
     patient_type_partitions = ((0,), (1, 2))
     survival_functions = (
-            lambda x: np.exp(-x), 
-            lambda x: 1 if x < 8 else 0,
-            lambda x: 1 if x < 16 else 0,
-            )
+        lambda x: np.exp(-x),
+        lambda x: 1 if x < 8 else 0,
+        lambda x: 1 if x < 16 else 0,
+    )
     primary_travel_times = np.array(((0, 3.3, 4.2, 3), (1, 0, 1, 2), (2, 3, 0, 2)))
     secondary_travel_times = np.array(
         ((0.1, 3.2, 4.1, 2), (1, 0, 1, 2), (2, 3.1, 0, 1.9))
@@ -288,10 +288,8 @@ def test_get_objective_function():
         (3, 2, 2): False,
         (3, 2, 3): False,
     }
-    weights = (.5, .3, .2)
-    demands = np.array(
-            (
-                ))
+    weights = (0.5, 0.3, 0.2)
+    demands = np.array(())
 
     demands = np.array(((2, 2, 3, 3), (2, 0, 1, 2), (1, 1, 1, 1)))
     g = objective.get_objective_function(

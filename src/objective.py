@@ -28,7 +28,13 @@ def get_objective_function(
     """
     number_of_vehicle_locations = len(vehicle_locations)
 
-    def tilde_psi(primary_vehicle_allocation, secondary_vehicle_allocation, patient_type, pickup_location, ambulance_station):
+    def tilde_psi(
+        primary_vehicle_allocation,
+        secondary_vehicle_allocation,
+        patient_type,
+        pickup_location,
+        ambulance_station,
+    ):
         """
         Return tilde_psi
         """
@@ -48,7 +54,13 @@ def get_objective_function(
             is_vehicle_type_closer_to_pickup_location=is_vehicle_type_closer_to_pickup_location,
         )
 
-    def psi(primary_vehicle_allocation, secondary_vehicle_station_utilisation, patient_type, pickup_location, ambulance_station):
+    def psi(
+        primary_vehicle_allocation,
+        secondary_vehicle_station_utilisation,
+        patient_type,
+        pickup_location,
+        ambulance_station,
+    ):
         """
         Return psi
         """
@@ -101,6 +113,7 @@ def get_objective_function(
             )
             for patient_types, psi in zip(patient_type_partitions, (psi, tilde_psi))
         )
+
     return g
 
 
@@ -120,7 +133,13 @@ def get_survival(
     return sum(
         weights[patient_type]
         * demands[(patient_type, pickup_location)]
-        * psi(primary_vehicle_allocation, secondary_vehicle_allocation, patient_type, pickup_location, ambulance_station)
+        * psi(
+            primary_vehicle_allocation,
+            secondary_vehicle_allocation,
+            patient_type,
+            pickup_location,
+            ambulance_station,
+        )
         for patient_type in patient_types
         for ambulance_station in vehicle_locations
         for pickup_location in pickup_locations
