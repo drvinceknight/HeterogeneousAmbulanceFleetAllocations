@@ -10,7 +10,7 @@ def test_get_single_vehicle_patient_survival():
     ambulance_station = 2
     survival_functions = [lambda x: np.exp(-x)]
     travel_times = np.array(((0, 3.3, 4.2, 3), (1, 0, 1, 2), (2, 3, 0, 2)))
-    station_utilisation = np.array((0.2, 0.4, 0.5))
+    station_utilisation = np.array((0.76, 0.71, 0.75))
     vehicle_locations = (0, 1, 2)
     vehicle_allocation = (2, 3, 1)
     is_station_closer_to_pickup_location = {
@@ -62,7 +62,199 @@ def test_get_single_vehicle_patient_survival():
         vehicle_allocation=vehicle_allocation,
         is_station_closer_to_pickup_location=is_station_closer_to_pickup_location,
     )
-    assert np.isclose(output, 0.01244676767)
+    assert np.isclose(output, 0.00933507531897449)
+
+
+def test_get_beta():
+    travel_times = np.array([
+        [0, 5, 10, 15, 20],
+        [5, 0, 5, 10, 15],
+        [10, 5, 0, 5, 10],
+        [15, 10, 5, 0, 5]
+    ])
+    
+    beta = objective.get_beta(travel_times)
+    
+    expected_beta = {
+        (0, 0, 0): False,
+        (0, 0, 1): True,
+        (0, 0, 2): True,
+        (0, 0, 3): True,
+        (0, 1, 0): False,
+        (0, 1, 1): False,
+        (0, 1, 2): True,
+        (0, 1, 3): True,
+        (0, 2, 0): False,
+        (0, 2, 1): False,
+        (0, 2, 2): False,
+        (0, 2, 3): True,
+        (0, 3, 0): False,
+        (0, 3, 1): False,
+        (0, 3, 2): False,
+        (0, 3, 3): False,
+        (1, 0, 0): False,
+        (1, 0, 1): False,
+        (1, 0, 2): False,
+        (1, 0, 3): True,
+        (1, 1, 0): True,
+        (1, 1, 1): False,
+        (1, 1, 2): True,
+        (1, 1, 3): True,
+        (1, 2, 0): False,
+        (1, 2, 1): False,
+        (1, 2, 2): False,
+        (1, 2, 3): True,
+        (1, 3, 0): False,
+        (1, 3, 1): False,
+        (1, 3, 2): False,
+        (1, 3, 3): False,
+        (2, 0, 0): False,
+        (2, 0, 1): False,
+        (2, 0, 2): False,
+        (2, 0, 3): False,
+        (2, 1, 0): True,
+        (2, 1, 1): False,
+        (2, 1, 2): False,
+        (2, 1, 3): False,
+        (2, 2, 0): True,
+        (2, 2, 1): True,
+        (2, 2, 2): False,
+        (2, 2, 3): True,
+        (2, 3, 0): True,
+        (2, 3, 1): False,
+        (2, 3, 2): False,
+        (2, 3, 3): False,
+        (3, 0, 0): False,
+        (3, 0, 1): False,
+        (3, 0, 2): False,
+        (3, 0, 3): False,
+        (3, 1, 0): True,
+        (3, 1, 1): False,
+        (3, 1, 2): False,
+        (3, 1, 3): False,
+        (3, 2, 0): True,
+        (3, 2, 1): True,
+        (3, 2, 2): False,
+        (3, 2, 3): False,
+        (3, 3, 0): True,
+        (3, 3, 1): True,
+        (3, 3, 2): True,
+        (3, 3, 3): False,
+        (4, 0, 0): False,
+        (4, 0, 1): False,
+        (4, 0, 2): False,
+        (4, 0, 3): False,
+        (4, 1, 0): True,
+        (4, 1, 1): False,
+        (4, 1, 2): False,
+        (4, 1, 3): False,
+        (4, 2, 0): True,
+        (4, 2, 1): True,
+        (4, 2, 2): False,
+        (4, 2, 3): False,
+        (4, 3, 0): True,
+        (4, 3, 1): True,
+        (4, 3, 2): True,
+        (4, 3, 3): False
+    }
+    
+    assert beta == expected_beta
+
+
+def test_get_R():
+    primary_travel_times = np.array([
+        [0, 5, 10, 15, 20],
+        [5, 0, 5, 10, 15],
+        [10, 5, 0, 5, 10],
+        [15, 10, 5, 0, 5]
+    ])
+    secondary_travel_times = 0.7 * primary_travel_times
+    
+    R = objective.get_R(primary_travel_times, secondary_travel_times)
+    
+    expected_R = {(0, 0, 0): False,
+        (0, 1, 0): True,
+        (0, 2, 0): True,
+        (0, 3, 0): True,
+        (0, 0, 1): False,
+        (0, 1, 1): False,
+        (0, 2, 1): True,
+        (0, 3, 1): True,
+        (0, 0, 2): False,
+        (0, 1, 2): False,
+        (0, 2, 2): False,
+        (0, 3, 2): True,
+        (0, 0, 3): False,
+        (0, 1, 3): False,
+        (0, 2, 3): False,
+        (0, 3, 3): False,
+        (1, 0, 0): False,
+        (1, 1, 0): False,
+        (1, 2, 0): False,
+        (1, 3, 0): True,
+        (1, 0, 1): True,
+        (1, 1, 1): False,
+        (1, 2, 1): True,
+        (1, 3, 1): True,
+        (1, 0, 2): False,
+        (1, 1, 2): False,
+        (1, 2, 2): False,
+        (1, 3, 2): True,
+        (1, 0, 3): False,
+        (1, 1, 3): False,
+        (1, 2, 3): False,
+        (1, 3, 3): False,
+        (2, 0, 0): False,
+        (2, 1, 0): False,
+        (2, 2, 0): False,
+        (2, 3, 0): False,
+        (2, 0, 1): True,
+        (2, 1, 1): False,
+        (2, 2, 1): False,
+        (2, 3, 1): False,
+        (2, 0, 2): True,
+        (2, 1, 2): True,
+        (2, 2, 2): False,
+        (2, 3, 2): True,
+        (2, 0, 3): True,
+        (2, 1, 3): False,
+        (2, 2, 3): False,
+        (2, 3, 3): False,
+        (3, 0, 0): False,
+        (3, 1, 0): False,
+        (3, 2, 0): False,
+        (3, 3, 0): False,
+        (3, 0, 1): True,
+        (3, 1, 1): False,
+        (3, 2, 1): False,
+        (3, 3, 1): False,
+        (3, 0, 2): True,
+        (3, 1, 2): True,
+        (3, 2, 2): False,
+        (3, 3, 2): False,
+        (3, 0, 3): True,
+        (3, 1, 3): True,
+        (3, 2, 3): True,
+        (3, 3, 3): False,
+        (4, 0, 0): False,
+        (4, 1, 0): False,
+        (4, 2, 0): False,
+        (4, 3, 0): False,
+        (4, 0, 1): False,
+        (4, 1, 1): False,
+        (4, 2, 1): False,
+        (4, 3, 1): False,
+        (4, 0, 2): True,
+        (4, 1, 2): True,
+        (4, 2, 2): False,
+        (4, 3, 2): False,
+        (4, 0, 3): True,
+        (4, 1, 3): True,
+        (4, 2, 3): True,
+        (4, 3, 3): False
+    }
+    
+    assert R == expected_R
 
 
 def test_get_multiple_vehicle_patient_survival():

@@ -8,6 +8,33 @@ import numpy.typing as npt
 import numpy as np
 
 
+def get_beta(travel_times: npt.NDArray) -> dict:
+    """
+    TODO Write documentation
+    """
+    return {
+        (pickup_location, a_1, a_2): time_1 < time_2
+        for pickup_location, column in enumerate(travel_times.T)
+        for a_1, time_1 in enumerate(column)
+        for a_2, time_2 in enumerate(column)
+    }
+
+
+def get_R(
+    primary_vehicle_travel_times: npt.NDArray,
+    secondary_vehicle_travel_times: npt.NDArray,
+) -> dict:
+    """
+    TODO Write documentation
+    """
+    return {
+        (pickup_location, a_1, a_2): time_1 < time_2
+        for pickup_location, column in enumerate(primary_vehicle_travel_times.T)
+        for a_2, time_1 in enumerate(column)
+        for a_1, time_2 in enumerate(secondary_vehicle_travel_times.T[pickup_location])
+    }
+
+
 def get_objective_function(
     pickup_locations: Iterable,
     patient_type_partitions: Iterable,
