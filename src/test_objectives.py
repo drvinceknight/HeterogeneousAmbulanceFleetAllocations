@@ -66,15 +66,12 @@ def test_get_single_vehicle_patient_survival():
 
 
 def test_get_beta():
-    travel_times = np.array([
-        [0, 5, 10, 15, 20],
-        [5, 0, 5, 10, 15],
-        [10, 5, 0, 5, 10],
-        [15, 10, 5, 0, 5]
-    ])
-    
+    travel_times = np.array(
+        [[0, 5, 10, 15, 20], [5, 0, 5, 10, 15], [10, 5, 0, 5, 10], [15, 10, 5, 0, 5]]
+    )
+
     beta = objective.get_beta(travel_times)
-    
+
     expected_beta = {
         (0, 0, 0): False,
         (0, 0, 1): True,
@@ -155,24 +152,22 @@ def test_get_beta():
         (4, 3, 0): True,
         (4, 3, 1): True,
         (4, 3, 2): True,
-        (4, 3, 3): False
+        (4, 3, 3): False,
     }
-    
+
     assert beta == expected_beta
 
 
 def test_get_R():
-    primary_travel_times = np.array([
-        [0, 5, 10, 15, 20],
-        [5, 0, 5, 10, 15],
-        [10, 5, 0, 5, 10],
-        [15, 10, 5, 0, 5]
-    ])
+    primary_travel_times = np.array(
+        [[0, 5, 10, 15, 20], [5, 0, 5, 10, 15], [10, 5, 0, 5, 10], [15, 10, 5, 0, 5]]
+    )
     secondary_travel_times = 0.7 * primary_travel_times
-    
+
     R = objective.get_R(primary_travel_times, secondary_travel_times)
-    
-    expected_R = {(0, 0, 0): False,
+
+    expected_R = {
+        (0, 0, 0): False,
         (0, 1, 0): True,
         (0, 2, 0): True,
         (0, 3, 0): True,
@@ -251,9 +246,9 @@ def test_get_R():
         (4, 0, 3): True,
         (4, 1, 3): True,
         (4, 2, 3): True,
-        (4, 3, 3): False
+        (4, 3, 3): False,
     }
-    
+
     assert R == expected_R
 
 
