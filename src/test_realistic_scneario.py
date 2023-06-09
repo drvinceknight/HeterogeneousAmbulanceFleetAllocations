@@ -35,9 +35,9 @@ allocation = np.genfromtxt("./allocation_75.csv", delimiter=",")
 def test_paramaters():
     assert raw_travel_times.shape == (67, 261)
     assert type(beta) is dict
-    assert len(beta) == 67 ** 2 * 261
+    assert len(beta) == 67**2 * 261
     assert type(R) is dict
-    assert len(R) == 67 ** 2 * 261
+    assert len(R) == 67**2 * 261
     assert survival_functions[0](0) == 1 / (1 + np.exp(0.26))
     assert survival_functions[1](16) is False
     assert survival_functions[2](16) is True
