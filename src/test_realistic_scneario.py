@@ -124,9 +124,8 @@ def test_objective_function_68():
     assert isinstance(g, types.FunctionType)
     assert g([0 for _ in range(67 * 2)]) == 0
     objective_in_days = g(allocation_68) * 1440
-    assert np.isclose(
-        objective_in_days, 124.69164131282206
-    )
+    assert np.isclose(objective_in_days, 124.69164131282206)
+
 
 def test_objective_function_75():
     """
@@ -151,9 +150,8 @@ def test_objective_function_75():
     assert isinstance(g, types.FunctionType)
     assert g([0 for _ in range(67 * 2)]) == 0
     objective_in_days = g(allocation_75) * 1440
-    assert np.isclose(
-        objective_in_days, 138.87802089723246
-    )
+    assert np.isclose(objective_in_days, 138.87802089723246)
+
 
 def test_objective_function_82():
     """
@@ -178,9 +176,8 @@ def test_objective_function_82():
     assert isinstance(g, types.FunctionType)
     assert g([0 for _ in range(67 * 2)]) == 0
     objective_in_days = g(allocation_82) * 1440
-    assert np.isclose(
-        objective_in_days, 131.23026163719774
-    )
+    assert np.isclose(objective_in_days, 131.23026163719774)
+
 
 def test_objective_function_89():
     """
@@ -205,9 +202,8 @@ def test_objective_function_89():
     assert isinstance(g, types.FunctionType)
     assert g([0 for _ in range(67 * 2)]) == 0
     objective_in_days = g(allocation_89) * 1440
-    assert np.isclose(
-        objective_in_days, 136.32357249461737
-    )
+    assert np.isclose(objective_in_days, 136.32357249461737)
+
 
 def test_objective_function_96():
     """
@@ -232,6 +228,4 @@ def test_objective_function_96():
     assert isinstance(g, types.FunctionType)
     assert g([0 for _ in range(67 * 2)]) == 0
     objective_in_days = g(allocation_96) * 1440
-    assert np.isclose(
-        objective_in_days, 141.0246340566464
-    )
+    assert np.isclose(objective_in_days, 141.0246340566464)
