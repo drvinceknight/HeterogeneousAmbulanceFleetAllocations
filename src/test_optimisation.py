@@ -1,4 +1,4 @@
-import genetic
+import optimisation
 import numpy as np
 
 
@@ -11,7 +11,7 @@ def test_move_vehicle_of_same_type():
     (
         resulting_primary_allocation,
         resulting_secondary_allocation,
-    ) = genetic.move_vehicle_of_same_type(
+    ) = optimisation.move_vehicle_of_same_type(
         allocation_for_moving=primary_allocation,
         allocation_not_for_moving=secondary_allocation,
         max_allocation=max_allocation,
@@ -32,7 +32,7 @@ def test_switch_primary_to_secondary():
     (
         resulting_primary_allocation,
         resulting_secondary_allocation,
-    ) = genetic.switch_primary_to_secondary(
+    ) = optimisation.switch_primary_to_secondary(
         primary_allocation=primary_allocation,
         secondary_allocation=secondary_allocation,
         max_allocation=max_allocation,
@@ -53,7 +53,7 @@ def test_switch_secondary_to_primary():
     (
         resulting_primary_allocation,
         resulting_secondary_allocation,
-    ) = genetic.switch_secondary_to_primary(
+    ) = optimisation.switch_secondary_to_primary(
         primary_allocation=primary_allocation,
         secondary_allocation=secondary_allocation,
         max_allocation=max_allocation,
@@ -71,7 +71,7 @@ def test_mutate_with_seed_0():
     max_allocation = 5
 
     np.random.seed(0)
-    resulting_primary_allocation, resulting_secondary_allocation = genetic.mutate(
+    resulting_primary_allocation, resulting_secondary_allocation = optimisation.mutate(
         primary_allocation=primary_allocation,
         secondary_allocation=secondary_allocation,
         max_allocation=max_allocation,
@@ -90,7 +90,7 @@ def test_mutate_with_seed_1():
     max_allocation = 5
 
     np.random.seed(1)
-    resulting_primary_allocation, resulting_secondary_allocation = genetic.mutate(
+    resulting_primary_allocation, resulting_secondary_allocation = optimisation.mutate(
         primary_allocation=primary_allocation,
         secondary_allocation=secondary_allocation,
         max_allocation=max_allocation,
@@ -109,7 +109,7 @@ def test_mutate_with_seed_3():
     max_allocation = 5
 
     np.random.seed(3)
-    resulting_primary_allocation, resulting_secondary_allocation = genetic.mutate(
+    resulting_primary_allocation, resulting_secondary_allocation = optimisation.mutate(
         primary_allocation=primary_allocation,
         secondary_allocation=secondary_allocation,
         max_allocation=max_allocation,
@@ -128,7 +128,7 @@ def test_mutate_with_seed_5():
     max_allocation = 5
 
     np.random.seed(5)
-    resulting_primary_allocation, resulting_secondary_allocation = genetic.mutate(
+    resulting_primary_allocation, resulting_secondary_allocation = optimisation.mutate(
         primary_allocation=primary_allocation,
         secondary_allocation=secondary_allocation,
         max_allocation=max_allocation,

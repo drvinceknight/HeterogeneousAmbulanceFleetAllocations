@@ -101,5 +101,4 @@ def mutate(
         )
 
     mutation_function = np.random.choice(possible_mutations)
-    print(mutation_function)
     return mutation_function(primary_allocation, secondary_allocation, max_allocation)
