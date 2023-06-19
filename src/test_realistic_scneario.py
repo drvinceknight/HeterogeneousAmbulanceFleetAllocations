@@ -21,7 +21,7 @@ survival_functions = (
 )
 demand_rates = np.genfromtxt("./test_data/demand.csv", delimiter=",") / 1440
 vehicle_locations, pickup_locations = tuple(map(range, raw_travel_times.shape))
-patient_type_partitions = ((1, 2), (0,))
+patient_type_partitions = ((2,), (0, 1))
 
 
 # Utilisations and allocations for resource level 68
@@ -105,7 +105,7 @@ def test_objective_function_68():
     """
     Tests the value of the objective function when using an allocation with a resource level of 68
      - When using a simulation, this will achieve a value of 144.5987.
-     - This objective gives a value of 124.69164131282206
+     - This objective gives a value of 151.9535873771784
     """
     g = objective.get_objective_function(
         pickup_locations=pickup_locations,
@@ -124,14 +124,14 @@ def test_objective_function_68():
     assert isinstance(g, types.FunctionType)
     assert g([0 for _ in range(67 * 2)]) == 0
     objective_in_days = g(allocation_68) * 1440
-    assert np.isclose(objective_in_days, 124.69164131282206)
+    assert np.isclose(objective_in_days, 151.9535873771784)
 
 
 def test_objective_function_75():
     """
     Tests the value of the objective function when using an allocation with a resource level of 75
      - When using a simulation, this will achieve a value of 145.8549.
-     - This objective gives a value of 138.87802089723246
+     - This objective gives a value of 151.92056329691513
     """
     g = objective.get_objective_function(
         pickup_locations=pickup_locations,
@@ -150,14 +150,14 @@ def test_objective_function_75():
     assert isinstance(g, types.FunctionType)
     assert g([0 for _ in range(67 * 2)]) == 0
     objective_in_days = g(allocation_75) * 1440
-    assert np.isclose(objective_in_days, 138.87802089723246)
+    assert np.isclose(objective_in_days, 151.92056329691513)
 
 
 def test_objective_function_82():
     """
     Tests the value of the objective function when using an allocation with a resource level of 82
      - When using a simulation, this will achieve a value of 145.6902
-     - This objective gives a value of 131.23026163719774
+     - This objective gives a value of 152.0974945594322
     """
     g = objective.get_objective_function(
         pickup_locations=pickup_locations,
@@ -176,14 +176,14 @@ def test_objective_function_82():
     assert isinstance(g, types.FunctionType)
     assert g([0 for _ in range(67 * 2)]) == 0
     objective_in_days = g(allocation_82) * 1440
-    assert np.isclose(objective_in_days, 131.23026163719774)
+    assert np.isclose(objective_in_days, 152.0974945594322)
 
 
 def test_objective_function_89():
     """
     Tests the value of the objective function when using an allocation with a resource level of 89
      - When using a simulation, this will achieve a value of 148.0597
-     - This objective gives a value of 136.32357249461737
+     - This objective gives a value of 151.95283744990988
     """
     g = objective.get_objective_function(
         pickup_locations=pickup_locations,
@@ -202,14 +202,14 @@ def test_objective_function_89():
     assert isinstance(g, types.FunctionType)
     assert g([0 for _ in range(67 * 2)]) == 0
     objective_in_days = g(allocation_89) * 1440
-    assert np.isclose(objective_in_days, 136.32357249461737)
+    assert np.isclose(objective_in_days, 151.95283744990988)
 
 
 def test_objective_function_96():
     """
     Tests the value of the objective function when using an allocation with a resource level of 96
      - When using a simulation, this will achieve a value of 147.4496
-     - This objective gives a value of 141.0246340566464
+     - This objective gives a value of 151.9626105857951
     """
     g = objective.get_objective_function(
         pickup_locations=pickup_locations,
@@ -228,4 +228,4 @@ def test_objective_function_96():
     assert isinstance(g, types.FunctionType)
     assert g([0 for _ in range(67 * 2)]) == 0
     objective_in_days = g(allocation_96) * 1440
-    assert np.isclose(objective_in_days, 141.0246340566464)
+    assert np.isclose(objective_in_days, 151.9626105857951)

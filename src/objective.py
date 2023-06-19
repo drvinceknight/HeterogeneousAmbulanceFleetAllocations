@@ -30,8 +30,8 @@ def get_R(
     return {
         (pickup_location, a_1, a_2): time_1 < time_2
         for pickup_location, column in enumerate(primary_vehicle_travel_times.T)
-        for a_2, time_1 in enumerate(column)
-        for a_1, time_2 in enumerate(secondary_vehicle_travel_times.T[pickup_location])
+        for a_1, time_1 in enumerate(column)
+        for a_2, time_2 in enumerate(secondary_vehicle_travel_times.T[pickup_location])
     }
 
 
@@ -265,8 +265,7 @@ def get_multiple_vehicle_patient_survival(
                 for busy_station in vehicle_locations
             ]
         )
-    )
-    +(
+    ) + (
         survival_functions[patient_type](
             primary_travel_times[ambulance_station, pickup_location]
         )

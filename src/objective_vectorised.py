@@ -26,8 +26,8 @@ def get_R(primary_vehicle_travel_times, secondary_vehicle_travel_times):
             [
                 [
                     float(
-                        primary_vehicle_travel_times[a2][p]
-                        < secondary_vehicle_travel_times[a1][p]
+                        primary_vehicle_travel_times[a1][p]
+                        < secondary_vehicle_travel_times[a2][p]
                     )
                     for a2 in ambulance_locations
                 ]
@@ -93,8 +93,8 @@ def get_all_primary_closer_busy_vector(vehicle_station_utilisation, allocation, 
       than a secondary vehicle at a being busy.
     """
     all_primary_closer_busy_vector = np.prod(
-        np.power(vehicle_station_utilisation, np.multiply(R, allocation)), axis=2
-    ).T
+        np.power(vehicle_station_utilisation, np.multiply(R.transpose(0, 2, 1), allocation)), axis=2
+    )
     return all_primary_closer_busy_vector
 
 
@@ -108,10 +108,10 @@ def get_all_secondary_closer_busy_vector(vehicle_station_utilisation, allocation
     all_secondary_closer_busy_vector = np.prod(
         np.power(
             vehicle_station_utilisation,
-            np.multiply(1 - np.transpose(R, (0, 2, 1)), allocation),
+            np.multiply(1 - R, allocation),
         ),
         axis=2,
-    ).T
+    )
     return all_secondary_closer_busy_vector
 
 
@@ -148,14 +148,14 @@ def get_psi_tilde(
         secondary_survivals
         * secondary_is_not_busy
         * all_closer_busy_secondary.T
-        * all_primary_closer_than_secondary_busy.T
+        * all_primary_closer_than_secondary_busy
     )
 
     primary_reached = (
         primary_survivals
         * primary_is_not_busy
         * all_closer_busy_primary.T
-        * all_secondary_closer_than_primary_busy.T
+        * all_secondary_closer_than_primary_busy
     )
 
     psi_tilde = secondary_reached + primary_reached
