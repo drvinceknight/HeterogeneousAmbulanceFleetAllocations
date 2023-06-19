@@ -139,3 +139,33 @@ def test_mutate_with_seed_5():
     ) + (sum(resulting_secondary_allocation) / 3)
     assert np.array_equal(resulting_secondary_allocation, np.array([2, 7, 0, 0]))
     assert np.array_equal(resulting_primary_allocation, np.array([0, 1, 5, 2]))
+
+
+def test_create_initial_population():
+    number_of_locations = 6
+    population_size = 15
+    number_of_primary_vehicles = 8
+    number_of_secondary_vehicles = 12
+    max_primary_allocation = 3
+    max_secondary_allocation = 4
+
+    np.random.seed(0)
+    population = genetic.create_initial_population(
+        number_of_locations=number_of_locations,
+        number_of_primary_vehicles=number_of_primary_vehicles,
+        number_of_secondary_vehicles=number_of_secondary_vehicles,
+        max_primary_allocation=max_primary_allocation,
+        max_secondary_allocation=max_secondary_allocation,
+        population_size=population_size
+    )
+
+    assert population.shape == (population_size, 2, number_of_locations)
+    for entry in range(population_size):
+        assert population[entry][0].sum() == number_of_primary_vehicles
+        assert population[entry][1].sum() == number_of_secondary_vehicles
+        assert population[entry][0].max() <= max_primary_allocation
+        assert population[entry][1].max() <= max_secondary_allocation
+
+    assert np.allclose(population[0][0], np.array([2, 1, 2, 1, 1, 1]))
+    assert np.allclose(population[0][1], np.array([1, 0, 2, 2, 3, 4]))
+

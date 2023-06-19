@@ -103,3 +103,35 @@ def mutate(
     mutation_function = np.random.choice(possible_mutations)
     print(mutation_function)
     return mutation_function(primary_allocation, secondary_allocation, max_allocation)
+
+
+def create_initial_population(
+    number_of_locations,
+    number_of_primary_vehicles,
+    number_of_secondary_vehicles,
+    max_primary_allocation,
+    max_secondary_allocation,
+    population_size
+):
+    """
+    Creates a (population_size, 2, number_of_locations) array of population_size allocations.
+    Each allocation is a (2, number_of_locations) array consisting of a primary allocation and a secondary allocation.
+    """
+    population = []
+    for entry in range(population_size):
+        # create primary allocation
+        primary_allocation = np.zeros(number_of_locations)
+        temp = np.random.choice(np.arange(number_of_locations).repeat(max_primary_allocation), number_of_primary_vehicles, replace=False)
+        locs, numbs = np.unique(temp, return_counts=True)
+        primary_allocation[locs] += numbs
+        
+        # create secondary allocation
+        secondary_allocation = np.zeros(number_of_locations)
+        temp = np.random.choice(np.arange(number_of_locations).repeat(max_secondary_allocation), number_of_secondary_vehicles, replace=False)
+        locs, numbs = np.unique(temp, return_counts=True)
+        secondary_allocation[locs] += numbs
+
+        # add to population
+        population.append([primary_allocation, secondary_allocation])
+    return np.array(population)
+
