@@ -1,4 +1,5 @@
 import numpy as np
+import objective_vectorised as objective
 
 
 def move_vehicle_of_same_type(
@@ -135,3 +136,38 @@ def create_initial_population(
         population.append([primary_allocation, secondary_allocation])
     return np.array(population)
 
+
+def rank_population(
+    population,
+    demand_rates,
+    primary_survivals,
+    secondary_survivals,
+    weights_single_vehicle,
+    weights_multiple_vehicles,
+    beta,
+    R,
+    primary_vehicle_station_utilisation,
+    secondary_vehicle_station_utilisation
+):
+    """
+    Ranks the population according to the objective function
+    """
+    objective_values = []
+    for allocation in population:
+        objective_values.append(
+            -objective.get_objective(
+                demand_rates=demand_rates,
+                primary_survivals=primary_survivals,
+                secondary_survivals=secondary_survivals,
+                weights_single_vehicle=weights_single_vehicle,
+                weights_multiple_vehicles=weights_multiple_vehicles,
+                beta=beta,
+                R=R,
+                primary_vehicle_station_utilisation=primary_vehicle_station_utilisation,
+                secondary_vehicle_station_utilisation=secondary_vehicle_station_utilisation,
+                allocation_primary=allocation[0],
+                allocation_secondary=allocation[1]
+            )
+        )
+    ordering = np.argsort(objective_values)
+    return np.array(population[ordering])
