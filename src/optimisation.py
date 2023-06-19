@@ -1,4 +1,9 @@
+from typing import Iterable
+
 import numpy as np
+import numpy.typing as npt
+
+import objective
 
 
 def move_vehicle_of_same_type(
@@ -102,3 +107,31 @@ def mutate(
 
     mutation_function = np.random.choice(possible_mutations)
     return mutation_function(primary_allocation, secondary_allocation, max_allocation)
+
+
+def run(
+        population_size: int,
+        number_of_generations: int,
+        replacement_number: int,
+        initial_allocation: npt.NDArray,
+        **objective_function_kwargs,
+        ) -> Iterable:
+    """
+    Run the optimisation algorithm
+
+    A population of size <population_size> is kept constant.
+    At every generation, all individuals in the population are evaluated.
+    <replacement_number> proportion of the population and replaced by mutations of
+    <replacement_number> proportion of the highest performers.
+    """
+    g = objective.get_objective_function(**objective_function_kwargs)
+    initial_population = [mutate(...)]
+    generations = [(x, g(x)) for x in initial_population]
+    for _ in range(number_of_generations):
+        generation = generations[-1]
+        generation.sort(key: lambda x, score: score)
+        replacement_individuals = [mutate(x) for x, _ in generation[:-replacement_number]]
+        new_generation = [(x, g(x)) for x in replacement_individuals] + generation[replacement_number:]
+        generations.append(new_generation)
+
+    return generations
