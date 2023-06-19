@@ -246,7 +246,7 @@ def test_get_R():
         (4, 3, 0): True,
         (4, 3, 1): True,
         (4, 3, 2): True,
-        (4, 3, 3): False
+        (4, 3, 3): False,
     }
     assert R == expected_R
 

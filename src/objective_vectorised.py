@@ -93,7 +93,10 @@ def get_all_primary_closer_busy_vector(vehicle_station_utilisation, allocation, 
       than a secondary vehicle at a being busy.
     """
     all_primary_closer_busy_vector = np.prod(
-        np.power(vehicle_station_utilisation, np.multiply(R.transpose(0, 2, 1), allocation)), axis=2
+        np.power(
+            vehicle_station_utilisation, np.multiply(R.transpose(0, 2, 1), allocation)
+        ),
+        axis=2,
     )
     return all_primary_closer_busy_vector
 
