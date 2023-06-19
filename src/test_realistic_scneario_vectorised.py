@@ -28,6 +28,16 @@ primary_survivals, secondary_survivals = objective.get_survival_time_vectors(
 )
 
 
+# Utilisations and allocations for resource level 61
+primary_vehicle_station_utilisation_61 = np.genfromtxt(
+    "./test_data/primary_utilisations_61.csv", delimiter=","
+)  # Directly from simulation
+secondary_vehicle_station_utilisation_61 = np.genfromtxt(
+    "./test_data/secondary_utilisations_61.csv", delimiter=","
+)  # Directly from simulation
+allocation_61 = np.genfromtxt("./test_data/allocation_61.csv", delimiter=",")
+
+
 # Utilisations and allocations for resource level 68
 primary_vehicle_station_utilisation_68 = np.genfromtxt(
     "./test_data/primary_utilisations_68.csv", delimiter=","
@@ -103,11 +113,34 @@ def test_paramaters():
     assert sum(allocation_96[:67]) + 1 / 3 * sum(allocation_96[-67:]) == 96
 
 
+def test_objective_function_61():
+    """
+    Tests the value of the objective function when using an allocation with a resource level of 61
+     - When using a simulation, this will achieve a value of 144.5987.
+     - This objective gives a value of 232.89387186907996
+    """
+    g = objective.get_objective(
+        demand_rates=demand_rates,
+        primary_survivals=primary_survivals,
+        secondary_survivals=secondary_survivals,
+        weights_single_vehicle=weights_single_vehicle,
+        weights_multiple_vehicles=weights_multiple_vehicles,
+        beta=beta,
+        R=R,
+        primary_vehicle_station_utilisation=primary_vehicle_station_utilisation_61,
+        secondary_vehicle_station_utilisation=secondary_vehicle_station_utilisation_61,
+        allocation_primary=allocation_61[:67],
+        allocation_secondary=allocation_61[67:],
+    )
+    objective_in_days = g * 1440
+    assert np.isclose(objective_in_days, 232.89387186907996)
+
+
 def test_objective_function_68():
     """
     Tests the value of the objective function when using an allocation with a resource level of 68
      - When using a simulation, this will achieve a value of 144.5987.
-     - This objective gives a value of 151.9535873771784
+     - This objective gives a value of 255.25058850564176
     """
     g = objective.get_objective(
         demand_rates=demand_rates,
@@ -123,14 +156,14 @@ def test_objective_function_68():
         allocation_secondary=allocation_68[67:],
     )
     objective_in_days = g * 1440
-    assert np.isclose(objective_in_days, 151.9535873771784)
+    assert np.isclose(objective_in_days, 255.25058850564176)
 
 
 def test_objective_function_75():
     """
     Tests the value of the objective function when using an allocation with a resource level of 75
      - When using a simulation, this will achieve a value of 145.8549.
-     - This objective gives a value of 151.92056329691513
+     - This objective gives a value of 254.69469398551522
     """
     g = objective.get_objective(
         demand_rates=demand_rates,
@@ -146,14 +179,14 @@ def test_objective_function_75():
         allocation_secondary=allocation_75[67:],
     )
     objective_in_days = g * 1440
-    assert np.isclose(objective_in_days, 151.92056329691513)
+    assert np.isclose(objective_in_days, 254.69469398551522)
 
 
 def test_objective_function_82():
     """
     Tests the value of the objective function when using an allocation with a resource level of 82
      - When using a simulation, this will achieve a value of 145.6902
-     - This objective gives a value of 152.0974945594322
+     - This objective gives a value of 258.380209445041
     """
     g = objective.get_objective(
         demand_rates=demand_rates,
@@ -169,14 +202,14 @@ def test_objective_function_82():
         allocation_secondary=allocation_82[67:],
     )
     objective_in_days = g * 1440
-    assert np.isclose(objective_in_days, 152.0974945594322)
+    assert np.isclose(objective_in_days, 258.380209445041)
 
 
 def test_objective_function_89():
     """
     Tests the value of the objective function when using an allocation with a resource level of 89
      - When using a simulation, this will achieve a value of 148.0597
-     - This objective gives a value of 151.95283744990988
+     - This objective gives a value of 260.69320203024455
     """
     g = objective.get_objective(
         demand_rates=demand_rates,
@@ -192,14 +225,14 @@ def test_objective_function_89():
         allocation_secondary=allocation_89[67:],
     )
     objective_in_days = g * 1440
-    assert np.isclose(objective_in_days, 151.95283744990988)
+    assert np.isclose(objective_in_days, 260.69320203024455)
 
 
 def test_objective_function_96():
     """
     Tests the value of the objective function when using an allocation with a resource level of 96
      - When using a simulation, this will achieve a value of 147.4496
-     - This objective gives a value of 151.9626105857951
+     - This objective gives a value of 260.8621820096541
     """
     g = objective.get_objective(
         demand_rates=demand_rates,
@@ -215,4 +248,4 @@ def test_objective_function_96():
         allocation_secondary=allocation_96[67:],
     )
     objective_in_days = g * 1440
-    assert np.isclose(objective_in_days, 151.9626105857951)
+    assert np.isclose(objective_in_days, 260.8621820096541)
