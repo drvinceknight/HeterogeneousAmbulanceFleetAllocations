@@ -133,8 +133,8 @@ def optimise(
     weights_multiple_vehicles,
     beta,
     R,
-    constant_primary_vehicle_station_utilisation,
-    constant_secondary_vehicle_station_utilisation,
+    primary_vehicle_station_utilisation,
+    secondary_vehicle_station_utilisation,
     seed,
     progress_bar=False
 ):
@@ -144,12 +144,12 @@ def optimise(
     np.random.seed(seed)
     objective_by_iteration = []
     population = create_initial_population(
-        number_of_locations,
-        number_of_primary_vehicles,
-        number_of_secondary_vehicles,
-        max_primary_allocation,
-        max_secondary_allocation,
-        population_size
+        number_of_locations=number_of_locations,
+        number_of_primary_vehicles=number_of_primary_vehicles,
+        number_of_secondary_vehicles=number_of_secondary_vehicles,
+        max_primary_allocation=max_primary_allocation,
+        max_secondary_allocation=max_secondary_allocation,
+        population_size=population_size,
     )
 
     new_pop_size = population_size - keep_size
@@ -160,16 +160,16 @@ def optimise(
         iterations = range(number_of_iterations)
     for iteration in iterations:
         ranked_population, objective_values = rank_population(
-            population,
-            demand_rates,
-            primary_survivals,
-            secondary_survivals,
-            weights_single_vehicle,
-            weights_multiple_vehicles,
-            beta,
-            R,
-            primary_vehicle_station_utilisation,
-            secondary_vehicle_station_utilisation
+            population=population,
+            demand_rates=demand_rates,
+            primary_survivals=primary_survivals,
+            secondary_survivals=secondary_survivals,
+            weights_single_vehicle=weights_single_vehicle,
+            weights_multiple_vehicles=weights_multiple_vehicles,
+            beta=beta,
+            R=R,
+            primary_vehicle_station_utilisation=primary_vehicle_station_utilisation,
+            secondary_vehicle_station_utilisation=secondary_vehicle_station_utilisation
         )
         objective_by_iteration.append(objective_values)
         kept_population = ranked_population[:keep_size]
@@ -186,19 +186,18 @@ def optimise(
         population = np.vstack([kept_population, np.array(new_population)])
 
     ranked_population, objective_values = rank_population(
-            population,
-            demand_rates,
-            primary_survivals,
-            secondary_survivals,
-            weights_single_vehicle,
-            weights_multiple_vehicles,
-            beta,
-            R,
-            primary_vehicle_station_utilisation,
-            secondary_vehicle_station_utilisation
+            population=population,
+            demand_rates=demand_rates,
+            primary_survivals=primary_survivals,
+            secondary_survivals=secondary_survivals,
+            weights_single_vehicle=weights_single_vehicle,
+            weights_multiple_vehicles=weights_multiple_vehicles,
+            beta=beta,
+            R=R,
+            primary_vehicle_station_utilisation=primary_vehicle_station_utilisation,
+            secondary_vehicle_station_utilisation=secondary_vehicle_station_utilisation
         )
 
-    return ranked_population[0][0], ranked_population[0][1], np.array(objective_by_iteration)
+    best_primary_population, best_secondary_population = ranked_population
 
-
-
+    return best_primary_population, best_secondary_population, np.array(objective_by_iteration)
