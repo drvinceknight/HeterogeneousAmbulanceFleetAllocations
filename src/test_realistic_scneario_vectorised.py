@@ -133,7 +133,7 @@ def test_objective_function_61():
         allocation_secondary=allocation_61[67:],
     )
     objective_in_days = g * 1440
-    assert np.isclose(objective_in_days, 232.89387186907996)
+    assert np.isclose(objective_in_days, 232.2921043699148)
 
 
 def test_objective_function_68():
@@ -156,7 +156,7 @@ def test_objective_function_68():
         allocation_secondary=allocation_68[67:],
     )
     objective_in_days = g * 1440
-    assert np.isclose(objective_in_days, 255.25058850564176)
+    assert np.isclose(objective_in_days, 254.8692893372367)
 
 
 def test_objective_function_75():
@@ -179,7 +179,7 @@ def test_objective_function_75():
         allocation_secondary=allocation_75[67:],
     )
     objective_in_days = g * 1440
-    assert np.isclose(objective_in_days, 254.69469398551522)
+    assert np.isclose(objective_in_days, 254.11456549042802)
 
 
 def test_objective_function_82():
@@ -202,7 +202,7 @@ def test_objective_function_82():
         allocation_secondary=allocation_82[67:],
     )
     objective_in_days = g * 1440
-    assert np.isclose(objective_in_days, 258.380209445041)
+    assert np.isclose(objective_in_days, 257.44519956766254)
 
 
 def test_objective_function_89():
@@ -225,7 +225,7 @@ def test_objective_function_89():
         allocation_secondary=allocation_89[67:],
     )
     objective_in_days = g * 1440
-    assert np.isclose(objective_in_days, 260.69320203024455)
+    assert np.isclose(objective_in_days, 260.2749321977294)
 
 
 def test_objective_function_96():
@@ -248,4 +248,4 @@ def test_objective_function_96():
         allocation_secondary=allocation_96[67:],
     )
     objective_in_days = g * 1440
-    assert np.isclose(objective_in_days, 260.8621820096541)
+    assert np.isclose(objective_in_days, 260.2722627389342)

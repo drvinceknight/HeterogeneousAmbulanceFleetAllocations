@@ -81,7 +81,7 @@ def get_all_same_closer_busy_vector(vehicle_station_utilisation, allocation, bet
       a being busy.
     """
     all_same_closer_busy = np.prod(
-        np.power(vehicle_station_utilisation, np.multiply(beta, allocation)), axis=2
+        np.power(vehicle_station_utilisation, np.multiply(beta.transpose(0, 2, 1), allocation)), axis=2
     ).T
     return all_same_closer_busy
 
