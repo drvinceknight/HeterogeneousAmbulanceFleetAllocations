@@ -135,7 +135,7 @@ def test_rank_population():
     ])
     assert population.shape == (10, 2, 67)
 
-    ranked_population = genetic.rank_population(
+    ranked_population, objective_values = genetic.rank_population(
         population=population,
         demand_rates=demand_rates,
         primary_survivals=primary_survivals,
@@ -149,6 +149,7 @@ def test_rank_population():
     )
 
     assert ranked_population.shape == (10, 2, 67)
+    assert np.all(objective_values[:-1] <= objective_values[1:])
     previous_objective_value = float('inf')
     for allocation in ranked_population:
         next_objective_value = objective.get_objective(

@@ -1,5 +1,6 @@
 import numpy as np
 import objective_vectorised as objective
+import tqdm
 
 
 def move_vehicle_of_same_type(
@@ -113,4 +114,91 @@ def rank_population(
             )
         )
     ordering = np.argsort(objective_values)
-    return np.array(population[ordering])
+    return np.array(population[ordering]), -np.array(objective_values)[ordering]
+
+
+def optimise(
+    number_of_locations,
+    number_of_primary_vehicles,
+    number_of_secondary_vehicles,
+    max_primary_allocation,
+    max_secondary_allocation,
+    population_size,
+    keep_size,
+    number_of_iterations,
+    demand_rates,
+    primary_survivals,
+    secondary_survivals,
+    weights_single_vehicle,
+    weights_multiple_vehicles,
+    beta,
+    R,
+    constant_primary_vehicle_station_utilisation,
+    constant_secondary_vehicle_station_utilisation,
+    seed,
+    progress_bar=False
+):
+    """
+    Optimise
+    """
+    np.random.seed(seed)
+    objective_by_iteration = []
+    population = create_initial_population(
+        number_of_locations,
+        number_of_primary_vehicles,
+        number_of_secondary_vehicles,
+        max_primary_allocation,
+        max_secondary_allocation,
+        population_size
+    )
+
+    new_pop_size = population_size - keep_size
+
+    if progress_bar:
+        iterations = tqdm.tqdm(range(number_of_iterations))
+    else:
+        iterations = range(number_of_iterations)
+    for iteration in iterations:
+        ranked_population, objective_values = rank_population(
+            population,
+            demand_rates,
+            primary_survivals,
+            secondary_survivals,
+            weights_single_vehicle,
+            weights_multiple_vehicles,
+            beta,
+            R,
+            primary_vehicle_station_utilisation,
+            secondary_vehicle_station_utilisation
+        )
+        objective_by_iteration.append(objective_values)
+        kept_population = ranked_population[:keep_size]
+        new_population = []
+        for new_solution in range(new_pop_size):
+            solution_to_mutate = kept_population[np.random.choice(range(keep_size))]
+            mutated_solution = mutate(
+                primary_allocation=solution_to_mutate[0],
+                secondary_allocation=solution_to_mutate[1],
+                max_primary_allocation=max_primary_allocation,
+                max_secondary_allocation=max_secondary_allocation
+            )
+            new_population.append(mutated_solution)
+        population = np.vstack([kept_population, np.array(new_population)])
+
+    ranked_population, objective_values = rank_population(
+            population,
+            demand_rates,
+            primary_survivals,
+            secondary_survivals,
+            weights_single_vehicle,
+            weights_multiple_vehicles,
+            beta,
+            R,
+            primary_vehicle_station_utilisation,
+            secondary_vehicle_station_utilisation
+        )
+
+    return ranked_population[0][0], ranked_population[0][1], np.array(objective_by_iteration)
+
+
+
