@@ -28,7 +28,7 @@ def get_R(primary_vehicle_travel_times, secondary_vehicle_travel_times):
                 [
                     float(
                         primary_vehicle_travel_times[a1][p]
-                        < secondary_vehicle_travel_times[a2][p]
+                        <= secondary_vehicle_travel_times[a2][p]
                     )
                     for a2 in ambulance_locations
                 ]
