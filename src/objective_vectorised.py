@@ -8,10 +8,11 @@ def get_beta(travel_times):
         [
             [
                 [
-                    float(travel_times[a1][p] < travel_times[a2][p])
-                    for a1 in ambulance_locations
+                    0 if a2 == a1 else
+                    float(travel_times[a1][p] <= travel_times[a2][p])
+                    for a2 in ambulance_locations
                 ]
-                for a2 in ambulance_locations
+                for a1 in ambulance_locations
             ]
             for p in pickup_locations
         ]
