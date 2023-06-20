@@ -198,6 +198,6 @@ def optimise(
             secondary_vehicle_station_utilisation=secondary_vehicle_station_utilisation
         )
 
-    best_primary_population, best_secondary_population = ranked_population
+    best_primary_population, best_secondary_population = ranked_population[0]
 
     return best_primary_population, best_secondary_population, np.array(objective_by_iteration)
