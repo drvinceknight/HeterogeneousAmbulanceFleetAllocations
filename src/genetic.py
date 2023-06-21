@@ -27,7 +27,7 @@ def mutate(
     primary_allocation,
     secondary_allocation,
     max_primary_allocation,
-    max_secondary_allocation
+    max_secondary_allocation,
 ):
     number_primary_vehicles = sum(primary_allocation)
     number_secondary_vehicles = sum(secondary_allocation)
@@ -35,7 +35,7 @@ def mutate(
         lambda x, y: move_vehicle_of_same_type(
             allocation_for_moving=x,
             allocation_not_for_moving=y,
-            max_allocation=max_primary_allocation
+            max_allocation=max_primary_allocation,
         )
     ]
     if number_secondary_vehicles > 0:
@@ -43,7 +43,7 @@ def mutate(
             lambda x, y: move_vehicle_of_same_type(
                 allocation_for_moving=y,
                 allocation_not_for_moving=x,
-                max_allocation=max_secondary_allocation
+                max_allocation=max_secondary_allocation,
             )[::-1]
         )
     mutation_function = np.random.choice(possible_mutations)
@@ -56,7 +56,7 @@ def create_initial_population(
     number_of_secondary_vehicles,
     max_primary_allocation,
     max_secondary_allocation,
-    population_size
+    population_size,
 ):
     """
     Creates a (population_size, 2, number_of_locations) array of population_size allocations.
@@ -66,13 +66,21 @@ def create_initial_population(
     for entry in range(population_size):
         # create primary allocation
         primary_allocation = np.zeros(number_of_locations)
-        temp = np.random.choice(np.arange(number_of_locations).repeat(max_primary_allocation), number_of_primary_vehicles, replace=False)
+        temp = np.random.choice(
+            np.arange(number_of_locations).repeat(max_primary_allocation),
+            number_of_primary_vehicles,
+            replace=False,
+        )
         locs, numbs = np.unique(temp, return_counts=True)
         primary_allocation[locs] += numbs
-        
+
         # create secondary allocation
         secondary_allocation = np.zeros(number_of_locations)
-        temp = np.random.choice(np.arange(number_of_locations).repeat(max_secondary_allocation), number_of_secondary_vehicles, replace=False)
+        temp = np.random.choice(
+            np.arange(number_of_locations).repeat(max_secondary_allocation),
+            number_of_secondary_vehicles,
+            replace=False,
+        )
         locs, numbs = np.unique(temp, return_counts=True)
         secondary_allocation[locs] += numbs
 
@@ -91,7 +99,7 @@ def rank_population(
     beta,
     R,
     primary_vehicle_station_utilisation,
-    secondary_vehicle_station_utilisation
+    secondary_vehicle_station_utilisation,
 ):
     """
     Ranks the population according to the objective function
@@ -110,7 +118,7 @@ def rank_population(
                 primary_vehicle_station_utilisation=primary_vehicle_station_utilisation,
                 secondary_vehicle_station_utilisation=secondary_vehicle_station_utilisation,
                 allocation_primary=allocation[0],
-                allocation_secondary=allocation[1]
+                allocation_secondary=allocation[1],
             )
         )
     ordering = np.argsort(objective_values)
@@ -136,7 +144,7 @@ def optimise(
     primary_vehicle_station_utilisation,
     secondary_vehicle_station_utilisation,
     seed,
-    progress_bar=False
+    progress_bar=False,
 ):
     """
     Optimise
@@ -169,7 +177,7 @@ def optimise(
             beta=beta,
             R=R,
             primary_vehicle_station_utilisation=primary_vehicle_station_utilisation,
-            secondary_vehicle_station_utilisation=secondary_vehicle_station_utilisation
+            secondary_vehicle_station_utilisation=secondary_vehicle_station_utilisation,
         )
         objective_by_iteration.append(objective_values)
         kept_population = ranked_population[:keep_size]
@@ -180,24 +188,28 @@ def optimise(
                 primary_allocation=solution_to_mutate[0],
                 secondary_allocation=solution_to_mutate[1],
                 max_primary_allocation=max_primary_allocation,
-                max_secondary_allocation=max_secondary_allocation
+                max_secondary_allocation=max_secondary_allocation,
             )
             new_population.append(mutated_solution)
         population = np.vstack([kept_population, np.array(new_population)])
 
     ranked_population, objective_values = rank_population(
-            population=population,
-            demand_rates=demand_rates,
-            primary_survivals=primary_survivals,
-            secondary_survivals=secondary_survivals,
-            weights_single_vehicle=weights_single_vehicle,
-            weights_multiple_vehicles=weights_multiple_vehicles,
-            beta=beta,
-            R=R,
-            primary_vehicle_station_utilisation=primary_vehicle_station_utilisation,
-            secondary_vehicle_station_utilisation=secondary_vehicle_station_utilisation
-        )
+        population=population,
+        demand_rates=demand_rates,
+        primary_survivals=primary_survivals,
+        secondary_survivals=secondary_survivals,
+        weights_single_vehicle=weights_single_vehicle,
+        weights_multiple_vehicles=weights_multiple_vehicles,
+        beta=beta,
+        R=R,
+        primary_vehicle_station_utilisation=primary_vehicle_station_utilisation,
+        secondary_vehicle_station_utilisation=secondary_vehicle_station_utilisation,
+    )
 
     best_primary_population, best_secondary_population = ranked_population[0]
 
-    return best_primary_population, best_secondary_population, np.array(objective_by_iteration)
+    return (
+        best_primary_population,
+        best_secondary_population,
+        np.array(objective_by_iteration),
+    )

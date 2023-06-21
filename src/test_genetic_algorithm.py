@@ -24,6 +24,7 @@ def test_move_vehicle_of_same_type():
     assert np.array_equal(secondary_allocation, resulting_secondary_allocation)
     assert np.array_equal(resulting_primary_allocation, np.array([0, 1, 4, 2]))
 
+
 def test_mutate_with_seed_0():
     primary_allocation = np.array([0, 1, 5, 1])
     secondary_allocation = np.array([3, 9, 0, 0])
@@ -79,7 +80,7 @@ def test_create_initial_population():
         number_of_secondary_vehicles=number_of_secondary_vehicles,
         max_primary_allocation=max_primary_allocation,
         max_secondary_allocation=max_secondary_allocation,
-        population_size=population_size
+        population_size=population_size,
     )
 
     assert population.shape == (population_size, 2, number_of_locations)
@@ -95,7 +96,9 @@ def test_create_initial_population():
 
 def test_rank_population():
     # Read in data
-    raw_travel_times = np.genfromtxt("./test_data/travel_times_matrix.csv", delimiter=",")
+    raw_travel_times = np.genfromtxt(
+        "./test_data/travel_times_matrix.csv", delimiter=","
+    )
     beta = objective.get_beta(travel_times=raw_travel_times)
     primary_vehicle_travel_times = raw_travel_times / 0.75
     secondary_vehicle_travel_times = raw_travel_times / 1.215
@@ -110,13 +113,13 @@ def test_rank_population():
     )
     demand_rates = np.genfromtxt("./test_data/demand.csv", delimiter=",") / 1440
     vehicle_locations, pickup_locations = tuple(map(range, raw_travel_times.shape))
-    
+
     weights_single_vehicle = np.array([0, 0, 1])
     weights_multiple_vehicles = np.array([1, 1, 0])
-    
+
     primary_survivals, secondary_survivals = objective.get_survival_time_vectors(
         survival_functions, primary_vehicle_travel_times, secondary_vehicle_travel_times
-    )    
+    )
     # Utilisations and allocations for resource level 61
     primary_vehicle_station_utilisation_61 = np.genfromtxt(
         "./test_data/primary_utilisations_61.csv", delimiter=","
@@ -128,11 +131,15 @@ def test_rank_population():
 
     # Create population
     random.seed(0)
-    population = np.array([
+    population = np.array(
         [
-            random.sample(list(allocation_61[:67]), 67), random.sample(list(allocation_61[67:]), 67)
-        ] for entry in range(10)
-    ])
+            [
+                random.sample(list(allocation_61[:67]), 67),
+                random.sample(list(allocation_61[67:]), 67),
+            ]
+            for entry in range(10)
+        ]
+    )
     assert population.shape == (10, 2, 67)
 
     ranked_population, objective_values = genetic.rank_population(
@@ -145,12 +152,12 @@ def test_rank_population():
         beta=beta,
         R=R,
         primary_vehicle_station_utilisation=primary_vehicle_station_utilisation_61,
-        secondary_vehicle_station_utilisation=secondary_vehicle_station_utilisation_61
+        secondary_vehicle_station_utilisation=secondary_vehicle_station_utilisation_61,
     )
 
     assert ranked_population.shape == (10, 2, 67)
     assert np.all(objective_values[:-1] <= objective_values[1:])
-    previous_objective_value = float('inf')
+    previous_objective_value = float("inf")
     for allocation in ranked_population:
         next_objective_value = objective.get_objective(
             demand_rates=demand_rates,
@@ -163,7 +170,7 @@ def test_rank_population():
             primary_vehicle_station_utilisation=primary_vehicle_station_utilisation_61,
             secondary_vehicle_station_utilisation=secondary_vehicle_station_utilisation_61,
             allocation_primary=allocation[0],
-            allocation_secondary=allocation[1]
+            allocation_secondary=allocation[1],
         )
         assert previous_objective_value >= next_objective_value
         previous_objective_value = next_objective_value

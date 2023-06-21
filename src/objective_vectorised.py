@@ -8,8 +8,7 @@ def get_beta(travel_times):
         [
             [
                 [
-                    0 if a2 == a1 else
-                    float(travel_times[a1][p] <= travel_times[a2][p])
+                    0 if a2 == a1 else float(travel_times[a1][p] <= travel_times[a2][p])
                     for a2 in ambulance_locations
                 ]
                 for a1 in ambulance_locations
@@ -81,7 +80,11 @@ def get_all_same_closer_busy_vector(vehicle_station_utilisation, allocation, bet
       a being busy.
     """
     all_same_closer_busy = np.prod(
-        np.power(vehicle_station_utilisation, np.multiply(beta.transpose(0, 2, 1), allocation)), axis=2
+        np.power(
+            vehicle_station_utilisation,
+            np.multiply(beta.transpose(0, 2, 1), allocation),
+        ),
+        axis=2,
     ).T
     return all_same_closer_busy
 
