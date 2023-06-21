@@ -1,6 +1,6 @@
 import numpy as np
 import types
-import objective_vectorised as objective
+import objective
 
 def test_get_beta():
     travel_times = np.array(

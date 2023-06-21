@@ -1,5 +1,5 @@
 import numpy as np
-import objective_vectorised as objective
+import objective
 import tqdm
 
 

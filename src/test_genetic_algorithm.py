@@ -1,5 +1,5 @@
 import genetic
-import objective_vectorised as objective
+import objective
 import numpy as np
 import random
 
