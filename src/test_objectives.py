@@ -1,501 +1,349 @@
 import numpy as np
 import types
-
-import objective
-
-
-def test_get_single_vehicle_patient_survival():
-    patient_type = 0
-    pickup_location = 1
-    ambulance_station = 2
-    survival_functions = [lambda x: np.exp(-x)]
-    travel_times = np.array(((0, 3.3, 4.2, 3), (1, 0, 1, 2), (2, 3, 0, 2)))
-    station_utilisation = np.array((0.76, 0.71, 0.75))
-    vehicle_locations = (0, 1, 2)
-    vehicle_allocation = (2, 3, 1)
-    is_station_closer_to_pickup_location = {
-        (0, 0, 0): False,
-        (0, 0, 1): False,
-        (0, 0, 2): False,
-        (0, 0, 3): False,
-        (0, 1, 0): True,
-        (0, 1, 1): False,
-        (0, 1, 2): False,
-        (0, 1, 3): False,
-        (0, 2, 0): True,
-        (0, 2, 1): False,
-        (0, 2, 2): True,
-        (0, 2, 3): False,
-        (1, 0, 0): True,
-        (1, 0, 1): True,
-        (1, 0, 2): False,
-        (1, 0, 3): False,
-        (1, 1, 0): False,
-        (1, 1, 1): False,
-        (1, 1, 2): False,
-        (1, 1, 3): False,
-        (1, 2, 0): True,
-        (1, 2, 1): False,
-        (1, 2, 2): True,
-        (1, 2, 3): False,
-        (2, 0, 0): True,
-        (2, 0, 1): True,
-        (2, 0, 2): False,
-        (2, 0, 3): False,
-        (2, 1, 0): False,
-        (2, 1, 1): False,
-        (2, 1, 2): False,
-        (2, 1, 3): False,
-        (2, 2, 0): False,
-        (2, 2, 1): False,
-        (2, 2, 2): False,
-        (2, 2, 3): False,
-    }
-    output = objective.get_single_vehicle_patient_survival(
-        patient_type=patient_type,
-        pickup_location=pickup_location,
-        ambulance_station=ambulance_station,
-        survival_functions=survival_functions,
-        travel_times=travel_times,
-        station_utilisation=station_utilisation,
-        vehicle_locations=vehicle_locations,
-        vehicle_allocation=vehicle_allocation,
-        is_station_closer_to_pickup_location=is_station_closer_to_pickup_location,
-    )
-    assert np.isclose(output, 0.00933507531897449)
-
+import objective_vectorised as objective
 
 def test_get_beta():
     travel_times = np.array(
-        [[0, 5, 10, 15, 20], [5, 0, 5, 10, 15], [10, 5, 0, 5, 10], [15, 10, 5, 0, 5]]
+        [[0, 5, 10, 15, 20],
+         [5, 0, 5, 10, 15],
+         [10, 5, 0, 5, 10],
+         [15, 10, 5, 0, 5]]
     )
-
     beta = objective.get_beta(travel_times)
+    expected_beta = np.array(
+      [[[0., 1., 1., 1.],
+        [0., 0., 1., 1.],
+        [0., 0., 0., 1.],
+        [0., 0., 0., 0.]],
 
-    expected_beta = {
-        (0, 0, 0): False,
-        (0, 0, 1): True,
-        (0, 0, 2): True,
-        (0, 0, 3): True,
-        (0, 1, 0): False,
-        (0, 1, 1): False,
-        (0, 1, 2): True,
-        (0, 1, 3): True,
-        (0, 2, 0): False,
-        (0, 2, 1): False,
-        (0, 2, 2): False,
-        (0, 2, 3): True,
-        (0, 3, 0): False,
-        (0, 3, 1): False,
-        (0, 3, 2): False,
-        (0, 3, 3): False,
-        (1, 0, 0): False,
-        (1, 0, 1): False,
-        (1, 0, 2): False,
-        (1, 0, 3): True,
-        (1, 1, 0): True,
-        (1, 1, 1): False,
-        (1, 1, 2): True,
-        (1, 1, 3): True,
-        (1, 2, 0): False,
-        (1, 2, 1): False,
-        (1, 2, 2): False,
-        (1, 2, 3): True,
-        (1, 3, 0): False,
-        (1, 3, 1): False,
-        (1, 3, 2): False,
-        (1, 3, 3): False,
-        (2, 0, 0): False,
-        (2, 0, 1): False,
-        (2, 0, 2): False,
-        (2, 0, 3): False,
-        (2, 1, 0): True,
-        (2, 1, 1): False,
-        (2, 1, 2): False,
-        (2, 1, 3): False,
-        (2, 2, 0): True,
-        (2, 2, 1): True,
-        (2, 2, 2): False,
-        (2, 2, 3): True,
-        (2, 3, 0): True,
-        (2, 3, 1): False,
-        (2, 3, 2): False,
-        (2, 3, 3): False,
-        (3, 0, 0): False,
-        (3, 0, 1): False,
-        (3, 0, 2): False,
-        (3, 0, 3): False,
-        (3, 1, 0): True,
-        (3, 1, 1): False,
-        (3, 1, 2): False,
-        (3, 1, 3): False,
-        (3, 2, 0): True,
-        (3, 2, 1): True,
-        (3, 2, 2): False,
-        (3, 2, 3): False,
-        (3, 3, 0): True,
-        (3, 3, 1): True,
-        (3, 3, 2): True,
-        (3, 3, 3): False,
-        (4, 0, 0): False,
-        (4, 0, 1): False,
-        (4, 0, 2): False,
-        (4, 0, 3): False,
-        (4, 1, 0): True,
-        (4, 1, 1): False,
-        (4, 1, 2): False,
-        (4, 1, 3): False,
-        (4, 2, 0): True,
-        (4, 2, 1): True,
-        (4, 2, 2): False,
-        (4, 2, 3): False,
-        (4, 3, 0): True,
-        (4, 3, 1): True,
-        (4, 3, 2): True,
-        (4, 3, 3): False,
-    }
+       [[0., 0., 1., 1.],
+        [1., 0., 1., 1.],
+        [1., 0., 0., 1.],
+        [0., 0., 0., 0.]],
 
-    assert beta == expected_beta
+       [[0., 0., 0., 0.],
+        [1., 0., 0., 1.],
+        [1., 1., 0., 1.],
+        [1., 1., 0., 0.]],
+
+       [[0., 0., 0., 0.],
+        [1., 0., 0., 0.],
+        [1., 1., 0., 0.],
+        [1., 1., 1., 0.]],
+
+       [[0., 0., 0., 0.],
+        [1., 0., 0., 0.],
+        [1., 1., 0., 0.],
+        [1., 1., 1., 0.]]]
+    )
+    assert np.allclose(beta, expected_beta)
 
 
 def test_get_R():
     primary_travel_times = np.array(
-        [[0, 5, 10, 15, 20], [5, 0, 5, 10, 15], [10, 5, 0, 5, 10], [15, 10, 5, 0, 5]]
+        [[0, 5, 10, 15, 20],
+         [5, 0, 5, 10, 15],
+         [10, 5, 0, 5, 10],
+         [15, 10, 5, 0, 5]]
     )
     secondary_travel_times = 0.7 * primary_travel_times
-
     R = objective.get_R(primary_travel_times, secondary_travel_times)
+    expected_R = np.array(
+      [[[1., 1., 1., 1.],
+        [0., 0., 1., 1.],
+        [0., 0., 0., 1.],
+        [0., 0., 0., 0.]],
 
-    expected_R = {
-        (0, 0, 0): False,
-        (0, 0, 1): True,
-        (0, 0, 2): True,
-        (0, 0, 3): True,
-        (0, 1, 0): False,
-        (0, 1, 1): False,
-        (0, 1, 2): True,
-        (0, 1, 3): True,
-        (0, 2, 0): False,
-        (0, 2, 1): False,
-        (0, 2, 2): False,
-        (0, 2, 3): True,
-        (0, 3, 0): False,
-        (0, 3, 1): False,
-        (0, 3, 2): False,
-        (0, 3, 3): False,
-        (1, 0, 0): False,
-        (1, 0, 1): False,
-        (1, 0, 2): False,
-        (1, 0, 3): True,
-        (1, 1, 0): True,
-        (1, 1, 1): False,
-        (1, 1, 2): True,
-        (1, 1, 3): True,
-        (1, 2, 0): False,
-        (1, 2, 1): False,
-        (1, 2, 2): False,
-        (1, 2, 3): True,
-        (1, 3, 0): False,
-        (1, 3, 1): False,
-        (1, 3, 2): False,
-        (1, 3, 3): False,
-        (2, 0, 0): False,
-        (2, 0, 1): False,
-        (2, 0, 2): False,
-        (2, 0, 3): False,
-        (2, 1, 0): True,
-        (2, 1, 1): False,
-        (2, 1, 2): False,
-        (2, 1, 3): False,
-        (2, 2, 0): True,
-        (2, 2, 1): True,
-        (2, 2, 2): False,
-        (2, 2, 3): True,
-        (2, 3, 0): True,
-        (2, 3, 1): False,
-        (2, 3, 2): False,
-        (2, 3, 3): False,
-        (3, 0, 0): False,
-        (3, 0, 1): False,
-        (3, 0, 2): False,
-        (3, 0, 3): False,
-        (3, 1, 0): True,
-        (3, 1, 1): False,
-        (3, 1, 2): False,
-        (3, 1, 3): False,
-        (3, 2, 0): True,
-        (3, 2, 1): True,
-        (3, 2, 2): False,
-        (3, 2, 3): False,
-        (3, 3, 0): True,
-        (3, 3, 1): True,
-        (3, 3, 2): True,
-        (3, 3, 3): False,
-        (4, 0, 0): False,
-        (4, 0, 1): False,
-        (4, 0, 2): False,
-        (4, 0, 3): False,
-        (4, 1, 0): False,
-        (4, 1, 1): False,
-        (4, 1, 2): False,
-        (4, 1, 3): False,
-        (4, 2, 0): True,
-        (4, 2, 1): True,
-        (4, 2, 2): False,
-        (4, 2, 3): False,
-        (4, 3, 0): True,
-        (4, 3, 1): True,
-        (4, 3, 2): True,
-        (4, 3, 3): False,
-    }
-    assert R == expected_R
+       [[0., 0., 0., 1.],
+        [1., 1., 1., 1.],
+        [0., 0., 0., 1.],
+        [0., 0., 0., 0.]],
 
+       [[0., 0., 0., 0.],
+        [1., 0., 0., 0.],
+        [1., 1., 1., 1.],
+        [1., 0., 0., 0.]],
 
-def test_get_multiple_vehicle_patient_survival():
-    patient_type = 0
-    pickup_location = 1
-    ambulance_station = 2
-    survival_functions = [lambda x: np.exp(-x)]
-    primary_travel_times = np.array(((0, 3.3, 4.2, 3), (1, 0, 1, 2), (2, 3, 0, 2)))
-    secondary_travel_times = np.array(
-        ((0.1, 3.2, 4.1, 2), (1, 0, 1, 2), (2, 3.1, 0, 1.9))
+       [[0., 0., 0., 0.],
+        [1., 0., 0., 0.],
+        [1., 1., 0., 0.],
+        [1., 1., 1., 1.]],
+
+       [[0., 0., 0., 0.],
+        [0., 0., 0., 0.],
+        [1., 1., 0., 0.],
+        [1., 1., 1., 0.]]])
+    assert np.allclose(R, expected_R)
+
+def test_relationship_between_beta_and_R():
+    travel_times = np.array(
+        [[0, 5, 10, 15, 20],
+         [5, 0, 5, 10, 15],
+         [10, 5, 0, 5, 10],
+         [15, 10, 5, 0, 5]]
     )
-    primary_vehicle_station_utilisation = np.array((0.2, 0.4, 0.5))
-    secondary_vehicle_station_utilisation = np.array((0.3, 0.2, 0.55))
-    vehicle_locations = (0, 1, 2)
-    primary_vehicle_allocation = (2, 3, 1)
-    secondary_vehicle_allocation = (2, 3, 1)
-    is_station_closer_to_pickup_location = {
-        (0, 0, 0): False,
-        (0, 0, 1): False,
-        (0, 0, 2): False,
-        (0, 0, 3): False,
-        (0, 1, 0): True,
-        (0, 1, 1): False,
-        (0, 1, 2): False,
-        (0, 1, 3): False,
-        (0, 2, 0): True,
-        (0, 2, 1): False,
-        (0, 2, 2): True,
-        (0, 2, 3): False,
-        (1, 0, 0): True,
-        (1, 0, 1): True,
-        (1, 0, 2): False,
-        (1, 0, 3): False,
-        (1, 1, 0): False,
-        (1, 1, 1): False,
-        (1, 1, 2): False,
-        (1, 1, 3): False,
-        (1, 2, 0): True,
-        (1, 2, 1): False,
-        (1, 2, 2): True,
-        (1, 2, 3): False,
-        (2, 0, 0): True,
-        (2, 0, 1): True,
-        (2, 0, 2): False,
-        (2, 0, 3): False,
-        (2, 1, 0): False,
-        (2, 1, 1): False,
-        (2, 1, 2): False,
-        (2, 1, 3): False,
-        (2, 2, 0): False,
-        (2, 2, 1): False,
-        (2, 2, 2): False,
-        (2, 2, 3): False,
-    }
-    is_vehicle_type_closer_to_pickup_location = {
-        (0, 0, 0): False,
-        (0, 0, 1): False,
-        (0, 0, 2): False,
-        (0, 0, 3): False,
-        (0, 1, 0): True,
-        (0, 1, 1): False,
-        (0, 1, 2): True,
-        (0, 1, 3): False,
-        (0, 2, 0): True,
-        (0, 2, 1): False,
-        (0, 2, 2): True,
-        (0, 2, 3): False,
-        (1, 0, 0): True,
-        (1, 0, 1): True,
-        (1, 0, 2): False,
-        (1, 0, 3): False,
-        (1, 1, 0): False,
-        (1, 1, 1): False,
-        (1, 1, 2): False,
-        (1, 1, 3): False,
-        (1, 2, 0): True,
-        (1, 2, 1): False,
-        (1, 2, 2): True,
-        (1, 2, 3): False,
-        (2, 0, 0): True,
-        (2, 0, 1): True,
-        (2, 0, 2): False,
-        (2, 0, 3): False,
-        (2, 1, 0): True,
-        (2, 1, 1): False,
-        (2, 1, 2): False,
-        (2, 1, 3): False,
-        (2, 2, 0): False,
-        (2, 2, 1): False,
-        (2, 2, 2): False,
-        (2, 2, 3): False,
-    }
-    output = objective.get_multiple_vehicle_patient_survival(
-        patient_type=patient_type,
-        pickup_location=pickup_location,
-        ambulance_station=ambulance_station,
-        survival_functions=survival_functions,
-        primary_travel_times=primary_travel_times,
-        secondary_travel_times=secondary_travel_times,
-        primary_vehicle_station_utilisation=primary_vehicle_station_utilisation,
-        secondary_vehicle_station_utilisation=secondary_vehicle_station_utilisation,
-        vehicle_locations=vehicle_locations,
-        primary_vehicle_allocation=primary_vehicle_allocation,
-        secondary_vehicle_allocation=secondary_vehicle_allocation,
-        is_station_closer_to_pickup_location=is_station_closer_to_pickup_location,
-        is_vehicle_type_closer_to_pickup_location=is_vehicle_type_closer_to_pickup_location,
+    R = objective.get_R(travel_times, travel_times)
+    beta = objective.get_beta(travel_times)
+    expected_difference_is_identity = np.array(
+      [[[1., 0., 0., 0.],
+        [0., 1., 0., 0.],
+        [0., 0., 1., 0.],
+        [0., 0., 0., 1.]],
+
+       [[1., 0., 0., 0.],
+        [0., 1., 0., 0.],
+        [0., 0., 1., 0.],
+        [0., 0., 0., 1.]],
+
+       [[1., 0., 0., 0.],
+        [0., 1., 0., 0.],
+        [0., 0., 1., 0.],
+        [0., 0., 0., 1.]],
+
+       [[1., 0., 0., 0.],
+        [0., 1., 0., 0.],
+        [0., 0., 1., 0.],
+        [0., 0., 0., 1.]],
+
+       [[1., 0., 0., 0.],
+        [0., 1., 0., 0.],
+        [0., 0., 1., 0.],
+        [0., 0., 0., 1.]]]
     )
-    assert np.isclose(output, 0.005674412932938506)
+    np.allclose(R - beta, expected_difference_is_identity)
 
-
-def test_get_objective_function():
-    pickup_locations = (0, 1, 2, 3)
-    patient_type_partitions = ((0,), (1, 2))
+def test_get_survival_vectors():
+    primary_travel_times = np.array(
+        [[0, 5, 10, 15, 20],
+         [5, 0, 5, 10, 15],
+         [10, 5, 0, 5, 10],
+         [15, 10, 5, 0, 5]]
+    )
+    secondary_travel_times = primary_travel_times * 0.7
     survival_functions = (
-        lambda x: np.exp(-x),
-        lambda x: 1 if x < 8 else 0,
-        lambda x: 1 if x < 16 else 0,
+        lambda t: np.ones(t.shape),
+        lambda t: np.heaviside(4 - t, 1),
+        lambda t: np.heaviside(14 - t, 1)
     )
-    primary_travel_times = np.array(((0, 3.3, 4.2, 3), (1, 0, 1, 2), (2, 3, 0, 2)))
-    secondary_travel_times = np.array(
-        ((0.1, 3.2, 4.1, 2), (1, 0, 1, 2), (2, 3.1, 0, 1.9))
-    )
-    primary_vehicle_station_utilisation = np.array((0.2, 0.4, 0.5))
-    secondary_vehicle_station_utilisation = np.array((0.3, 0.2, 0.55))
-    vehicle_locations = (0, 1, 2)
-    is_station_closer_to_pickup_location = {
-        (0, 0, 0): False,
-        (0, 0, 1): False,
-        (0, 0, 2): False,
-        (0, 0, 3): False,
-        (0, 1, 0): True,
-        (0, 1, 1): False,
-        (0, 1, 2): False,
-        (0, 1, 3): False,
-        (0, 2, 0): True,
-        (0, 2, 1): False,
-        (0, 2, 2): True,
-        (0, 2, 3): False,
-        (1, 0, 0): True,
-        (1, 0, 1): True,
-        (1, 0, 2): False,
-        (1, 0, 3): False,
-        (1, 1, 0): False,
-        (1, 1, 1): False,
-        (1, 1, 2): False,
-        (1, 1, 3): False,
-        (1, 2, 0): True,
-        (1, 2, 1): False,
-        (1, 2, 2): True,
-        (1, 2, 3): False,
-        (2, 0, 0): True,
-        (2, 0, 1): True,
-        (2, 0, 2): False,
-        (2, 0, 3): False,
-        (2, 1, 0): False,
-        (2, 1, 1): False,
-        (2, 1, 2): False,
-        (2, 1, 3): False,
-        (2, 2, 0): False,
-        (2, 2, 1): False,
-        (2, 2, 2): False,
-        (2, 2, 3): False,
-        (3, 0, 0): True,
-        (3, 0, 1): True,
-        (3, 0, 2): False,
-        (3, 0, 3): False,
-        (3, 1, 0): False,
-        (3, 1, 1): False,
-        (3, 1, 2): False,
-        (3, 1, 3): False,
-        (3, 2, 0): False,
-        (3, 2, 1): False,
-        (3, 2, 2): False,
-        (3, 2, 3): False,
-    }
-    is_vehicle_type_closer_to_pickup_location = {
-        (0, 0, 0): False,
-        (0, 0, 1): False,
-        (0, 0, 2): False,
-        (0, 0, 3): False,
-        (0, 1, 0): True,
-        (0, 1, 1): False,
-        (0, 1, 2): True,
-        (0, 1, 3): False,
-        (0, 2, 0): True,
-        (0, 2, 1): False,
-        (0, 2, 2): True,
-        (0, 2, 3): False,
-        (1, 0, 0): True,
-        (1, 0, 1): True,
-        (1, 0, 2): False,
-        (1, 0, 3): False,
-        (1, 1, 0): False,
-        (1, 1, 1): False,
-        (1, 1, 2): False,
-        (1, 1, 3): False,
-        (1, 2, 0): True,
-        (1, 2, 1): False,
-        (1, 2, 2): True,
-        (1, 2, 3): False,
-        (2, 0, 0): True,
-        (2, 0, 1): True,
-        (2, 0, 2): False,
-        (2, 0, 3): False,
-        (2, 1, 0): True,
-        (2, 1, 1): False,
-        (2, 1, 2): False,
-        (2, 1, 3): False,
-        (2, 2, 0): False,
-        (2, 2, 1): False,
-        (2, 2, 2): False,
-        (2, 2, 3): False,
-        (3, 0, 0): True,
-        (3, 0, 1): True,
-        (3, 0, 2): False,
-        (3, 0, 3): False,
-        (3, 1, 0): False,
-        (3, 1, 1): False,
-        (3, 1, 2): False,
-        (3, 1, 3): False,
-        (3, 2, 0): False,
-        (3, 2, 1): False,
-        (3, 2, 2): False,
-        (3, 2, 3): False,
-    }
-    weights = (0.5, 0.3, 0.2)
-    demands = np.array(())
 
-    demands = np.array(((2, 2, 3, 3), (2, 0, 1, 2), (1, 1, 1, 1)))
-    g = objective.get_objective_function(
-        pickup_locations=pickup_locations,
-        patient_type_partitions=patient_type_partitions,
-        survival_functions=survival_functions,
-        primary_travel_times=primary_travel_times,
-        secondary_travel_times=secondary_travel_times,
-        primary_vehicle_station_utilisation=primary_vehicle_station_utilisation,
-        secondary_vehicle_station_utilisation=secondary_vehicle_station_utilisation,
-        vehicle_locations=vehicle_locations,
-        is_station_closer_to_pickup_location=is_station_closer_to_pickup_location,
-        is_vehicle_type_closer_to_pickup_location=is_vehicle_type_closer_to_pickup_location,
-        weights=weights,
-        demands=demands,
+    expected_primary_survivals = np.array(
+      [[[1., 1., 1., 1.],
+        [1., 1., 1., 1.],
+        [1., 1., 1., 1.],
+        [1., 1., 1., 1.],
+        [1., 1., 1., 1.]],
+
+       [[1., 0., 0., 0.],
+        [0., 1., 0., 0.],
+        [0., 0., 1., 0.],
+        [0., 0., 0., 1.],
+        [0., 0., 0., 0.]],
+
+       [[1., 1., 1., 0.],
+        [1., 1., 1., 1.],
+        [1., 1., 1., 1.],
+        [0., 1., 1., 1.],
+        [0., 0., 1., 1.]]]
     )
-    assert isinstance(g, types.FunctionType)
-    allocations = np.array((0, 0, 0, 0, 0, 0))
-    assert g(allocations) == 0.0
-    allocations = np.array((1, 0, 2, 0, 3, 0))
-    assert np.isclose(g(allocations), 2.8467657961082806)
-    allocations = np.array((1, 50, 2, 20, 3, 5))
-    assert np.isclose(g(allocations), 4.097203665412069)
+    expected_secondary_survivals = np.array(
+      [[[1., 1., 1., 1.],
+        [1., 1., 1., 1.],
+        [1., 1., 1., 1.],
+        [1., 1., 1., 1.],
+        [1., 1., 1., 1.]],
+
+       [[1., 1., 0., 0.],
+        [1., 1., 1., 0.],
+        [0., 1., 1., 1.],
+        [0., 0., 1., 1.],
+        [0., 0., 0., 1.]],
+
+       [[1., 1., 1., 1.],
+        [1., 1., 1., 1.],
+        [1., 1., 1., 1.],
+        [1., 1., 1., 1.],
+        [1., 1., 1., 1.]]]
+    )
+    primary_survivals, secondary_survivals = objective.get_survival_time_vectors(
+        survival_functions, primary_travel_times, secondary_travel_times
+    )
+    assert np.allclose(primary_survivals, expected_primary_survivals)
+    assert np.allclose(secondary_survivals, expected_secondary_survivals)
+
+
+def test_get_not_busy_vector():
+    allocation_1 = [0, 0, 0, 0]
+    allocation_2 = [0, 1, 1, 1]
+    allocation_3 = [1, 2, 3, 4]
+    utilisations = [0.2, 0.5, 0.7, 1.0]
+    not_busy_1 = objective.get_is_not_busy_vector(utilisations, allocation_1)
+    not_busy_2 = objective.get_is_not_busy_vector(utilisations, allocation_2)
+    not_busy_3 = objective.get_is_not_busy_vector(utilisations, allocation_3)
+    expected_not_busy_1 = np.array([1 - u ** a for u, a in zip(utilisations, allocation_1)])
+    expected_not_busy_2 = np.array([1 - u ** a for u, a in zip(utilisations, allocation_2)])
+    expected_not_busy_3 = np.array([1 - u ** a for u, a in zip(utilisations, allocation_3)])
+    assert np.allclose(not_busy_1, expected_not_busy_1)
+    assert np.allclose(not_busy_2, expected_not_busy_2)
+    assert np.allclose(not_busy_3, expected_not_busy_3)
+
+
+def test_get_all_same_closer_busy_vector():
+    allocation_1 = [0, 0, 0, 0]
+    allocation_2 = [0, 1, 1, 1]
+    allocation_3 = [1, 2, 3, 4]
+    utilisations = [0.2, 0.5, 0.7, 1.0]
+    travel_times = np.array(
+        [[0, 5, 10, 15, 20],
+         [5, 0, 5, 10, 15],
+         [10, 5, 0, 5, 10],
+         [15, 10, 5, 0, 5]]
+    )
+    beta = objective.get_beta(travel_times)
+
+    all_same_busy_1 = objective.get_all_same_closer_busy_vector(
+        utilisations, allocation_1, beta
+    )
+    all_same_busy_2 = objective.get_all_same_closer_busy_vector(
+        utilisations, allocation_2, beta
+    )
+    all_same_busy_3 = objective.get_all_same_closer_busy_vector(
+        utilisations, allocation_3, beta
+    )
+    expected_all_same_busy_1 = np.array([[np.prod([utilisations[alpha] ** (allocation_1[alpha] * beta[p][alpha][a]) for alpha in range(4)]) for p in range(5)] for a in range(4)])
+    expected_all_same_busy_2 = np.array([[np.prod([utilisations[alpha] ** (allocation_2[alpha] * beta[p][alpha][a]) for alpha in range(4)]) for p in range(5)] for a in range(4)])
+    expected_all_same_busy_3 = np.array([[np.prod([utilisations[alpha] ** (allocation_3[alpha] * beta[p][alpha][a]) for alpha in range(4)]) for p in range(5)] for a in range(4)])
+    assert np.allclose(all_same_busy_1, expected_all_same_busy_1)
+    assert np.allclose(all_same_busy_2, expected_all_same_busy_2)
+    assert np.allclose(all_same_busy_3, expected_all_same_busy_3)
+
+
+def test_get_all_primary_closer_busy_vector():
+    allocation_1 = [0, 0, 0, 0]
+    allocation_2 = [0, 1, 1, 1]
+    allocation_3 = [1, 2, 3, 4]
+    utilisations = [0.2, 0.5, 0.7, 1.0]
+    travel_times = np.array(
+        [[0, 5, 10, 15, 20],
+         [5, 0, 5, 10, 15],
+         [10, 5, 0, 5, 10],
+         [15, 10, 5, 0, 5]]
+    )
+    R = objective.get_R(travel_times, travel_times * 0.7)
+
+    all_primary_closer_busy_1 = objective.get_all_primary_closer_busy_vector(
+        utilisations, allocation_1, R
+    )
+    all_primary_closer_busy_2 = objective.get_all_primary_closer_busy_vector(
+        utilisations, allocation_2, R
+    )
+    all_primary_closer_busy_3 = objective.get_all_primary_closer_busy_vector(
+        utilisations, allocation_3, R
+    )
+    expected_all_primary_closer_busy_1 = np.array([[np.prod([utilisations[alpha] ** (allocation_1[alpha] * R[p][alpha][a]) for alpha in range(4)]) for a in range(4)] for p in range(5)])
+    expected_all_primary_closer_busy_2 = np.array([[np.prod([utilisations[alpha] ** (allocation_2[alpha] * R[p][alpha][a]) for alpha in range(4)]) for a in range(4)] for p in range(5)])
+    expected_all_primary_closer_busy_3 = np.array([[np.prod([utilisations[alpha] ** (allocation_3[alpha] * R[p][alpha][a]) for alpha in range(4)]) for a in range(4)] for p in range(5)])
+    assert np.allclose(all_primary_closer_busy_1, expected_all_primary_closer_busy_1)
+    assert np.allclose(all_primary_closer_busy_2, expected_all_primary_closer_busy_2)
+    assert np.allclose(all_primary_closer_busy_3, expected_all_primary_closer_busy_3)
+
+
+def test_get_all_secondary_closer_busy_vector():
+    allocation_1 = [0, 0, 0, 0]
+    allocation_2 = [0, 1, 1, 1]
+    allocation_3 = [1, 2, 3, 4]
+    utilisations = [0.2, 0.5, 0.7, 1.0]
+    travel_times = np.array(
+        [[0, 5, 10, 15, 20],
+         [5, 0, 5, 10, 15],
+         [10, 5, 0, 5, 10],
+         [15, 10, 5, 0, 5]]
+    )
+    R = objective.get_R(travel_times, travel_times * 0.7)
+
+    all_secondary_closer_busy_1 = objective.get_all_secondary_closer_busy_vector(
+        utilisations, allocation_1, R
+    )
+    all_secondary_closer_busy_2 = objective.get_all_secondary_closer_busy_vector(
+        utilisations, allocation_2, R
+    )
+    all_secondary_closer_busy_3 = objective.get_all_secondary_closer_busy_vector(
+        utilisations, allocation_3, R
+    )
+    expected_all_secondary_closer_busy_1 = np.array([[np.prod([utilisations[alpha] ** (allocation_1[alpha] * (1 - R[p][a][alpha])) for alpha in range(4)]) for a in range(4)] for p in range(5)])
+    expected_all_secondary_closer_busy_2 = np.array([
+        [np.prod([utilisations[alpha] ** (allocation_2[alpha] * (1 - R[p][a][alpha])) for alpha in range(4)]) for a in range(4)] for p in range(5)])
+    expected_all_secondary_closer_busy_3 = np.array([[np.prod([utilisations[alpha] ** (allocation_3[alpha] * (1 - R[p][a][alpha])) for alpha in range(4)]) for a in range(4)] for p in range(5)])
+    assert np.allclose(all_secondary_closer_busy_1, expected_all_secondary_closer_busy_1)
+    assert np.allclose(all_secondary_closer_busy_2, expected_all_secondary_closer_busy_2)
+    assert np.allclose(all_secondary_closer_busy_3, expected_all_secondary_closer_busy_3)
+
+
+def test_get_objective():
+    primary_travel_times = np.array(
+        [[0, 5, 10, 15, 20],
+         [5, 0, 5, 10, 15],
+         [10, 5, 0, 5, 10],
+         [15, 10, 5, 0, 5]]
+    )
+    secondary_travel_times = 0.7 * primary_travel_times
+    beta = objective.get_beta(primary_travel_times)
+    R = objective.get_R(primary_travel_times, secondary_travel_times)
+    survival_functions = (
+        lambda t: np.ones(t.shape),
+        lambda t: np.ones(t.shape),
+        lambda t: np.ones(t.shape),
+    )
+    primary_survivals, secondary_survivals = objective.get_survival_time_vectors(
+        survival_functions, primary_travel_times, secondary_travel_times
+    )
+    primary_utilisations = np.array([0.2, 0.5, 0.7, 1.0])
+    secondary_utilisations = np.array([0.6, 0.6, 0.2, 0.2])
+    demand_rates = np.array(((2, 2, 3, 3, 7), (2, 0, 1, 2, 4), (1, 1, 1, 1, 1))) * 10
+
+    # Some allocation
+    g = objective.get_objective(
+        demand_rates=demand_rates,
+        primary_survivals=primary_survivals,
+        secondary_survivals=secondary_survivals,
+        weights_single_vehicle=np.array([0, 0, 1]),
+        weights_multiple_vehicles=np.array([1, 1, 0]),
+        beta=beta,
+        R=R,
+        primary_vehicle_station_utilisation=primary_utilisations,
+        secondary_vehicle_station_utilisation=secondary_utilisations,
+        allocation_primary=np.array([1, 0, 0, 1]),
+        allocation_secondary=np.array([0, 2, 1, 1]),
+    )
+    assert round(g, 4) == 295.1552
+
+    # Zero allocation (cannot save anyone)
+    g = objective.get_objective(
+        demand_rates=demand_rates,
+        primary_survivals=primary_survivals,
+        secondary_survivals=secondary_survivals,
+        weights_single_vehicle=np.array([0, 0, 1]),
+        weights_multiple_vehicles=np.array([1, 1, 0]),
+        beta=beta,
+        R=R,
+        primary_vehicle_station_utilisation=primary_utilisations,
+        secondary_vehicle_station_utilisation=secondary_utilisations,
+        allocation_primary=np.array([0, 0, 0, 0]),
+        allocation_secondary=np.array([0, 0, 0, 0]),
+    )
+    assert round(g, 4) == 0.0
+
+    # Over allocation (always saving everyone)
+    g = objective.get_objective(
+        demand_rates=demand_rates,
+        primary_survivals=primary_survivals,
+        secondary_survivals=secondary_survivals,
+        weights_single_vehicle=np.array([0, 0, 1]),
+        weights_multiple_vehicles=np.array([1, 1, 0]),
+        beta=beta,
+        R=R,
+        primary_vehicle_station_utilisation=primary_utilisations,
+        secondary_vehicle_station_utilisation=secondary_utilisations,
+        allocation_primary=np.array([1000, 1000, 1000, 1000]),
+        allocation_secondary=np.array([1000, 1000, 1000, 1000]),
+    )
+    assert round(g, 4) == demand_rates.sum()
