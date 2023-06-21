@@ -1,5 +1,5 @@
-import genetic
 import objective
+import optimisation
 import numpy as np
 import random
 
@@ -13,7 +13,7 @@ def test_move_vehicle_of_same_type():
     (
         resulting_primary_allocation,
         resulting_secondary_allocation,
-    ) = genetic.move_vehicle_of_same_type(
+    ) = optimisation.move_vehicle_of_same_type(
         allocation_for_moving=primary_allocation,
         allocation_not_for_moving=secondary_allocation,
         max_allocation=max_allocation,
@@ -31,7 +31,7 @@ def test_mutate_with_seed_0():
     max_allocation = 5
 
     np.random.seed(0)
-    resulting_primary_allocation, resulting_secondary_allocation = genetic.mutate(
+    resulting_primary_allocation, resulting_secondary_allocation = optimisation.mutate(
         primary_allocation=primary_allocation,
         secondary_allocation=secondary_allocation,
         max_primary_allocation=max_allocation,
@@ -51,7 +51,7 @@ def test_mutate_with_seed_1():
     max_allocation = 5
 
     np.random.seed(1)
-    resulting_primary_allocation, resulting_secondary_allocation = genetic.mutate(
+    resulting_primary_allocation, resulting_secondary_allocation = optimisation.mutate(
         primary_allocation=primary_allocation,
         secondary_allocation=secondary_allocation,
         max_primary_allocation=max_allocation,
@@ -74,7 +74,7 @@ def test_create_initial_population():
     max_secondary_allocation = 4
 
     np.random.seed(0)
-    population = genetic.create_initial_population(
+    population = optimisation.create_initial_population(
         number_of_locations=number_of_locations,
         number_of_primary_vehicles=number_of_primary_vehicles,
         number_of_secondary_vehicles=number_of_secondary_vehicles,
@@ -142,7 +142,7 @@ def test_rank_population():
     )
     assert population.shape == (10, 2, 67)
 
-    ranked_population, objective_values = genetic.rank_population(
+    ranked_population, objective_values = optimisation.rank_population(
         population=population,
         demand_rates=demand_rates,
         primary_survivals=primary_survivals,
@@ -207,7 +207,7 @@ def test_optimise():
     max_alloc = 4
     num_vehicles = 20
 
-    best_primary, best_secondary, objective_by_iteration = genetic.optimise(
+    best_primary, best_secondary, objective_by_iteration = optimisation.optimise(
         number_of_locations=67,
         number_of_primary_vehicles=num_vehicles,
         number_of_secondary_vehicles=num_vehicles,
