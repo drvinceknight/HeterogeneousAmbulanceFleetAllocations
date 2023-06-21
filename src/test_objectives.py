@@ -2,167 +2,195 @@ import numpy as np
 import types
 import objective
 
+
 def test_get_beta():
     travel_times = np.array(
-        [[0, 5, 10, 15, 20],
-         [5, 0, 5, 10, 15],
-         [10, 5, 0, 5, 10],
-         [15, 10, 5, 0, 5]]
+        [[0, 5, 10, 15, 20], [5, 0, 5, 10, 15], [10, 5, 0, 5, 10], [15, 10, 5, 0, 5]]
     )
     beta = objective.get_beta(travel_times)
     expected_beta = np.array(
-      [[[0., 1., 1., 1.],
-        [0., 0., 1., 1.],
-        [0., 0., 0., 1.],
-        [0., 0., 0., 0.]],
-
-       [[0., 0., 1., 1.],
-        [1., 0., 1., 1.],
-        [1., 0., 0., 1.],
-        [0., 0., 0., 0.]],
-
-       [[0., 0., 0., 0.],
-        [1., 0., 0., 1.],
-        [1., 1., 0., 1.],
-        [1., 1., 0., 0.]],
-
-       [[0., 0., 0., 0.],
-        [1., 0., 0., 0.],
-        [1., 1., 0., 0.],
-        [1., 1., 1., 0.]],
-
-       [[0., 0., 0., 0.],
-        [1., 0., 0., 0.],
-        [1., 1., 0., 0.],
-        [1., 1., 1., 0.]]]
+        [
+            [
+                [0.0, 1.0, 1.0, 1.0],
+                [0.0, 0.0, 1.0, 1.0],
+                [0.0, 0.0, 0.0, 1.0],
+                [0.0, 0.0, 0.0, 0.0],
+            ],
+            [
+                [0.0, 0.0, 1.0, 1.0],
+                [1.0, 0.0, 1.0, 1.0],
+                [1.0, 0.0, 0.0, 1.0],
+                [0.0, 0.0, 0.0, 0.0],
+            ],
+            [
+                [0.0, 0.0, 0.0, 0.0],
+                [1.0, 0.0, 0.0, 1.0],
+                [1.0, 1.0, 0.0, 1.0],
+                [1.0, 1.0, 0.0, 0.0],
+            ],
+            [
+                [0.0, 0.0, 0.0, 0.0],
+                [1.0, 0.0, 0.0, 0.0],
+                [1.0, 1.0, 0.0, 0.0],
+                [1.0, 1.0, 1.0, 0.0],
+            ],
+            [
+                [0.0, 0.0, 0.0, 0.0],
+                [1.0, 0.0, 0.0, 0.0],
+                [1.0, 1.0, 0.0, 0.0],
+                [1.0, 1.0, 1.0, 0.0],
+            ],
+        ]
     )
     assert np.allclose(beta, expected_beta)
 
 
 def test_get_R():
     primary_travel_times = np.array(
-        [[0, 5, 10, 15, 20],
-         [5, 0, 5, 10, 15],
-         [10, 5, 0, 5, 10],
-         [15, 10, 5, 0, 5]]
+        [[0, 5, 10, 15, 20], [5, 0, 5, 10, 15], [10, 5, 0, 5, 10], [15, 10, 5, 0, 5]]
     )
     secondary_travel_times = 0.7 * primary_travel_times
     R = objective.get_R(primary_travel_times, secondary_travel_times)
     expected_R = np.array(
-      [[[1., 1., 1., 1.],
-        [0., 0., 1., 1.],
-        [0., 0., 0., 1.],
-        [0., 0., 0., 0.]],
-
-       [[0., 0., 0., 1.],
-        [1., 1., 1., 1.],
-        [0., 0., 0., 1.],
-        [0., 0., 0., 0.]],
-
-       [[0., 0., 0., 0.],
-        [1., 0., 0., 0.],
-        [1., 1., 1., 1.],
-        [1., 0., 0., 0.]],
-
-       [[0., 0., 0., 0.],
-        [1., 0., 0., 0.],
-        [1., 1., 0., 0.],
-        [1., 1., 1., 1.]],
-
-       [[0., 0., 0., 0.],
-        [0., 0., 0., 0.],
-        [1., 1., 0., 0.],
-        [1., 1., 1., 0.]]])
+        [
+            [
+                [1.0, 1.0, 1.0, 1.0],
+                [0.0, 0.0, 1.0, 1.0],
+                [0.0, 0.0, 0.0, 1.0],
+                [0.0, 0.0, 0.0, 0.0],
+            ],
+            [
+                [0.0, 0.0, 0.0, 1.0],
+                [1.0, 1.0, 1.0, 1.0],
+                [0.0, 0.0, 0.0, 1.0],
+                [0.0, 0.0, 0.0, 0.0],
+            ],
+            [
+                [0.0, 0.0, 0.0, 0.0],
+                [1.0, 0.0, 0.0, 0.0],
+                [1.0, 1.0, 1.0, 1.0],
+                [1.0, 0.0, 0.0, 0.0],
+            ],
+            [
+                [0.0, 0.0, 0.0, 0.0],
+                [1.0, 0.0, 0.0, 0.0],
+                [1.0, 1.0, 0.0, 0.0],
+                [1.0, 1.0, 1.0, 1.0],
+            ],
+            [
+                [0.0, 0.0, 0.0, 0.0],
+                [0.0, 0.0, 0.0, 0.0],
+                [1.0, 1.0, 0.0, 0.0],
+                [1.0, 1.0, 1.0, 0.0],
+            ],
+        ]
+    )
     assert np.allclose(R, expected_R)
+
 
 def test_relationship_between_beta_and_R():
     travel_times = np.array(
-        [[0, 5, 10, 15, 20],
-         [5, 0, 5, 10, 15],
-         [10, 5, 0, 5, 10],
-         [15, 10, 5, 0, 5]]
+        [[0, 5, 10, 15, 20], [5, 0, 5, 10, 15], [10, 5, 0, 5, 10], [15, 10, 5, 0, 5]]
     )
     R = objective.get_R(travel_times, travel_times)
     beta = objective.get_beta(travel_times)
     expected_difference_is_identity = np.array(
-      [[[1., 0., 0., 0.],
-        [0., 1., 0., 0.],
-        [0., 0., 1., 0.],
-        [0., 0., 0., 1.]],
-
-       [[1., 0., 0., 0.],
-        [0., 1., 0., 0.],
-        [0., 0., 1., 0.],
-        [0., 0., 0., 1.]],
-
-       [[1., 0., 0., 0.],
-        [0., 1., 0., 0.],
-        [0., 0., 1., 0.],
-        [0., 0., 0., 1.]],
-
-       [[1., 0., 0., 0.],
-        [0., 1., 0., 0.],
-        [0., 0., 1., 0.],
-        [0., 0., 0., 1.]],
-
-       [[1., 0., 0., 0.],
-        [0., 1., 0., 0.],
-        [0., 0., 1., 0.],
-        [0., 0., 0., 1.]]]
+        [
+            [
+                [1.0, 0.0, 0.0, 0.0],
+                [0.0, 1.0, 0.0, 0.0],
+                [0.0, 0.0, 1.0, 0.0],
+                [0.0, 0.0, 0.0, 1.0],
+            ],
+            [
+                [1.0, 0.0, 0.0, 0.0],
+                [0.0, 1.0, 0.0, 0.0],
+                [0.0, 0.0, 1.0, 0.0],
+                [0.0, 0.0, 0.0, 1.0],
+            ],
+            [
+                [1.0, 0.0, 0.0, 0.0],
+                [0.0, 1.0, 0.0, 0.0],
+                [0.0, 0.0, 1.0, 0.0],
+                [0.0, 0.0, 0.0, 1.0],
+            ],
+            [
+                [1.0, 0.0, 0.0, 0.0],
+                [0.0, 1.0, 0.0, 0.0],
+                [0.0, 0.0, 1.0, 0.0],
+                [0.0, 0.0, 0.0, 1.0],
+            ],
+            [
+                [1.0, 0.0, 0.0, 0.0],
+                [0.0, 1.0, 0.0, 0.0],
+                [0.0, 0.0, 1.0, 0.0],
+                [0.0, 0.0, 0.0, 1.0],
+            ],
+        ]
     )
     np.allclose(R - beta, expected_difference_is_identity)
 
+
 def test_get_survival_vectors():
     primary_travel_times = np.array(
-        [[0, 5, 10, 15, 20],
-         [5, 0, 5, 10, 15],
-         [10, 5, 0, 5, 10],
-         [15, 10, 5, 0, 5]]
+        [[0, 5, 10, 15, 20], [5, 0, 5, 10, 15], [10, 5, 0, 5, 10], [15, 10, 5, 0, 5]]
     )
     secondary_travel_times = primary_travel_times * 0.7
     survival_functions = (
         lambda t: np.ones(t.shape),
         lambda t: np.heaviside(4 - t, 1),
-        lambda t: np.heaviside(14 - t, 1)
+        lambda t: np.heaviside(14 - t, 1),
     )
 
     expected_primary_survivals = np.array(
-      [[[1., 1., 1., 1.],
-        [1., 1., 1., 1.],
-        [1., 1., 1., 1.],
-        [1., 1., 1., 1.],
-        [1., 1., 1., 1.]],
-
-       [[1., 0., 0., 0.],
-        [0., 1., 0., 0.],
-        [0., 0., 1., 0.],
-        [0., 0., 0., 1.],
-        [0., 0., 0., 0.]],
-
-       [[1., 1., 1., 0.],
-        [1., 1., 1., 1.],
-        [1., 1., 1., 1.],
-        [0., 1., 1., 1.],
-        [0., 0., 1., 1.]]]
+        [
+            [
+                [1.0, 1.0, 1.0, 1.0],
+                [1.0, 1.0, 1.0, 1.0],
+                [1.0, 1.0, 1.0, 1.0],
+                [1.0, 1.0, 1.0, 1.0],
+                [1.0, 1.0, 1.0, 1.0],
+            ],
+            [
+                [1.0, 0.0, 0.0, 0.0],
+                [0.0, 1.0, 0.0, 0.0],
+                [0.0, 0.0, 1.0, 0.0],
+                [0.0, 0.0, 0.0, 1.0],
+                [0.0, 0.0, 0.0, 0.0],
+            ],
+            [
+                [1.0, 1.0, 1.0, 0.0],
+                [1.0, 1.0, 1.0, 1.0],
+                [1.0, 1.0, 1.0, 1.0],
+                [0.0, 1.0, 1.0, 1.0],
+                [0.0, 0.0, 1.0, 1.0],
+            ],
+        ]
     )
     expected_secondary_survivals = np.array(
-      [[[1., 1., 1., 1.],
-        [1., 1., 1., 1.],
-        [1., 1., 1., 1.],
-        [1., 1., 1., 1.],
-        [1., 1., 1., 1.]],
-
-       [[1., 1., 0., 0.],
-        [1., 1., 1., 0.],
-        [0., 1., 1., 1.],
-        [0., 0., 1., 1.],
-        [0., 0., 0., 1.]],
-
-       [[1., 1., 1., 1.],
-        [1., 1., 1., 1.],
-        [1., 1., 1., 1.],
-        [1., 1., 1., 1.],
-        [1., 1., 1., 1.]]]
+        [
+            [
+                [1.0, 1.0, 1.0, 1.0],
+                [1.0, 1.0, 1.0, 1.0],
+                [1.0, 1.0, 1.0, 1.0],
+                [1.0, 1.0, 1.0, 1.0],
+                [1.0, 1.0, 1.0, 1.0],
+            ],
+            [
+                [1.0, 1.0, 0.0, 0.0],
+                [1.0, 1.0, 1.0, 0.0],
+                [0.0, 1.0, 1.0, 1.0],
+                [0.0, 0.0, 1.0, 1.0],
+                [0.0, 0.0, 0.0, 1.0],
+            ],
+            [
+                [1.0, 1.0, 1.0, 1.0],
+                [1.0, 1.0, 1.0, 1.0],
+                [1.0, 1.0, 1.0, 1.0],
+                [1.0, 1.0, 1.0, 1.0],
+                [1.0, 1.0, 1.0, 1.0],
+            ],
+        ]
     )
     primary_survivals, secondary_survivals = objective.get_survival_time_vectors(
         survival_functions, primary_travel_times, secondary_travel_times
@@ -179,9 +207,15 @@ def test_get_not_busy_vector():
     not_busy_1 = objective.get_is_not_busy_vector(utilisations, allocation_1)
     not_busy_2 = objective.get_is_not_busy_vector(utilisations, allocation_2)
     not_busy_3 = objective.get_is_not_busy_vector(utilisations, allocation_3)
-    expected_not_busy_1 = np.array([1 - u ** a for u, a in zip(utilisations, allocation_1)])
-    expected_not_busy_2 = np.array([1 - u ** a for u, a in zip(utilisations, allocation_2)])
-    expected_not_busy_3 = np.array([1 - u ** a for u, a in zip(utilisations, allocation_3)])
+    expected_not_busy_1 = np.array(
+        [1 - u**a for u, a in zip(utilisations, allocation_1)]
+    )
+    expected_not_busy_2 = np.array(
+        [1 - u**a for u, a in zip(utilisations, allocation_2)]
+    )
+    expected_not_busy_3 = np.array(
+        [1 - u**a for u, a in zip(utilisations, allocation_3)]
+    )
     assert np.allclose(not_busy_1, expected_not_busy_1)
     assert np.allclose(not_busy_2, expected_not_busy_2)
     assert np.allclose(not_busy_3, expected_not_busy_3)
@@ -193,10 +227,7 @@ def test_get_all_same_closer_busy_vector():
     allocation_3 = [1, 2, 3, 4]
     utilisations = [0.2, 0.5, 0.7, 1.0]
     travel_times = np.array(
-        [[0, 5, 10, 15, 20],
-         [5, 0, 5, 10, 15],
-         [10, 5, 0, 5, 10],
-         [15, 10, 5, 0, 5]]
+        [[0, 5, 10, 15, 20], [5, 0, 5, 10, 15], [10, 5, 0, 5, 10], [15, 10, 5, 0, 5]]
     )
     beta = objective.get_beta(travel_times)
 
@@ -209,9 +240,48 @@ def test_get_all_same_closer_busy_vector():
     all_same_busy_3 = objective.get_all_same_closer_busy_vector(
         utilisations, allocation_3, beta
     )
-    expected_all_same_busy_1 = np.array([[np.prod([utilisations[alpha] ** (allocation_1[alpha] * beta[p][alpha][a]) for alpha in range(4)]) for p in range(5)] for a in range(4)])
-    expected_all_same_busy_2 = np.array([[np.prod([utilisations[alpha] ** (allocation_2[alpha] * beta[p][alpha][a]) for alpha in range(4)]) for p in range(5)] for a in range(4)])
-    expected_all_same_busy_3 = np.array([[np.prod([utilisations[alpha] ** (allocation_3[alpha] * beta[p][alpha][a]) for alpha in range(4)]) for p in range(5)] for a in range(4)])
+    expected_all_same_busy_1 = np.array(
+        [
+            [
+                np.prod(
+                    [
+                        utilisations[alpha] ** (allocation_1[alpha] * beta[p][alpha][a])
+                        for alpha in range(4)
+                    ]
+                )
+                for p in range(5)
+            ]
+            for a in range(4)
+        ]
+    )
+    expected_all_same_busy_2 = np.array(
+        [
+            [
+                np.prod(
+                    [
+                        utilisations[alpha] ** (allocation_2[alpha] * beta[p][alpha][a])
+                        for alpha in range(4)
+                    ]
+                )
+                for p in range(5)
+            ]
+            for a in range(4)
+        ]
+    )
+    expected_all_same_busy_3 = np.array(
+        [
+            [
+                np.prod(
+                    [
+                        utilisations[alpha] ** (allocation_3[alpha] * beta[p][alpha][a])
+                        for alpha in range(4)
+                    ]
+                )
+                for p in range(5)
+            ]
+            for a in range(4)
+        ]
+    )
     assert np.allclose(all_same_busy_1, expected_all_same_busy_1)
     assert np.allclose(all_same_busy_2, expected_all_same_busy_2)
     assert np.allclose(all_same_busy_3, expected_all_same_busy_3)
@@ -223,10 +293,7 @@ def test_get_all_primary_closer_busy_vector():
     allocation_3 = [1, 2, 3, 4]
     utilisations = [0.2, 0.5, 0.7, 1.0]
     travel_times = np.array(
-        [[0, 5, 10, 15, 20],
-         [5, 0, 5, 10, 15],
-         [10, 5, 0, 5, 10],
-         [15, 10, 5, 0, 5]]
+        [[0, 5, 10, 15, 20], [5, 0, 5, 10, 15], [10, 5, 0, 5, 10], [15, 10, 5, 0, 5]]
     )
     R = objective.get_R(travel_times, travel_times * 0.7)
 
@@ -239,9 +306,48 @@ def test_get_all_primary_closer_busy_vector():
     all_primary_closer_busy_3 = objective.get_all_primary_closer_busy_vector(
         utilisations, allocation_3, R
     )
-    expected_all_primary_closer_busy_1 = np.array([[np.prod([utilisations[alpha] ** (allocation_1[alpha] * R[p][alpha][a]) for alpha in range(4)]) for a in range(4)] for p in range(5)])
-    expected_all_primary_closer_busy_2 = np.array([[np.prod([utilisations[alpha] ** (allocation_2[alpha] * R[p][alpha][a]) for alpha in range(4)]) for a in range(4)] for p in range(5)])
-    expected_all_primary_closer_busy_3 = np.array([[np.prod([utilisations[alpha] ** (allocation_3[alpha] * R[p][alpha][a]) for alpha in range(4)]) for a in range(4)] for p in range(5)])
+    expected_all_primary_closer_busy_1 = np.array(
+        [
+            [
+                np.prod(
+                    [
+                        utilisations[alpha] ** (allocation_1[alpha] * R[p][alpha][a])
+                        for alpha in range(4)
+                    ]
+                )
+                for a in range(4)
+            ]
+            for p in range(5)
+        ]
+    )
+    expected_all_primary_closer_busy_2 = np.array(
+        [
+            [
+                np.prod(
+                    [
+                        utilisations[alpha] ** (allocation_2[alpha] * R[p][alpha][a])
+                        for alpha in range(4)
+                    ]
+                )
+                for a in range(4)
+            ]
+            for p in range(5)
+        ]
+    )
+    expected_all_primary_closer_busy_3 = np.array(
+        [
+            [
+                np.prod(
+                    [
+                        utilisations[alpha] ** (allocation_3[alpha] * R[p][alpha][a])
+                        for alpha in range(4)
+                    ]
+                )
+                for a in range(4)
+            ]
+            for p in range(5)
+        ]
+    )
     assert np.allclose(all_primary_closer_busy_1, expected_all_primary_closer_busy_1)
     assert np.allclose(all_primary_closer_busy_2, expected_all_primary_closer_busy_2)
     assert np.allclose(all_primary_closer_busy_3, expected_all_primary_closer_busy_3)
@@ -253,10 +359,7 @@ def test_get_all_secondary_closer_busy_vector():
     allocation_3 = [1, 2, 3, 4]
     utilisations = [0.2, 0.5, 0.7, 1.0]
     travel_times = np.array(
-        [[0, 5, 10, 15, 20],
-         [5, 0, 5, 10, 15],
-         [10, 5, 0, 5, 10],
-         [15, 10, 5, 0, 5]]
+        [[0, 5, 10, 15, 20], [5, 0, 5, 10, 15], [10, 5, 0, 5, 10], [15, 10, 5, 0, 5]]
     )
     R = objective.get_R(travel_times, travel_times * 0.7)
 
@@ -269,21 +372,65 @@ def test_get_all_secondary_closer_busy_vector():
     all_secondary_closer_busy_3 = objective.get_all_secondary_closer_busy_vector(
         utilisations, allocation_3, R
     )
-    expected_all_secondary_closer_busy_1 = np.array([[np.prod([utilisations[alpha] ** (allocation_1[alpha] * (1 - R[p][a][alpha])) for alpha in range(4)]) for a in range(4)] for p in range(5)])
-    expected_all_secondary_closer_busy_2 = np.array([
-        [np.prod([utilisations[alpha] ** (allocation_2[alpha] * (1 - R[p][a][alpha])) for alpha in range(4)]) for a in range(4)] for p in range(5)])
-    expected_all_secondary_closer_busy_3 = np.array([[np.prod([utilisations[alpha] ** (allocation_3[alpha] * (1 - R[p][a][alpha])) for alpha in range(4)]) for a in range(4)] for p in range(5)])
-    assert np.allclose(all_secondary_closer_busy_1, expected_all_secondary_closer_busy_1)
-    assert np.allclose(all_secondary_closer_busy_2, expected_all_secondary_closer_busy_2)
-    assert np.allclose(all_secondary_closer_busy_3, expected_all_secondary_closer_busy_3)
+    expected_all_secondary_closer_busy_1 = np.array(
+        [
+            [
+                np.prod(
+                    [
+                        utilisations[alpha]
+                        ** (allocation_1[alpha] * (1 - R[p][a][alpha]))
+                        for alpha in range(4)
+                    ]
+                )
+                for a in range(4)
+            ]
+            for p in range(5)
+        ]
+    )
+    expected_all_secondary_closer_busy_2 = np.array(
+        [
+            [
+                np.prod(
+                    [
+                        utilisations[alpha]
+                        ** (allocation_2[alpha] * (1 - R[p][a][alpha]))
+                        for alpha in range(4)
+                    ]
+                )
+                for a in range(4)
+            ]
+            for p in range(5)
+        ]
+    )
+    expected_all_secondary_closer_busy_3 = np.array(
+        [
+            [
+                np.prod(
+                    [
+                        utilisations[alpha]
+                        ** (allocation_3[alpha] * (1 - R[p][a][alpha]))
+                        for alpha in range(4)
+                    ]
+                )
+                for a in range(4)
+            ]
+            for p in range(5)
+        ]
+    )
+    assert np.allclose(
+        all_secondary_closer_busy_1, expected_all_secondary_closer_busy_1
+    )
+    assert np.allclose(
+        all_secondary_closer_busy_2, expected_all_secondary_closer_busy_2
+    )
+    assert np.allclose(
+        all_secondary_closer_busy_3, expected_all_secondary_closer_busy_3
+    )
 
 
 def test_get_objective():
     primary_travel_times = np.array(
-        [[0, 5, 10, 15, 20],
-         [5, 0, 5, 10, 15],
-         [10, 5, 0, 5, 10],
-         [15, 10, 5, 0, 5]]
+        [[0, 5, 10, 15, 20], [5, 0, 5, 10, 15], [10, 5, 0, 5, 10], [15, 10, 5, 0, 5]]
     )
     secondary_travel_times = 0.7 * primary_travel_times
     beta = objective.get_beta(primary_travel_times)
