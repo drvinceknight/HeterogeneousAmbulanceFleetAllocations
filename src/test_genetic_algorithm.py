@@ -174,3 +174,67 @@ def test_rank_population():
         )
         assert previous_objective_value >= next_objective_value
         previous_objective_value = next_objective_value
+
+
+def test_optimise():
+    # Read in data
+    raw_travel_times = np.genfromtxt(
+        "./test_data/travel_times_matrix.csv", delimiter=","
+    )
+    beta = objective.get_beta(travel_times=raw_travel_times)
+    primary_vehicle_travel_times = raw_travel_times / 0.75
+    secondary_vehicle_travel_times = raw_travel_times / 1.215
+    R = objective.get_R(
+        primary_vehicle_travel_times=primary_vehicle_travel_times,
+        secondary_vehicle_travel_times=secondary_vehicle_travel_times,
+    )
+    survival_functions = (
+        lambda t: 1 / (1 + np.exp(0.26 + 0.139 * t)),
+        lambda t: np.heaviside(15 - t, 1),
+        lambda t: np.heaviside(60 - t, 1),
+    )
+    demand_rates = np.genfromtxt("./test_data/demand.csv", delimiter=",") / 1440
+    vehicle_locations, pickup_locations = tuple(map(range, raw_travel_times.shape))
+
+    weights_single_vehicle = np.array([0, 0, 1])
+    weights_multiple_vehicles = np.array([1, 1, 0])
+
+    primary_survivals, secondary_survivals = objective.get_survival_time_vectors(
+        survival_functions, primary_vehicle_travel_times, secondary_vehicle_travel_times
+    )
+    pop_size = 20
+    num_iters = 30
+    max_alloc = 4
+    num_vehicles = 20
+
+    best_primary, best_secondary, objective_by_iteration = genetic.optimise(
+        number_of_locations=67,
+        number_of_primary_vehicles=num_vehicles,
+        number_of_secondary_vehicles=num_vehicles,
+        max_primary_allocation=max_alloc,
+        max_secondary_allocation=max_alloc,
+        population_size=pop_size,
+        keep_size=5,
+        number_of_iterations=num_iters,
+        demand_rates=demand_rates,
+        primary_survivals=primary_survivals,
+        secondary_survivals=secondary_survivals,
+        weights_single_vehicle=weights_single_vehicle,
+        weights_multiple_vehicles=weights_multiple_vehicles,
+        beta=beta,
+        R=R,
+        primary_vehicle_station_utilisation=np.array([0.7 for _ in range(67)]),
+        secondary_vehicle_station_utilisation=np.array([0.4 for _ in range(67)]),
+        seed=0,
+        progress_bar=False,
+    )
+    best_over_time = objective_by_iteration.max(axis=1)
+
+    assert len(best_primary) == 67
+    assert len(best_secondary) == 67
+    assert max(best_primary) <= max_alloc
+    assert max(best_secondary) <= max_alloc
+    assert sum(best_primary) == num_vehicles
+    assert sum(best_secondary) == num_vehicles
+    assert objective_by_iteration.shape == (num_iters, pop_size)
+    assert np.all(best_over_time[:-1] <= best_over_time[1:])
