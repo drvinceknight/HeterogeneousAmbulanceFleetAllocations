@@ -219,7 +219,7 @@ def get_objective(
         beta=beta,
         R=R,
         allocation_primary=allocation_primary,
-        allocation_secondary=allocation=secondary,
+        allocation_secondary=allocation_secondary,
     )
     secondary_vehicle_station_utilisation = secondary_vehicle_station_utilisation_function(
         demand_rates=demand_rates,
@@ -230,7 +230,7 @@ def get_objective(
         beta=beta,
         R=R,
         allocation_primary=allocation_primary,
-        allocation_secondary=allocation=secondary,
+        allocation_secondary=allocation_secondary,
     )
     primary_is_not_busy = get_is_not_busy_vector(
         primary_vehicle_station_utilisation, allocation_primary
