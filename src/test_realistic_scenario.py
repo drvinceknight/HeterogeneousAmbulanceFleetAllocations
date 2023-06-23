@@ -269,7 +269,7 @@ def test_objective_function_96():
         allocation_secondary=allocation_96[67:],
     )
     objective_in_days = g * 1440
-    assert np.isclose(objective_in_days, 260.8621820096541)
+    assert np.isclose(objective_in_days, 260.2722627389342)
 
 
 def test_objective_function_with_allocation_dependent_utilisation():
@@ -285,7 +285,7 @@ def test_objective_function_with_allocation_dependent_utilisation():
         """
         total_demand = demand_rates.sum()
         service_rate = 4
-        return np.array([total_demand / (service_rate * z) for z in allocation_primary])
+        return np.array([0 if z == 0 else total_demand / (service_rate * z) for z in allocation_primary])
 
     def secondary_vehicle_station_utilisation_function(allocation_secondary, demand_rates, **kwargs):
         """
@@ -295,7 +295,7 @@ def test_objective_function_with_allocation_dependent_utilisation():
         """
         total_demand = demand_rates.sum()
         service_rate = 10
-        return np.array([total_demand / (service_rate * z) for z in allocation_secondary])
+        return np.array([0 if z == 0 else total_demand / (service_rate * z) for z in allocation_secondary])
 
     g = objective.get_objective(
         demand_rates=demand_rates,

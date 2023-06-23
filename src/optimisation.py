@@ -298,8 +298,8 @@ def optimise(
         weights_multiple_vehicles=weights_multiple_vehicles,
         beta=beta,
         R=R,
-        primary_vehicle_station_utilisation=primary_vehicle_station_utilisation,
-        secondary_vehicle_station_utilisation=secondary_vehicle_station_utilisation,
+        primary_vehicle_station_utilisation_function=primary_vehicle_station_utilisation_function,
+        secondary_vehicle_station_utilisation_function=secondary_vehicle_station_utilisation_function,
     )
 
     best_primary_population, best_secondary_population = ranked_population[0]
