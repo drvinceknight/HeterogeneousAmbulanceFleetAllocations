@@ -1,6 +1,7 @@
 import numpy as np
 import types
 import objective
+import utilisation
 
 
 def test_get_beta():
@@ -443,13 +444,8 @@ def test_get_objective():
     primary_survivals, secondary_survivals = objective.get_survival_time_vectors(
         survival_functions, primary_travel_times, secondary_travel_times
     )
-
-    def primary_utilisations(**kwargs):
-        return np.array([0.2, 0.5, 0.7, 1.0])
-
-    def secondary_utilisations(**kwargs):
-        return np.array([0.6, 0.6, 0.2, 0.2])
-
+    given_utilisations_primary = np.array([0.2, 0.5, 0.7, 1.0])
+    given_utilisations_secondary = np.array([0.6, 0.6, 0.2, 0.2])
     demand_rates = np.array(((2, 2, 3, 3, 7), (2, 0, 1, 2, 4), (1, 1, 1, 1, 1))) * 10
 
     # Some allocation
@@ -461,10 +457,12 @@ def test_get_objective():
         weights_multiple_vehicles=np.array([1, 1, 0]),
         beta=beta,
         R=R,
-        primary_vehicle_station_utilisation_function=primary_utilisations,
-        secondary_vehicle_station_utilisation_function=secondary_utilisations,
+        primary_vehicle_station_utilisation_function=utilisation.given_utilisations_primary,
+        secondary_vehicle_station_utilisation_function=utilisation.given_utilisations_secondary,
         allocation_primary=np.array([1, 0, 0, 1]),
         allocation_secondary=np.array([0, 2, 1, 1]),
+        given_utilisations_primary=given_utilisations_primary,
+        given_utilisations_secondary=given_utilisations_secondary,
     )
     assert round(g, 4) == 295.1552
 
@@ -477,10 +475,12 @@ def test_get_objective():
         weights_multiple_vehicles=np.array([1, 1, 0]),
         beta=beta,
         R=R,
-        primary_vehicle_station_utilisation_function=primary_utilisations,
-        secondary_vehicle_station_utilisation_function=secondary_utilisations,
+        primary_vehicle_station_utilisation_function=utilisation.given_utilisations_primary,
+        secondary_vehicle_station_utilisation_function=utilisation.given_utilisations_secondary,
         allocation_primary=np.array([0, 0, 0, 0]),
         allocation_secondary=np.array([0, 0, 0, 0]),
+        given_utilisations_primary=given_utilisations_primary,
+        given_utilisations_secondary=given_utilisations_secondary,
     )
     assert round(g, 4) == 0.0
 
@@ -493,9 +493,11 @@ def test_get_objective():
         weights_multiple_vehicles=np.array([1, 1, 0]),
         beta=beta,
         R=R,
-        primary_vehicle_station_utilisation_function=primary_utilisations,
-        secondary_vehicle_station_utilisation_function=secondary_utilisations,
+        primary_vehicle_station_utilisation_function=utilisation.given_utilisations_primary,
+        secondary_vehicle_station_utilisation_function=utilisation.given_utilisations_secondary,
         allocation_primary=np.array([1000, 1000, 1000, 1000]),
         allocation_secondary=np.array([1000, 1000, 1000, 1000]),
+        given_utilisations_primary=given_utilisations_primary,
+        given_utilisations_secondary=given_utilisations_secondary,
     )
     assert round(g, 4) == demand_rates.sum()

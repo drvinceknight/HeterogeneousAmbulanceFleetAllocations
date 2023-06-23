@@ -203,6 +203,7 @@ def get_objective(
     secondary_vehicle_station_utilisation_function,
     allocation_primary,
     allocation_secondary,
+    **kwargs,
 ):
     """
     TODO: Document parameters
@@ -225,6 +226,7 @@ def get_objective(
         R=R,
         allocation_primary=allocation_primary,
         allocation_secondary=allocation_secondary,
+        **kwargs,
     )
     secondary_vehicle_station_utilisation = (
         secondary_vehicle_station_utilisation_function(
@@ -237,6 +239,7 @@ def get_objective(
             R=R,
             allocation_primary=allocation_primary,
             allocation_secondary=allocation_secondary,
+            **kwargs,
         )
     )
 
