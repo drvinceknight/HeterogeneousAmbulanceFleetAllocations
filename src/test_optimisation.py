@@ -264,9 +264,11 @@ def test_rank_population():
 
     # Utilisations and allocations for resource level 61
     given_utilisations_primary_61 = np.genfromtxt(
-        "./test_data/primary_utilisations_61.csv", delimiter=",")
+        "./test_data/primary_utilisations_61.csv", delimiter=","
+    )
     given_utilisations_secondary_61 = np.genfromtxt(
-        "./test_data/secondary_utilisations_61.csv", delimiter=",")
+        "./test_data/secondary_utilisations_61.csv", delimiter=","
+    )
     allocation_61 = np.genfromtxt("./test_data/allocation_61.csv", delimiter=",")
 
     # Create population

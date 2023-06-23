@@ -31,50 +31,62 @@ primary_survivals, secondary_survivals = objective.get_survival_time_vectors(
 
 # Utilisations and allocations for resource level 61
 given_utilisations_primary_61 = np.genfromtxt(
-    "./test_data/primary_utilisations_61.csv", delimiter=",")
+    "./test_data/primary_utilisations_61.csv", delimiter=","
+)
 given_utilisations_secondary_61 = np.genfromtxt(
-    "./test_data/secondary_utilisations_61.csv", delimiter=",")
+    "./test_data/secondary_utilisations_61.csv", delimiter=","
+)
 allocation_61 = np.genfromtxt("./test_data/allocation_61.csv", delimiter=",")
 
 
 # Utilisations and allocations for resource level 68
 given_utilisations_primary_68 = np.genfromtxt(
-    "./test_data/primary_utilisations_68.csv", delimiter=",")
+    "./test_data/primary_utilisations_68.csv", delimiter=","
+)
 given_utilisations_secondary_68 = np.genfromtxt(
-    "./test_data/secondary_utilisations_68.csv", delimiter=",")
+    "./test_data/secondary_utilisations_68.csv", delimiter=","
+)
 allocation_68 = np.genfromtxt("./test_data/allocation_68.csv", delimiter=",")
 
 
 # Utilisations and allocations for resource level 75
 given_utilisations_primary_75 = np.genfromtxt(
-    "./test_data/primary_utilisations_75.csv", delimiter=",")
+    "./test_data/primary_utilisations_75.csv", delimiter=","
+)
 given_utilisations_secondary_75 = np.genfromtxt(
-        "./test_data/secondary_utilisations_75.csv", delimiter=",")
+    "./test_data/secondary_utilisations_75.csv", delimiter=","
+)
 allocation_75 = np.genfromtxt("./test_data/allocation_75.csv", delimiter=",")
 
 
 # Utilisations and allocations for resource level 82
 # Directly from simulation
 given_utilisations_primary_82 = np.genfromtxt(
-    "./test_data/primary_utilisations_82.csv", delimiter=",")
+    "./test_data/primary_utilisations_82.csv", delimiter=","
+)
 given_utilisations_secondary_82 = np.genfromtxt(
-    "./test_data/secondary_utilisations_82.csv", delimiter=",")
+    "./test_data/secondary_utilisations_82.csv", delimiter=","
+)
 allocation_82 = np.genfromtxt("./test_data/allocation_82.csv", delimiter=",")
 
 
 # Utilisations and allocations for resource level 89
 given_utilisations_primary_89 = np.genfromtxt(
-    "./test_data/primary_utilisations_89.csv", delimiter=",")
+    "./test_data/primary_utilisations_89.csv", delimiter=","
+)
 given_utilisations_secondary_89 = np.genfromtxt(
-    "./test_data/secondary_utilisations_89.csv", delimiter=",")
+    "./test_data/secondary_utilisations_89.csv", delimiter=","
+)
 allocation_89 = np.genfromtxt("./test_data/allocation_89.csv", delimiter=",")
 
 
 # Utilisations and allocations for resource level 96
 given_utilisations_primary_96 = np.genfromtxt(
-    "./test_data/primary_utilisations_96.csv", delimiter=",")
+    "./test_data/primary_utilisations_96.csv", delimiter=","
+)
 given_utilisations_secondary_96 = np.genfromtxt(
-    "./test_data/secondary_utilisations_96.csv", delimiter=",")
+    "./test_data/secondary_utilisations_96.csv", delimiter=","
+)
 allocation_96 = np.genfromtxt("./test_data/allocation_96.csv", delimiter=",")
 
 
@@ -109,8 +121,8 @@ def test_paramaters():
 def test_objective_function_61():
     """
     Tests the value of the objective function when using an allocation with a resource level of 61
-     - When using a simulation, this will achieve a value of 144.5987.
-     - This objective gives a value of 232.89387186907996
+     - When using a simulation, this will achieve a value of 169.9796
+     - This objective gives a value of 232.2921043699148
     """
     g = objective.get_objective(
         demand_rates=demand_rates,
@@ -134,8 +146,8 @@ def test_objective_function_61():
 def test_objective_function_68():
     """
     Tests the value of the objective function when using an allocation with a resource level of 68
-     - When using a simulation, this will achieve a value of 144.5987.
-     - This objective gives a value of 255.25058850564176
+     - When using a simulation, this will achieve a value of 208.6921
+     - This objective gives a value of 254.8692893372367
     """
     g = objective.get_objective(
         demand_rates=demand_rates,
@@ -159,8 +171,8 @@ def test_objective_function_68():
 def test_objective_function_75():
     """
     Tests the value of the objective function when using an allocation with a resource level of 75
-     - When using a simulation, this will achieve a value of 145.8549.
-     - This objective gives a value of 254.69469398551522
+     - When using a simulation, this will achieve a value of 209.5593
+     - This objective gives a value of 254.11456549042802
     """
     g = objective.get_objective(
         demand_rates=demand_rates,
@@ -184,8 +196,8 @@ def test_objective_function_75():
 def test_objective_function_82():
     """
     Tests the value of the objective function when using an allocation with a resource level of 82
-     - When using a simulation, this will achieve a value of 145.6902
-     - This objective gives a value of 258.380209445041
+     - When using a simulation, this will achieve a value of 233.7559
+     - This objective gives a value of 257.44519956766254
     """
     g = objective.get_objective(
         demand_rates=demand_rates,
@@ -209,8 +221,8 @@ def test_objective_function_82():
 def test_objective_function_89():
     """
     Tests the value of the objective function when using an allocation with a resource level of 89
-     - When using a simulation, this will achieve a value of 148.0597
-     - This objective gives a value of 260.69320203024455
+     - When using a simulation, this will achieve a value of 242.9359
+     - This objective gives a value of 260.2749321977294
     """
     g = objective.get_objective(
         demand_rates=demand_rates,
@@ -234,8 +246,8 @@ def test_objective_function_89():
 def test_objective_function_96():
     """
     Tests the value of the objective function when using an allocation with a resource level of 96
-     - When using a simulation, this will achieve a value of 147.4496
-     - This objective gives a value of 260.8621820096541
+     - When using a simulation, this will achieve a value of 246.4273
+     - This objective gives a value of 260.2722627389342
     """
     g = objective.get_objective(
         demand_rates=demand_rates,

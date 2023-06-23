@@ -112,7 +112,9 @@ def test_proportional_utilisations_primary():
     )
     expected_utils = np.array([0, 15, 7.5, 0, 7.5])
     obtained_utils = utilisation.proportional_utilisations_primary(
-        allocation_primary=allocation, demand_rates=demand_rates, service_rate_primary=service_rate_primary
+        allocation_primary=allocation,
+        demand_rates=demand_rates,
+        service_rate_primary=service_rate_primary,
     )
     assert np.allclose(expected_utils, obtained_utils)
 
@@ -147,6 +149,8 @@ def test_proportional_utilisations_secondary():
     )
     expected_utils = np.array([0, 7.5, 3.75, 0, 3.75])
     obtained_utils = utilisation.proportional_utilisations_secondary(
-        allocation_secondary=allocation, demand_rates=demand_rates, service_rate_secondary=service_rate_secondary
+        allocation_secondary=allocation,
+        demand_rates=demand_rates,
+        service_rate_secondary=service_rate_secondary,
     )
     assert np.allclose(expected_utils, obtained_utils)
