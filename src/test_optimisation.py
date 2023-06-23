@@ -260,15 +260,18 @@ def test_rank_population():
     primary_survivals, secondary_survivals = objective.get_survival_time_vectors(
         survival_functions, primary_vehicle_travel_times, secondary_vehicle_travel_times
     )
+
     # Utilisations and allocations for resource level 61
     def primary_vehicle_station_utilisation_function_61(**kwargs):
         return np.genfromtxt(
-        "./test_data/primary_utilisations_61.csv", delimiter=","
-    )  # Directly from simulation
+            "./test_data/primary_utilisations_61.csv", delimiter=","
+        )  # Directly from simulation
+
     def secondary_vehicle_station_utilisation_function_61(**kwargs):
         return np.genfromtxt(
-        "./test_data/secondary_utilisations_61.csv", delimiter=","
-    )  # Directly from simulation
+            "./test_data/secondary_utilisations_61.csv", delimiter=","
+        )  # Directly from simulation
+
     allocation_61 = np.genfromtxt("./test_data/allocation_61.csv", delimiter=",")
 
     # Create population
@@ -294,7 +297,7 @@ def test_rank_population():
         beta=beta,
         R=R,
         primary_vehicle_station_utilisation_function=primary_vehicle_station_utilisation_function_61,
-        secondary_vehicle_station_utilisation_function=secondary_vehicle_station_utilisation_function_61
+        secondary_vehicle_station_utilisation_function=secondary_vehicle_station_utilisation_function_61,
     )
 
     assert ranked_population.shape == (10, 2, 67)
@@ -351,7 +354,6 @@ def test_optimise():
 
     def primary_vehicle_station_utilisation_function(**kwargs):
         return np.array([0.7 for _ in range(67)])
-
 
     def secondary_vehicle_station_utilisation_function(**kwargs):
         return np.array([0.4 for _ in range(67)])

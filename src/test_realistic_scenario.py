@@ -31,14 +31,12 @@ primary_survivals, secondary_survivals = objective.get_survival_time_vectors(
 # Utilisations and allocations for resource level 61
 # Directly from simulation
 def primary_vehicle_station_utilisation_function_61(**kwargs):
-    return np.genfromtxt(
-    "./test_data/primary_utilisations_61.csv", delimiter=","
-)
+    return np.genfromtxt("./test_data/primary_utilisations_61.csv", delimiter=",")
+
+
 # Directly from simulation
 def secondary_vehicle_station_utilisation_function_61(**kwargs):
-    return np.genfromtxt(
-    "./test_data/secondary_utilisations_61.csv", delimiter=","
-)  
+    return np.genfromtxt("./test_data/secondary_utilisations_61.csv", delimiter=",")
 
 
 allocation_61 = np.genfromtxt("./test_data/allocation_61.csv", delimiter=",")
@@ -46,66 +44,76 @@ allocation_61 = np.genfromtxt("./test_data/allocation_61.csv", delimiter=",")
 
 # Utilisations and allocations for resource level 68
 # Directly from simulation
-def primary_vehicle_station_utilisation_function_68(**kwargs): 
-    return np.genfromtxt(
-    "./test_data/primary_utilisations_68.csv", delimiter=","
-)
+def primary_vehicle_station_utilisation_function_68(**kwargs):
+    return np.genfromtxt("./test_data/primary_utilisations_68.csv", delimiter=",")
+
+
 # Directly from simulation
-def secondary_vehicle_station_utilisation_function_68(**kwargs): 
-    return np.genfromtxt(
-    "./test_data/secondary_utilisations_68.csv", delimiter=","
-)
+def secondary_vehicle_station_utilisation_function_68(**kwargs):
+    return np.genfromtxt("./test_data/secondary_utilisations_68.csv", delimiter=",")
+
+
 allocation_68 = np.genfromtxt("./test_data/allocation_68.csv", delimiter=",")
 
 
 # Utilisations and allocations for resource level 75
 # Directly from simulation
-def primary_vehicle_station_utilisation_function_75(**kwargs): 
-    return np.genfromtxt(
-    "./test_data/primary_utilisations_75.csv", delimiter=","
-) 
+def primary_vehicle_station_utilisation_function_75(**kwargs):
+    return np.genfromtxt("./test_data/primary_utilisations_75.csv", delimiter=",")
+
+
 def secondary_vehicle_station_utilisation_function_75(**kargs):
     return np.genfromtxt(
-    "./test_data/secondary_utilisations_75.csv", delimiter=","
-)  # Directly from simulation
+        "./test_data/secondary_utilisations_75.csv", delimiter=","
+    )  # Directly from simulation
+
+
 allocation_75 = np.genfromtxt("./test_data/allocation_75.csv", delimiter=",")
 
 
 # Utilisations and allocations for resource level 82
 # Directly from simulation
 def primary_vehicle_station_utilisation_function_82(**kwargs):
-    return np.genfromtxt(
-    "./test_data/primary_utilisations_82.csv", delimiter=","
-)
+    return np.genfromtxt("./test_data/primary_utilisations_82.csv", delimiter=",")
+
+
 # Directly from simulation
-def secondary_vehicle_station_utilisation_function_82(**kwargs): 
-    return np.genfromtxt(
-    "./test_data/secondary_utilisations_82.csv", delimiter=","
-)
+def secondary_vehicle_station_utilisation_function_82(**kwargs):
+    return np.genfromtxt("./test_data/secondary_utilisations_82.csv", delimiter=",")
+
+
 allocation_82 = np.genfromtxt("./test_data/allocation_82.csv", delimiter=",")
 
 
 # Utilisations and allocations for resource level 89
-def primary_vehicle_station_utilisation_function_89(**kwargs): 
+def primary_vehicle_station_utilisation_function_89(**kwargs):
     return np.genfromtxt(
-    "./test_data/primary_utilisations_89.csv", delimiter=","
-)  # Directly from simulation
-def secondary_vehicle_station_utilisation_function_89(**kwargs): 
+        "./test_data/primary_utilisations_89.csv", delimiter=","
+    )  # Directly from simulation
+
+
+def secondary_vehicle_station_utilisation_function_89(**kwargs):
     return np.genfromtxt(
-    "./test_data/secondary_utilisations_89.csv", delimiter=","
-)  # Directly from simulation
+        "./test_data/secondary_utilisations_89.csv", delimiter=","
+    )  # Directly from simulation
+
+
 allocation_89 = np.genfromtxt("./test_data/allocation_89.csv", delimiter=",")
 
 
 # Utilisations and allocations for resource level 96
-def primary_vehicle_station_utilisation_function_96(**kwargs): 
+def primary_vehicle_station_utilisation_function_96(**kwargs):
     return np.genfromtxt(
-    "./test_data/primary_utilisations_96.csv", delimiter=","
-)  # Directly from simulation
-def secondary_vehicle_station_utilisation_function_96(**kwargs): 
+        "./test_data/primary_utilisations_96.csv", delimiter=","
+    )  # Directly from simulation
+
+
+def secondary_vehicle_station_utilisation_function_96(**kwargs):
     return np.genfromtxt(
-    "./test_data/secondary_utilisations_96.csv", delimiter=","
-)  # Directly from simulation
+        "./test_data/secondary_utilisations_96.csv", delimiter=","
+    )  # Directly from simulation
+
+
 allocation_96 = np.genfromtxt("./test_data/allocation_96.csv", delimiter=",")
 
 
@@ -277,25 +285,40 @@ def test_objective_function_with_allocation_dependent_utilisation():
     Tests the value of the objective function when using a utilisation function
     that uses the allocation.
     """
-    def primary_vehicle_station_utilisation_function(allocation_primary, demand_rates, **kwargs):
+
+    def primary_vehicle_station_utilisation_function(
+        allocation_primary, demand_rates, **kwargs
+    ):
         """
         Shares demand proportional to the allocation.
-        
+
         Uses a service rate of 4.
         """
         total_demand = demand_rates.sum()
         service_rate = 4
-        return np.array([0 if z == 0 else total_demand / (service_rate * z) for z in allocation_primary])
+        return np.array(
+            [
+                0 if z == 0 else total_demand / (service_rate * z)
+                for z in allocation_primary
+            ]
+        )
 
-    def secondary_vehicle_station_utilisation_function(allocation_secondary, demand_rates, **kwargs):
+    def secondary_vehicle_station_utilisation_function(
+        allocation_secondary, demand_rates, **kwargs
+    ):
         """
         Shares demand proportional to the allocation.
-        
+
         Uses a service rate of 10.
         """
         total_demand = demand_rates.sum()
         service_rate = 10
-        return np.array([0 if z == 0 else total_demand / (service_rate * z) for z in allocation_secondary])
+        return np.array(
+            [
+                0 if z == 0 else total_demand / (service_rate * z)
+                for z in allocation_secondary
+            ]
+        )
 
     g = objective.get_objective(
         demand_rates=demand_rates,

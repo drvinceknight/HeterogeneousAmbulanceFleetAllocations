@@ -443,10 +443,13 @@ def test_get_objective():
     primary_survivals, secondary_survivals = objective.get_survival_time_vectors(
         survival_functions, primary_travel_times, secondary_travel_times
     )
+
     def primary_utilisations(**kwargs):
         return np.array([0.2, 0.5, 0.7, 1.0])
+
     def secondary_utilisations(**kwargs):
         return np.array([0.6, 0.6, 0.2, 0.2])
+
     demand_rates = np.array(((2, 2, 3, 3, 7), (2, 0, 1, 2, 4), (1, 1, 1, 1, 1))) * 10
 
     # Some allocation

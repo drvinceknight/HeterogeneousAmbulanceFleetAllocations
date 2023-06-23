@@ -226,16 +226,18 @@ def get_objective(
         allocation_primary=allocation_primary,
         allocation_secondary=allocation_secondary,
     )
-    secondary_vehicle_station_utilisation = secondary_vehicle_station_utilisation_function(
-        demand_rates=demand_rates,
-        primary_survivals=primary_survivals,
-        secondary_survivals=secondary_survivals,
-        weights_single_vehicle=weights_single_vehicle,
-        weights_multiple_vehicles=weights_multiple_vehicles,
-        beta=beta,
-        R=R,
-        allocation_primary=allocation_primary,
-        allocation_secondary=allocation_secondary,
+    secondary_vehicle_station_utilisation = (
+        secondary_vehicle_station_utilisation_function(
+            demand_rates=demand_rates,
+            primary_survivals=primary_survivals,
+            secondary_survivals=secondary_survivals,
+            weights_single_vehicle=weights_single_vehicle,
+            weights_multiple_vehicles=weights_multiple_vehicles,
+            beta=beta,
+            R=R,
+            allocation_primary=allocation_primary,
+            allocation_secondary=allocation_secondary,
+        )
     )
 
     primary_is_not_busy = get_is_not_busy_vector(
