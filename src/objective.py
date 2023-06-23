@@ -2,6 +2,9 @@ import numpy as np
 
 
 def get_beta(travel_times):
+    """
+    TODO Add docstring
+    """
     ambulance_locations = range(travel_times.shape[0])
     pickup_locations = range(travel_times.shape[1])
     return np.array(
@@ -19,6 +22,9 @@ def get_beta(travel_times):
 
 
 def get_R(primary_vehicle_travel_times, secondary_vehicle_travel_times):
+    """
+    TODO Add docstring
+    """
     ambulance_locations = range(primary_vehicle_travel_times.shape[0])
     pickup_locations = range(primary_vehicle_travel_times.shape[1])
     return np.array(
@@ -42,6 +48,10 @@ def get_survival_time_vectors(
     survival_functions, primary_vehicle_travel_times, secondary_vehicle_travel_times
 ):
     """
+    TODO: Document parameters
+
+    TODO: Document parameters
+
     Returns two arrays:
       + `primary_survivals[k][p][a]` indicating the probability of
          survival for patients of type k, at pickup location p, by
@@ -64,6 +74,8 @@ def get_is_not_busy_vector(
     allocation,
 ):
     """
+    TODO: Document parameters
+
     Returns a vector:
       + `is_not_busy[a]` indicating the probability of a vehicle
          at location a not being busy.
@@ -74,6 +86,8 @@ def get_is_not_busy_vector(
 
 def get_all_same_closer_busy_vector(vehicle_station_utilisation, allocation, beta):
     """
+    TODO: Document parameters
+
     Returns a vector:
       + `all_same_closer_busy[a][p]` indicating the probability
       of all vehicles of the same type and closer to p than
@@ -91,6 +105,8 @@ def get_all_same_closer_busy_vector(vehicle_station_utilisation, allocation, bet
 
 def get_all_primary_closer_busy_vector(vehicle_station_utilisation, allocation, R):
     """
+    TODO: Document parameters
+
     Returns a vector:
       + `all_primary_closer_busy_vector[a][p]` indicating
       the probability of all primary vehicles closer to p
@@ -107,6 +123,8 @@ def get_all_primary_closer_busy_vector(vehicle_station_utilisation, allocation, 
 
 def get_all_secondary_closer_busy_vector(vehicle_station_utilisation, allocation, R):
     """
+    TODO: Document parameters
+
     Returns a vector:
       + `all_secondary_closer_busy_vector[a][p]` indicating
       the probability of all secondary vehicles closer to p
@@ -124,6 +142,8 @@ def get_all_secondary_closer_busy_vector(vehicle_station_utilisation, allocation
 
 def get_psi(primary_survivals, primary_is_not_busy, all_closer_busy_primary):
     """
+    TODO: Document parameters
+
     Returns a vector:
       + `psi[k][p][a]` indicating the probability of survival
       of a patient at pickup location p of type k by a primary
@@ -144,6 +164,8 @@ def get_psi_tilde(
     all_primary_closer_than_secondary_busy,
 ):
     """
+    TODO: Document parameters
+
     Returns a vector:
       + `psi_tilde[k][p][a]` indicating the probability of survival
       of a patient at pickup location p of type k by a secondary
@@ -177,14 +199,45 @@ def get_objective(
     weights_multiple_vehicles,
     beta,
     R,
-    primary_vehicle_station_utilisation,
-    secondary_vehicle_station_utilisation,
+    primary_vehicle_station_utilisation_function,
+    secondary_vehicle_station_utilisation_function,
     allocation_primary,
     allocation_secondary,
 ):
     """
+    TODO: Document parameters
+
+
+        - primary_vehicle_station_utilisation_function: a callable that returns
+          an array of floats -- must be defined with `(**kwargs)`.
+        - secondary_vehicle_station_utilisation_function: a callable that returns
+          an array of floats -- must be defined with `(**kwargs)`.
+
     Returns the value of the objective function.
     """
+    primary_vehicle_station_utilisation = primary_vehicle_station_utilisation_function(
+        demand_rates=demand_rates,
+        primary_survivals=primary_survivals,
+        secondary_survivals=secondary_survivals,
+        weights_single_vehicle=weights_single_vehicle,
+        weights_multiple_vehicles=weights_multiple_vehicles,
+        beta=beta,
+        R=R,
+        allocation_primary=allocation_primary,
+        allocation_secondary=allocation_secondary,
+    )
+    secondary_vehicle_station_utilisation = secondary_vehicle_station_utilisation_function(
+        demand_rates=demand_rates,
+        primary_survivals=primary_survivals,
+        secondary_survivals=secondary_survivals,
+        weights_single_vehicle=weights_single_vehicle,
+        weights_multiple_vehicles=weights_multiple_vehicles,
+        beta=beta,
+        R=R,
+        allocation_primary=allocation_primary,
+        allocation_secondary=allocation_secondary,
+    )
+
     primary_is_not_busy = get_is_not_busy_vector(
         primary_vehicle_station_utilisation, allocation_primary
     )

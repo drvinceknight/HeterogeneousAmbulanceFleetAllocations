@@ -311,4 +311,4 @@ def test_objective_function_with_allocation_dependent_utilisation():
         allocation_secondary=allocation_96[67:],
     )
     objective_in_days = g * 1440
-    assert np.isclose(objective_in_days, 61.0637383103119)
+    assert np.isclose(objective_in_days, 261.6662338220468)

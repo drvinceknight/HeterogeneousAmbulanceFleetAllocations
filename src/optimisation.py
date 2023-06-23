@@ -193,8 +193,8 @@ def rank_population(
     weights_multiple_vehicles,
     beta,
     R,
-    primary_vehicle_station_utilisation,
-    secondary_vehicle_station_utilisation,
+    primary_vehicle_station_utilisation_function,
+    secondary_vehicle_station_utilisation_function,
 ):
     """
     Ranks the population according to the objective function
@@ -210,8 +210,8 @@ def rank_population(
                 weights_multiple_vehicles=weights_multiple_vehicles,
                 beta=beta,
                 R=R,
-                primary_vehicle_station_utilisation=primary_vehicle_station_utilisation,
-                secondary_vehicle_station_utilisation=secondary_vehicle_station_utilisation,
+                primary_vehicle_station_utilisation_function=primary_vehicle_station_utilisation_function,
+                secondary_vehicle_station_utilisation_function=secondary_vehicle_station_utilisation_function,
                 allocation_primary=allocation[0],
                 allocation_secondary=allocation[1],
             )
@@ -237,8 +237,8 @@ def optimise(
     weights_multiple_vehicles,
     beta,
     R,
-    primary_vehicle_station_utilisation,
-    secondary_vehicle_station_utilisation,
+    primary_vehicle_station_utilisation_function,
+    secondary_vehicle_station_utilisation_function,
     seed,
     progress_bar=False,
 ):
@@ -272,8 +272,8 @@ def optimise(
             weights_multiple_vehicles=weights_multiple_vehicles,
             beta=beta,
             R=R,
-            primary_vehicle_station_utilisation=primary_vehicle_station_utilisation,
-            secondary_vehicle_station_utilisation=secondary_vehicle_station_utilisation,
+            primary_vehicle_station_utilisation_function=primary_vehicle_station_utilisation_function,
+            secondary_vehicle_station_utilisation_function=secondary_vehicle_station_utilisation_function,
         )
         objective_by_iteration.append(objective_values)
         kept_population = ranked_population[:keep_size]
