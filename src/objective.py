@@ -1,299 +1,270 @@
-"""
-Code to evaluate the survival probability for a given allocation of ambulances.
-
-TODO Add more theoretic description.
-"""
-from typing import Callable, Iterable
-import numpy.typing as npt
 import numpy as np
 
 
-def get_beta(travel_times: npt.NDArray) -> dict:
+def get_beta(travel_times):
     """
-    TODO Write documentation
+    TODO Add docstring
     """
-    return {
-        (pickup_location, a_1, a_2): time_1 < time_2
-        for pickup_location, column in enumerate(travel_times.T)
-        for a_1, time_1 in enumerate(column)
-        for a_2, time_2 in enumerate(column)
-    }
-
-
-def get_R(
-    primary_vehicle_travel_times: npt.NDArray,
-    secondary_vehicle_travel_times: npt.NDArray,
-) -> dict:
-    """
-    TODO Write documentation
-    """
-    return {
-        (pickup_location, a_1, a_2): time_1 < time_2
-        for pickup_location, column in enumerate(primary_vehicle_travel_times.T)
-        for a_1, time_1 in enumerate(column)
-        for a_2, time_2 in enumerate(secondary_vehicle_travel_times.T[pickup_location])
-    }
-
-
-def get_objective_function(
-    pickup_locations: Iterable,
-    patient_type_partitions: Iterable,
-    survival_functions: Iterable[Callable],
-    primary_travel_times: npt.NDArray,
-    secondary_travel_times: npt.NDArray,
-    primary_vehicle_station_utilisation: Iterable,
-    secondary_vehicle_station_utilisation: Iterable,
-    vehicle_locations: Iterable,
-    is_station_closer_to_pickup_location: dict,
-    is_vehicle_type_closer_to_pickup_location: dict,
-    weights: dict,
-    demands: dict,
-) -> Callable:
-    """
-    Take all parameters of the given problem and generate a function of a single
-    variable (the allocations).
-    """
-    number_of_vehicle_locations = len(vehicle_locations)
-
-    def tilde_psi(
-        primary_vehicle_allocation,
-        secondary_vehicle_allocation,
-        patient_type,
-        pickup_location,
-        ambulance_station,
-    ):
-        """
-        Return tilde_psi
-        """
-        return get_multiple_vehicle_patient_survival(
-            patient_type=patient_type,
-            pickup_location=pickup_location,
-            ambulance_station=ambulance_station,
-            survival_functions=survival_functions,
-            primary_travel_times=primary_travel_times,
-            secondary_travel_times=secondary_travel_times,
-            primary_vehicle_station_utilisation=primary_vehicle_station_utilisation,
-            secondary_vehicle_station_utilisation=secondary_vehicle_station_utilisation,
-            vehicle_locations=vehicle_locations,
-            primary_vehicle_allocation=primary_vehicle_allocation,
-            secondary_vehicle_allocation=secondary_vehicle_allocation,
-            is_station_closer_to_pickup_location=is_station_closer_to_pickup_location,
-            is_vehicle_type_closer_to_pickup_location=is_vehicle_type_closer_to_pickup_location,
-        )
-
-    def psi(
-        primary_vehicle_allocation,
-        secondary_vehicle_station_utilisation,
-        patient_type,
-        pickup_location,
-        ambulance_station,
-    ):
-        """
-        Return psi
-        """
-        return get_single_vehicle_patient_survival(
-            patient_type=patient_type,
-            pickup_location=pickup_location,
-            ambulance_station=ambulance_station,
-            survival_functions=survival_functions,
-            travel_times=primary_travel_times,
-            station_utilisation=primary_vehicle_station_utilisation,
-            vehicle_locations=vehicle_locations,
-            vehicle_allocation=primary_vehicle_allocation,
-            is_station_closer_to_pickup_location=is_station_closer_to_pickup_location,
-        )
-
-    def g(allocation: npt.NDArray) -> float:
-        f"""
-        The objective function for the problem defined by the following
-        parameters:
-
-        - pickup_locations: {pickup_locations}
-        - patient_type_partitions: {patient_type_partitions}
-        - survival_functions: {survival_functions}
-        - primary_travel_times: {primary_travel_times}
-        - secondary_travel_times: {secondary_travel_times}
-        - primary_vehicle_station_utilisation: {primary_vehicle_station_utilisation}
-        - secondary_vehicle_station_utilisation: {secondary_vehicle_station_utilisation}
-        - vehicle_locations: {vehicle_locations}
-        - is_station_closer_to_pickup_location: {is_station_closer_to_pickup_location}
-        - is_vehicle_type_closer_to_pickup_location: {is_vehicle_type_closer_to_pickup_location}
-        - weights: {weights}
-        - demands: {demands}
-
-        It takes `allocation` as a single numpy array. The first half
-        corresponds to the location of the primary vehicles and the second half
-        to the location of the secondary vehicles.
-        """
-        primary_vehicle_allocation = allocation[:number_of_vehicle_locations]
-        secondary_vehicle_allocation = allocation[number_of_vehicle_locations:]
-        return sum(
-            get_survival(
-                pickup_locations=pickup_locations,
-                vehicle_locations=vehicle_locations,
-                primary_vehicle_allocation=primary_vehicle_allocation,
-                secondary_vehicle_allocation=secondary_vehicle_allocation,
-                patient_types=patient_types,
-                weights=weights,
-                demands=demands,
-                psi=psi,
-            )
-            for patient_types, psi in zip(patient_type_partitions, (psi, tilde_psi))
-        )
-
-    return g
-
-
-def get_survival(
-    pickup_locations: Iterable,
-    vehicle_locations: Iterable,
-    patient_types: Iterable,
-    primary_vehicle_allocation: npt.NDArray,
-    secondary_vehicle_allocation: npt.NDArray,
-    weights: dict,
-    demands: dict,
-    psi: Callable,
-) -> float:
-    """
-    TODO Write docstring
-    """
-    return sum(
-        weights[patient_type]
-        * demands[(patient_type, pickup_location)]
-        * psi(
-            primary_vehicle_allocation,
-            secondary_vehicle_allocation,
-            patient_type,
-            pickup_location,
-            ambulance_station,
-        )
-        for patient_type in patient_types
-        for ambulance_station in vehicle_locations
-        for pickup_location in pickup_locations
+    ambulance_locations = range(travel_times.shape[0])
+    pickup_locations = range(travel_times.shape[1])
+    return np.array(
+        [
+            [
+                [
+                    0 if a2 == a1 else float(travel_times[a1][p] <= travel_times[a2][p])
+                    for a2 in ambulance_locations
+                ]
+                for a1 in ambulance_locations
+            ]
+            for p in pickup_locations
+        ]
     )
 
 
-def get_single_vehicle_patient_survival(
-    patient_type: int,
-    pickup_location: int,
-    ambulance_station: int,
-    survival_functions: Iterable[Callable],
-    travel_times: npt.NDArray,
-    station_utilisation: Iterable,
-    vehicle_locations: Iterable,
-    vehicle_allocation: npt.NDArray,
-    is_station_closer_to_pickup_location: dict,
-) -> float:
+def get_R(primary_vehicle_travel_times, secondary_vehicle_travel_times):
     """
-    TODO Write docstring
+    TODO Add docstring
     """
-    return (
-        survival_functions[patient_type](
-            travel_times[ambulance_station, pickup_location]
-        )
-        * (
-            1
-            - station_utilisation[ambulance_station]
-            ** vehicle_allocation[ambulance_station]
-        )
-        * np.prod(
+    ambulance_locations = range(primary_vehicle_travel_times.shape[0])
+    pickup_locations = range(primary_vehicle_travel_times.shape[1])
+    return np.array(
+        [
             [
-                station_utilisation[busy_station]
-                ** (
-                    vehicle_allocation[busy_station]
-                    * is_station_closer_to_pickup_location[
-                        (pickup_location, busy_station, ambulance_station)
-                    ]
-                )
-                for busy_station in vehicle_locations
-            ]
-        )
-    )
-
-
-def get_multiple_vehicle_patient_survival(
-    patient_type: int,
-    pickup_location: int,
-    ambulance_station: int,
-    survival_functions: Iterable[Callable],
-    primary_travel_times: npt.NDArray,
-    secondary_travel_times: npt.NDArray,
-    primary_vehicle_station_utilisation: Iterable,
-    secondary_vehicle_station_utilisation: Iterable,
-    vehicle_locations: Iterable,
-    primary_vehicle_allocation: npt.NDArray,
-    secondary_vehicle_allocation: npt.NDArray,
-    is_station_closer_to_pickup_location: dict,
-    is_vehicle_type_closer_to_pickup_location: dict,
-) -> float:
-    """
-    TODO Write docstring
-
-     s(t) -> the probability of surviving given that the second vehicle went to
-     the patient
-     (1 - pi...) -> that vehicle was available
-     \prod_{a \in \mathcal{A}} -> looking at all other potential vehicles
-         first term ->  All other secondary vehicles before vehicle in question
-         are busy
-         second term -> All other closer primary vehicles are busy
-    """
-    return (
-        survival_functions[patient_type](
-            secondary_travel_times[ambulance_station, pickup_location]
-        )
-        * (
-            1
-            - secondary_vehicle_station_utilisation[ambulance_station]
-            ** secondary_vehicle_allocation[ambulance_station]
-        )
-        * np.prod(
-            [
-                secondary_vehicle_station_utilisation[busy_station]
-                ** (
-                    secondary_vehicle_allocation[busy_station]
-                    * is_station_closer_to_pickup_location[
-                        (pickup_location, busy_station, ambulance_station)
-                    ]
-                )
-                * primary_vehicle_station_utilisation[busy_station]
-                ** (
-                    primary_vehicle_allocation[busy_station]
-                    * is_vehicle_type_closer_to_pickup_location[
-                        (pickup_location, busy_station, ambulance_station)
-                    ]
-                )
-                for busy_station in vehicle_locations
-            ]
-        )
-    ) + (
-        survival_functions[patient_type](
-            primary_travel_times[ambulance_station, pickup_location]
-        )
-        * (
-            1
-            - primary_vehicle_station_utilisation[ambulance_station]
-            ** primary_vehicle_allocation[ambulance_station]
-        )
-        * np.prod(
-            [
-                primary_vehicle_station_utilisation[busy_station]
-                ** (
-                    primary_vehicle_allocation[busy_station]
-                    * is_station_closer_to_pickup_location[
-                        (pickup_location, busy_station, ambulance_station)
-                    ]
-                )
-                * secondary_vehicle_station_utilisation[busy_station]
-                ** (
-                    secondary_vehicle_allocation[busy_station]
-                    * (
-                        1
-                        - is_vehicle_type_closer_to_pickup_location[
-                            (pickup_location, ambulance_station, busy_station)
-                        ]
+                [
+                    float(
+                        primary_vehicle_travel_times[a1][p]
+                        <= secondary_vehicle_travel_times[a2][p]
                     )
-                )
-                for busy_station in vehicle_locations
+                    for a2 in ambulance_locations
+                ]
+                for a1 in ambulance_locations
             ]
-        )
+            for p in pickup_locations
+        ]
     )
+
+
+def get_survival_time_vectors(
+    survival_functions, primary_vehicle_travel_times, secondary_vehicle_travel_times
+):
+    """
+    TODO: Document parameters
+
+    TODO: Document parameters
+
+    Returns two arrays:
+      + `primary_survivals[k][p][a]` indicating the probability of
+         survival for patients of type k, at pickup location p, by
+         a primary vehicle from location a;
+      + `secondary_survivals[k][p][a]` indicating the probability of
+         survival for patients of type k, at pickup location p, by
+         a secondary vehicle from location a.
+    """
+    primary_survivals = np.dstack(
+        [survival_functions[i](primary_vehicle_travel_times) for i in range(3)]
+    ).T
+    secondary_survivals = np.dstack(
+        [survival_functions[i](secondary_vehicle_travel_times) for i in range(3)]
+    ).T
+    return primary_survivals, secondary_survivals
+
+
+def get_is_not_busy_vector(
+    vehicle_station_utilisation,
+    allocation,
+):
+    """
+    TODO: Document parameters
+
+    Returns a vector:
+      + `is_not_busy[a]` indicating the probability of a vehicle
+         at location a not being busy.
+    """
+    is_not_busy = 1 - np.power(vehicle_station_utilisation, allocation)
+    return is_not_busy
+
+
+def get_all_same_closer_busy_vector(vehicle_station_utilisation, allocation, beta):
+    """
+    TODO: Document parameters
+
+    Returns a vector:
+      + `all_same_closer_busy[a][p]` indicating the probability
+      of all vehicles of the same type and closer to p than
+      a being busy.
+    """
+    all_same_closer_busy = np.prod(
+        np.power(
+            vehicle_station_utilisation,
+            np.multiply(beta.transpose(0, 2, 1), allocation),
+        ),
+        axis=2,
+    ).T
+    return all_same_closer_busy
+
+
+def get_all_primary_closer_busy_vector(vehicle_station_utilisation, allocation, R):
+    """
+    TODO: Document parameters
+
+    Returns a vector:
+      + `all_primary_closer_busy_vector[a][p]` indicating
+      the probability of all primary vehicles closer to p
+      than a secondary vehicle at a being busy.
+    """
+    all_primary_closer_busy_vector = np.prod(
+        np.power(
+            vehicle_station_utilisation, np.multiply(R.transpose(0, 2, 1), allocation)
+        ),
+        axis=2,
+    )
+    return all_primary_closer_busy_vector
+
+
+def get_all_secondary_closer_busy_vector(vehicle_station_utilisation, allocation, R):
+    """
+    TODO: Document parameters
+
+    Returns a vector:
+      + `all_secondary_closer_busy_vector[a][p]` indicating
+      the probability of all secondary vehicles closer to p
+      than a primary vehicle at a being busy.
+    """
+    all_secondary_closer_busy_vector = np.prod(
+        np.power(
+            vehicle_station_utilisation,
+            np.multiply(1 - R, allocation),
+        ),
+        axis=2,
+    )
+    return all_secondary_closer_busy_vector
+
+
+def get_psi(primary_survivals, primary_is_not_busy, all_closer_busy_primary):
+    """
+    TODO: Document parameters
+
+    Returns a vector:
+      + `psi[k][p][a]` indicating the probability of survival
+      of a patient at pickup location p of type k by a primary
+      vehicle at location a.
+    """
+    psi = primary_survivals * primary_is_not_busy * all_closer_busy_primary.T
+    return psi
+
+
+def get_psi_tilde(
+    primary_survivals,
+    secondary_survivals,
+    primary_is_not_busy,
+    secondary_is_not_busy,
+    all_closer_busy_primary,
+    all_closer_busy_secondary,
+    all_secondary_closer_than_primary_busy,
+    all_primary_closer_than_secondary_busy,
+):
+    """
+    TODO: Document parameters
+
+    Returns a vector:
+      + `psi_tilde[k][p][a]` indicating the probability of survival
+      of a patient at pickup location p of type k by a secondary
+      vehicle at location a.
+    """
+    pass
+
+    secondary_reached = (
+        secondary_survivals
+        * secondary_is_not_busy
+        * all_closer_busy_secondary.T
+        * all_primary_closer_than_secondary_busy
+    )
+
+    primary_reached = (
+        primary_survivals
+        * primary_is_not_busy
+        * all_closer_busy_primary.T
+        * all_secondary_closer_than_primary_busy
+    )
+
+    psi_tilde = secondary_reached + primary_reached
+    return psi_tilde
+
+
+def get_objective(
+    demand_rates,
+    primary_survivals,
+    secondary_survivals,
+    weights_single_vehicle,
+    weights_multiple_vehicles,
+    beta,
+    R,
+    vehicle_station_utilisation_function,
+    allocation_primary,
+    allocation_secondary,
+    **kwargs,
+):
+    """
+    TODO: Document parameters
+
+
+        - vehicle_station_util\isation_function: a callable that returns
+          an two arrays of floats -- must be defined with `(**kwargs)`.
+
+    Returns the value of the objective function.
+    """
+    (
+        primary_vehicle_station_utilisation,
+        secondary_vehicle_station_utilisation,
+    ) = vehicle_station_utilisation_function(
+        demand_rates=demand_rates,
+        primary_survivals=primary_survivals,
+        secondary_survivals=secondary_survivals,
+        weights_single_vehicle=weights_single_vehicle,
+        weights_multiple_vehicles=weights_multiple_vehicles,
+        beta=beta,
+        R=R,
+        allocation_primary=allocation_primary,
+        allocation_secondary=allocation_secondary,
+        **kwargs,
+    )
+
+    primary_is_not_busy = get_is_not_busy_vector(
+        primary_vehicle_station_utilisation, allocation_primary
+    )
+    secondary_is_not_busy = get_is_not_busy_vector(
+        secondary_vehicle_station_utilisation, allocation_secondary
+    )
+
+    all_closer_busy_primary = get_all_same_closer_busy_vector(
+        primary_vehicle_station_utilisation, allocation_primary, beta
+    )
+
+    all_closer_busy_secondary = get_all_same_closer_busy_vector(
+        secondary_vehicle_station_utilisation, allocation_secondary, beta
+    )
+
+    all_primary_closer_than_secondary_busy = get_all_primary_closer_busy_vector(
+        primary_vehicle_station_utilisation, allocation_primary, R
+    )
+    all_secondary_closer_than_primary_busy = get_all_secondary_closer_busy_vector(
+        secondary_vehicle_station_utilisation, allocation_secondary, R
+    )
+
+    psi = get_psi(primary_survivals, primary_is_not_busy, all_closer_busy_primary)
+    psi_tilde = get_psi_tilde(
+        primary_survivals,
+        secondary_survivals,
+        primary_is_not_busy,
+        secondary_is_not_busy,
+        all_closer_busy_primary,
+        all_closer_busy_secondary,
+        all_secondary_closer_than_primary_busy,
+        all_primary_closer_than_secondary_busy,
+    )
+
+    g = (
+        ((psi.T * weights_single_vehicle) * demand_rates.T).sum(axis=2)
+        + ((psi_tilde.T * weights_multiple_vehicles) * demand_rates.T).sum(axis=2)
+    ).sum()
+    return g
