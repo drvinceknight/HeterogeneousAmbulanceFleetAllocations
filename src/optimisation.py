@@ -193,8 +193,7 @@ def rank_population(
     weights_multiple_vehicles,
     beta,
     R,
-    primary_vehicle_station_utilisation_function,
-    secondary_vehicle_station_utilisation_function,
+    vehicle_station_utilisation_function,
     **kwargs,
 ):
     """
@@ -211,8 +210,7 @@ def rank_population(
                 weights_multiple_vehicles=weights_multiple_vehicles,
                 beta=beta,
                 R=R,
-                primary_vehicle_station_utilisation_function=primary_vehicle_station_utilisation_function,
-                secondary_vehicle_station_utilisation_function=secondary_vehicle_station_utilisation_function,
+                vehicle_station_utilisation_function=vehicle_station_utilisation_function,
                 allocation_primary=allocation[0],
                 allocation_secondary=allocation[1],
                 **kwargs,
@@ -239,8 +237,7 @@ def optimise(
     weights_multiple_vehicles,
     beta,
     R,
-    primary_vehicle_station_utilisation_function,
-    secondary_vehicle_station_utilisation_function,
+    vehicle_station_utilisation_function,
     seed,
     progress_bar=False,
     **kwargs,
@@ -275,8 +272,7 @@ def optimise(
             weights_multiple_vehicles=weights_multiple_vehicles,
             beta=beta,
             R=R,
-            primary_vehicle_station_utilisation_function=primary_vehicle_station_utilisation_function,
-            secondary_vehicle_station_utilisation_function=secondary_vehicle_station_utilisation_function,
+            vehicle_station_utilisation_function=vehicle_station_utilisation_function,
             **kwargs,
         )
         objective_by_iteration.append(objective_values)
@@ -302,8 +298,7 @@ def optimise(
         weights_multiple_vehicles=weights_multiple_vehicles,
         beta=beta,
         R=R,
-        primary_vehicle_station_utilisation_function=primary_vehicle_station_utilisation_function,
-        secondary_vehicle_station_utilisation_function=secondary_vehicle_station_utilisation_function,
+        vehicle_station_utilisation_function=vehicle_station_utilisation_function,
         **kwargs,
     )
 
