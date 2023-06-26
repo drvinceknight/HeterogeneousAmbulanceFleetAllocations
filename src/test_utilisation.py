@@ -1,4 +1,5 @@
 import utilisation
+import objective
 import numpy as np
 
 
@@ -89,3 +90,117 @@ def test_proportional_utilisations_primary():
     )
     assert np.allclose(expected_utils_primary, obtained_utils_primary)
     assert np.allclose(expected_utils_secondary, obtained_utils_secondary)
+
+
+def test_get_lambda_differences_primary():
+    ## Time units in minutes
+    raw_travel_times = np.genfromtxt(
+        "./test_data/travel_times_matrix.csv", delimiter=","
+    )
+    beta = objective.get_beta(travel_times=raw_travel_times)
+    primary_vehicle_travel_times = raw_travel_times / 0.75
+    secondary_vehicle_travel_times = raw_travel_times / 1.215
+    R = objective.get_R(
+        primary_vehicle_travel_times=primary_vehicle_travel_times,
+        secondary_vehicle_travel_times=secondary_vehicle_travel_times,
+    )
+    demand_rates = np.genfromtxt("./test_data/demand.csv", delimiter=",") / 1440
+    service_rate_primary = 1 / (4.5 * 60)
+    service_rate_secondary = 1 / (3.5 * 60)
+    allocation_primary = np.ones(67)
+    allocation_secondary = np.ones(67)
+
+    diffs_0 = utilisation.get_lambda_differences_primary(
+        lhs=np.zeros(67),
+        service_rate_primary=service_rate_primary,
+        allocation_primary=allocation_primary,
+        beta=beta,
+        demand_rates=demand_rates,
+    )
+
+    assert round(diffs_0.sum(), 7) == 0.1823491
+    assert round(diffs_0.min(), 7) == 0.0000986
+    assert round(diffs_0.max(), 7) == 0.0140919
+
+
+def test_get_lambda_differences_secondary():
+    ## Time units in minutes
+    raw_travel_times = np.genfromtxt(
+        "./test_data/travel_times_matrix.csv", delimiter=","
+    )
+    beta = objective.get_beta(travel_times=raw_travel_times)
+    primary_vehicle_travel_times = raw_travel_times / 0.75
+    secondary_vehicle_travel_times = raw_travel_times / 1.215
+    R = objective.get_R(
+        primary_vehicle_travel_times=primary_vehicle_travel_times,
+        secondary_vehicle_travel_times=secondary_vehicle_travel_times,
+    )
+    demand_rates = np.genfromtxt("./test_data/demand.csv", delimiter=",") / 1440
+    service_rate_primary = 1 / (4.5 * 60)
+    service_rate_secondary = 1 / (3.5 * 60)
+    allocation_primary = np.ones(67)
+    allocation_secondary = np.ones(67)
+    primary_utilisations = np.ones(67) * 0.6
+
+    diffs_0 = utilisation.get_lambda_differences_secondary(
+        lhs=np.zeros(67),
+        service_rate_secondary=service_rate_secondary,
+        allocation_secondary=allocation_secondary,
+        allocation_primary=allocation_primary,
+        utilisations_primary=primary_utilisations,
+        beta=beta,
+        R=R,
+        demand_rates=demand_rates,
+    )
+
+    assert round(diffs_0.sum(), 7) == 0.1029984
+    assert round(diffs_0.min(), 7) == 0.0000397
+    assert round(diffs_0.max(), 7) == 0.0072913
+
+
+def test_solve_utilisations():
+    ## Time units in minutes
+    raw_travel_times = np.genfromtxt(
+        "./test_data/travel_times_matrix.csv", delimiter=","
+    )
+    beta = objective.get_beta(travel_times=raw_travel_times)
+    primary_vehicle_travel_times = raw_travel_times / 0.75
+    secondary_vehicle_travel_times = raw_travel_times / 1.215
+    R = objective.get_R(
+        primary_vehicle_travel_times=primary_vehicle_travel_times,
+        secondary_vehicle_travel_times=secondary_vehicle_travel_times,
+    )
+    demand_rates = np.genfromtxt("./test_data/demand.csv", delimiter=",") / 1440
+    service_rate_primary = 1 / (4.5 * 60)
+    service_rate_secondary = 1 / (3.5 * 60)
+    allocation_primary = np.ones(67)
+    allocation_secondary = np.ones(67)
+
+    primary_utilisations, secondary_utilisations = utilisation.solve_utilisations(
+        allocation_primary=allocation_primary,
+        allocation_secondary=allocation_secondary,
+        beta=beta,
+        R=R,
+        demand_rates=demand_rates,
+        service_rate_primary=service_rate_primary,
+        service_rate_secondary=service_rate_secondary,
+    )
+
+    assert len(primary_utilisations) == 67
+    assert len(secondary_utilisations) == 67
+    assert max(primary_utilisations) <= 1.0
+    assert max(secondary_utilisations) <= 1.0
+    assert min(primary_utilisations) >= 0.0
+    assert min(secondary_utilisations) >= 0.0
+
+    # Some slight demand loss (due to unmet demand)
+    assert (
+        primary_utilisations * service_rate_primary * allocation_primary
+    ).sum() * 1440 == 262.1546962546663
+    assert demand_rates.sum() * 1440 == 262.5826343840001
+
+    # More significant demand loss (due to primary vehicles getting there first)
+    assert (
+        secondary_utilisations * service_rate_secondary * allocation_secondary
+    ).sum() * 1440 == 158.21533513661336
+    assert demand_rates[:-1].sum() * 1440 == 175.664826165
