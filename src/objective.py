@@ -199,23 +199,24 @@ def get_objective(
     weights_multiple_vehicles,
     beta,
     R,
-    primary_vehicle_station_utilisation_function,
-    secondary_vehicle_station_utilisation_function,
+    vehicle_station_utilisation_function,
     allocation_primary,
     allocation_secondary,
+    **kwargs,
 ):
     """
     TODO: Document parameters
 
 
-        - primary_vehicle_station_utilisation_function: a callable that returns
-          an array of floats -- must be defined with `(**kwargs)`.
-        - secondary_vehicle_station_utilisation_function: a callable that returns
-          an array of floats -- must be defined with `(**kwargs)`.
+        - vehicle_station_util\isation_function: a callable that returns
+          an two arrays of floats -- must be defined with `(**kwargs)`.
 
     Returns the value of the objective function.
     """
-    primary_vehicle_station_utilisation = primary_vehicle_station_utilisation_function(
+    (
+        primary_vehicle_station_utilisation,
+        secondary_vehicle_station_utilisation,
+    ) = vehicle_station_utilisation_function(
         demand_rates=demand_rates,
         primary_survivals=primary_survivals,
         secondary_survivals=secondary_survivals,
@@ -225,17 +226,7 @@ def get_objective(
         R=R,
         allocation_primary=allocation_primary,
         allocation_secondary=allocation_secondary,
-    )
-    secondary_vehicle_station_utilisation = secondary_vehicle_station_utilisation_function(
-        demand_rates=demand_rates,
-        primary_survivals=primary_survivals,
-        secondary_survivals=secondary_survivals,
-        weights_single_vehicle=weights_single_vehicle,
-        weights_multiple_vehicles=weights_multiple_vehicles,
-        beta=beta,
-        R=R,
-        allocation_primary=allocation_primary,
-        allocation_secondary=allocation_secondary,
+        **kwargs,
     )
 
     primary_is_not_busy = get_is_not_busy_vector(

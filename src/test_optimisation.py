@@ -1,5 +1,6 @@
 import objective
 import optimisation
+import utilisation
 import numpy as np
 import random
 
@@ -260,15 +261,14 @@ def test_rank_population():
     primary_survivals, secondary_survivals = objective.get_survival_time_vectors(
         survival_functions, primary_vehicle_travel_times, secondary_vehicle_travel_times
     )
+
     # Utilisations and allocations for resource level 61
-    def primary_vehicle_station_utilisation_function_61(**kwargs):
-        return np.genfromtxt(
+    given_utilisations_primary_61 = np.genfromtxt(
         "./test_data/primary_utilisations_61.csv", delimiter=","
-    )  # Directly from simulation
-    def secondary_vehicle_station_utilisation_function_61(**kwargs):
-        return np.genfromtxt(
+    )
+    given_utilisations_secondary_61 = np.genfromtxt(
         "./test_data/secondary_utilisations_61.csv", delimiter=","
-    )  # Directly from simulation
+    )
     allocation_61 = np.genfromtxt("./test_data/allocation_61.csv", delimiter=",")
 
     # Create population
@@ -293,8 +293,9 @@ def test_rank_population():
         weights_multiple_vehicles=weights_multiple_vehicles,
         beta=beta,
         R=R,
-        primary_vehicle_station_utilisation_function=primary_vehicle_station_utilisation_function_61,
-        secondary_vehicle_station_utilisation_function=secondary_vehicle_station_utilisation_function_61
+        vehicle_station_utilisation_function=utilisation.given_utilisations,
+        given_utilisations_primary=given_utilisations_primary_61,
+        given_utilisations_secondary=given_utilisations_secondary_61,
     )
 
     assert ranked_population.shape == (10, 2, 67)
@@ -309,10 +310,11 @@ def test_rank_population():
             weights_multiple_vehicles=weights_multiple_vehicles,
             beta=beta,
             R=R,
-            primary_vehicle_station_utilisation_function=primary_vehicle_station_utilisation_function_61,
-            secondary_vehicle_station_utilisation_function=secondary_vehicle_station_utilisation_function_61,
+            vehicle_station_utilisation_function=utilisation.given_utilisations,
             allocation_primary=allocation[0],
             allocation_secondary=allocation[1],
+            given_utilisations_primary=given_utilisations_primary_61,
+            given_utilisations_secondary=given_utilisations_secondary_61,
         )
         assert previous_objective_value >= next_objective_value
         previous_objective_value = next_objective_value
@@ -349,13 +351,6 @@ def test_optimise():
     max_alloc = 4
     num_vehicles = 20
 
-    def primary_vehicle_station_utilisation_function(**kwargs):
-        return np.array([0.7 for _ in range(67)])
-
-
-    def secondary_vehicle_station_utilisation_function(**kwargs):
-        return np.array([0.4 for _ in range(67)])
-
     best_primary, best_secondary, objective_by_iteration = optimisation.optimise(
         number_of_locations=67,
         number_of_primary_vehicles=num_vehicles,
@@ -373,10 +368,11 @@ def test_optimise():
         weights_multiple_vehicles=weights_multiple_vehicles,
         beta=beta,
         R=R,
-        primary_vehicle_station_utilisation_function=primary_vehicle_station_utilisation_function,
-        secondary_vehicle_station_utilisation_function=secondary_vehicle_station_utilisation_function,
+        vehicle_station_utilisation_function=utilisation.constant_utilisation,
         seed=0,
         progress_bar=False,
+        utilisation_rate_primary=0.7,
+        utilisation_rate_secondary=0.4,
     )
     best_over_time = objective_by_iteration.max(axis=1)
 
