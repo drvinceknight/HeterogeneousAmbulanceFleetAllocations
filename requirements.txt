@@ -2,3 +2,5 @@
 pytest
 numpy
 black
+scipy
+dask
