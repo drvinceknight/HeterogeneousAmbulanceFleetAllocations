@@ -256,6 +256,8 @@ def optimise(
     keep_size,
     number_of_iterations,
     mutation_function,
+    initial_number_of_mutatation_repetitions,
+    cooling_rate,
     demand_rates,
     primary_survivals,
     secondary_survivals,
@@ -285,11 +287,20 @@ def optimise(
 
     new_pop_size = population_size - keep_size
 
+    steps_to_reach_1 = (initial_number_of_mutatation_repetitions - 1) / cooling_rate
+    repetitions = np.int64(
+        np.ceil(
+            np.interp(
+                x=np.arange(number_of_iterations),
+                xp=[0, steps_to_reach_1, number_of_iterations],
+                fp=[initial_number_of_mutatation_repetitions, 1, 1],
+            )
+        )
+    )
+
     if progress_bar:
-        iterations = tqdm.tqdm(range(number_of_iterations))
-    else:
-        iterations = range(number_of_iterations)
-    for iteration in iterations:
+        repetitions = tqdm.tqdm(repetitions)
+    for number_of_repetitions in repetitions:
         ranked_population, objective_values = rank_population(
             population=population,
             demand_rates=demand_rates,
@@ -308,7 +319,9 @@ def optimise(
         new_population = []
         for new_solution in range(new_pop_size):
             solution_to_mutate = kept_population[np.random.choice(range(keep_size))]
-            mutated_solution = mutation_function(
+            mutated_solution = repeat_mutation(
+                mutation_function=mutation_function,
+                times_to_repeat=number_of_repetitions,
                 primary_allocation=solution_to_mutate[0],
                 secondary_allocation=solution_to_mutate[1],
                 max_primary=max_primary,

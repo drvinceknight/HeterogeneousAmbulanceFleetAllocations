@@ -403,6 +403,8 @@ def test_optimise():
         keep_size=5,
         number_of_iterations=num_iters,
         mutation_function=optimisation.mutate_retain_vehicle_numbers,
+        initial_number_of_mutatation_repetitions=1,
+        cooling_rate=1,
         demand_rates=demand_rates,
         primary_survivals=primary_survivals,
         secondary_survivals=secondary_survivals,
