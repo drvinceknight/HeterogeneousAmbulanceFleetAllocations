@@ -146,6 +146,27 @@ def mutate_retain_vehicle_numbers(
     )
 
 
+def repeat_mutation(
+    mutation_function,
+    times_to_repeat,
+    primary_allocation,
+    secondary_allocation,
+    max_primary,
+    max_secondary,
+):
+    """
+    Repeats the mutation function a number of times
+    """
+    for repetition in range(times_to_repeat):
+        primary_allocation, secondary_allocation = mutation_function(
+            primary_allocation=primary_allocation,
+            secondary_allocation=secondary_allocation,
+            max_primary=max_primary,
+            max_secondary=max_secondary,
+        )
+    return primary_allocation, secondary_allocation
+
+
 def create_initial_population(
     number_of_locations,
     number_of_primary_vehicles,
@@ -218,7 +239,9 @@ def rank_population(
                 **kwargs,
             )
         )
-    objective_values = -np.array(dask.compute(*objective_values, num_workers=num_workers))
+    objective_values = -np.array(
+        dask.compute(*objective_values, num_workers=num_workers)
+    )
     ordering = np.argsort(objective_values)
     return np.array(population[ordering]), -np.array(objective_values)[ordering]
 

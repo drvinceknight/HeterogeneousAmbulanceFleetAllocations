@@ -206,6 +206,47 @@ def test_mutate_full_with_seed_5():
     assert np.array_equal(resulting_primary_allocation, np.array([0, 1, 5, 2]))
 
 
+def test_repeat_mutation():
+    primary_allocation = np.array([0, 1, 5, 1])
+    secondary_allocation = np.array([3, 9, 0, 0])
+    max_allocation = 5
+
+    # Make allocations manually
+    np.random.seed(5)
+    allocations = [[np.array(primary_allocation), np.array(secondary_allocation)]]
+    for repeat in range(10):
+        new_primary_allocation, new_secondary_allocation = optimisation.mutate_full(
+            primary_allocation=allocations[-1][0],
+            secondary_allocation=allocations[-1][1],
+            max_primary=max_allocation,
+            max_secondary=max_allocation,
+        )
+        allocations.append(
+            [np.array(new_primary_allocation), np.array(new_secondary_allocation)]
+        )
+
+    # Make allocations with repeat function
+    allocations_repeat = [
+        [np.array(primary_allocation), np.array(secondary_allocation)]
+    ]
+    for repeat in range(10):
+        np.random.seed(5)
+        new_primary_allocation, new_secondary_allocation = optimisation.repeat_mutation(
+            mutation_function=optimisation.mutate_full,
+            times_to_repeat=repeat + 1,
+            primary_allocation=primary_allocation,
+            secondary_allocation=secondary_allocation,
+            max_primary=max_allocation,
+            max_secondary=max_allocation,
+        )
+        allocations_repeat.append(
+            [np.array(new_primary_allocation), np.array(new_secondary_allocation)]
+        )
+
+    for repeat in range(10):
+        assert np.allclose(allocations[repeat], allocations_repeat[repeat])
+
+
 def test_create_initial_population():
     number_of_locations = 6
     population_size = 15
