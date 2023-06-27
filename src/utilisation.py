@@ -1,6 +1,9 @@
 import numpy as np
 import objective
 import scipy.optimize
+import warnings
+
+warnings.simplefilter("ignore")
 
 
 def constant_utilisation(
@@ -129,6 +132,9 @@ def solve_utilisations_primary(
     Finds the utilisations by solving the equations relating demans to each ambulance location.
     """
     total_demand = demand_rates.sum()
+    if total_demand / (service_rate_primary * sum(allocation_primary)) > 0.99:
+        return np.array([0.99 for _ in allocation_primary])
+
     starting_lambdas = np.array(
         [total_demand / len(allocation_primary) for _ in allocation_primary]
     )
