@@ -294,6 +294,7 @@ def test_rank_population():
         beta=beta,
         R=R,
         vehicle_station_utilisation_function=utilisation.given_utilisations,
+        num_workers=7,
         given_utilisations_primary=given_utilisations_primary_61,
         given_utilisations_secondary=given_utilisations_secondary_61,
     )
@@ -370,6 +371,7 @@ def test_optimise():
         R=R,
         vehicle_station_utilisation_function=utilisation.constant_utilisation,
         seed=0,
+        num_workers=7,
         progress_bar=False,
         utilisation_rate_primary=0.7,
         utilisation_rate_secondary=0.4,
