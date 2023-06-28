@@ -164,3 +164,14 @@ cython_debug/
 
 # Outputs
 results/
+
+# LaTeX aux files
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.spl
+*.xdv
