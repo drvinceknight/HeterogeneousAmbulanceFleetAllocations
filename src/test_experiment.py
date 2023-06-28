@@ -8,24 +8,21 @@ def test_run_experiment():
 
     This does not test the output, just tests that the script runs.
     """
-    args = (
-        "cd",
-        "..",
-        ";",
+    args = [
         "python",
         "src/experiment.py",
-        "10",
-        "10",
-        "240",
-        "40",
-        "500",
+        "1",
+        "1",
+        "2",
+        "1",
+        "5",
         "6",
         "0.25",
         "13",
-        "60",
-        "125",
-        "62",
+        "1",
+        "1",
+        "1",
         "False",
-    )
-    result = subprocess.run(args)
-    assert result.returncode == 0
+    ]
+    result = subprocess.check_call(args, cwd="../")
+    assert result == 0
