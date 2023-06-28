@@ -566,6 +566,7 @@ def test_caching_of_objective():
     )
 
     assert g == -10
+<<<<<<< HEAD
 
     g = objective.get_objective(
         demand_rates=demand_rates,
