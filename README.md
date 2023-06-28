@@ -2,7 +2,7 @@
 Code for optimising ambulance allocation
 
 
-To run the experiments from home with:
+To run the experiments from the root of this repository with:
     + max_primary=10
     + max_secondary=10
     + population_size=240

@@ -157,7 +157,7 @@ def repeat_mutation(
     """
     Repeats the mutation function a number of times
     """
-    for repetition in range(times_to_repeat):
+    for _ in range(times_to_repeat):
         primary_allocation, secondary_allocation = mutation_function(
             primary_allocation=primary_allocation,
             secondary_allocation=secondary_allocation,
