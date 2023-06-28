@@ -202,6 +202,7 @@ def get_objective(
     vehicle_station_utilisation_function,
     allocation_primary,
     allocation_secondary,
+    cache=None,
     **kwargs,
 ):
     """
@@ -211,8 +212,18 @@ def get_objective(
         - vehicle_station_util\isation_function: a callable that returns
           an two arrays of floats -- must be defined with `(**kwargs)`.
 
+    Parameters
+    ----------
+
+    - cache: a dictionary mapping tuples of str representations of allocations
+      to objective function values.
+
     Returns the value of the objective function.
     """
+    if (cache is not None) and (
+        (keyname := (str(allocation_primary), str(allocation_secondary))) in cache
+    ):
+        return cache[keyname]
     (
         primary_vehicle_station_utilisation,
         secondary_vehicle_station_utilisation,
@@ -267,4 +278,8 @@ def get_objective(
         ((psi.T * weights_single_vehicle) * demand_rates.T).sum(axis=2)
         + ((psi_tilde.T * weights_multiple_vehicles) * demand_rates.T).sum(axis=2)
     ).sum()
+
+    if cache is not None:
+        cache[keyname] = g
+
     return g

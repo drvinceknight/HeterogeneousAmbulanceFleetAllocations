@@ -498,3 +498,70 @@ def test_get_objective():
         given_utilisations_secondary=given_utilisations_secondary,
     )
     assert round(g, 4) == demand_rates.sum()
+
+
+def test_caching_of_objective():
+    """
+    This confirms:
+
+    - The cache is modified in place.
+    - The cache is used when the function is called again. This is done by
+      replacing the value of the cache with a nonsensical value.
+    """
+    cache = {}
+
+    primary_travel_times = np.array(
+        [[0, 5, 10, 15, 20], [5, 0, 5, 10, 15], [10, 5, 0, 5, 10], [15, 10, 5, 0, 5]]
+    )
+    secondary_travel_times = 0.7 * primary_travel_times
+    beta = objective.get_beta(primary_travel_times)
+    R = objective.get_R(primary_travel_times, secondary_travel_times)
+    survival_functions = (
+        lambda t: np.ones(t.shape),
+        lambda t: np.ones(t.shape),
+        lambda t: np.ones(t.shape),
+    )
+    primary_survivals, secondary_survivals = objective.get_survival_time_vectors(
+        survival_functions, primary_travel_times, secondary_travel_times
+    )
+    given_utilisations_primary = np.array([0.2, 0.5, 0.7, 1.0])
+    given_utilisations_secondary = np.array([0.6, 0.6, 0.2, 0.2])
+    demand_rates = np.array(((2, 2, 3, 3, 7), (2, 0, 1, 2, 4), (1, 1, 1, 1, 1))) * 10
+
+    g = objective.get_objective(
+        demand_rates=demand_rates,
+        primary_survivals=primary_survivals,
+        secondary_survivals=secondary_survivals,
+        weights_single_vehicle=np.array([0, 0, 1]),
+        weights_multiple_vehicles=np.array([1, 1, 0]),
+        beta=beta,
+        R=R,
+        vehicle_station_utilisation_function=utilisation.given_utilisations,
+        allocation_primary=np.array([1000, 1000, 1000, 1000]),
+        allocation_secondary=np.array([1000, 1000, 1000, 1000]),
+        given_utilisations_primary=given_utilisations_primary,
+        given_utilisations_secondary=given_utilisations_secondary,
+        cache=cache,
+    )
+    assert cache == {
+        ("[1000 1000 1000 1000]", "[1000 1000 1000 1000]"): demand_rates.sum()
+    }
+
+    cache[("[1000 1000 1000 1000]", "[1000 1000 1000 1000]")] = -10
+    g = objective.get_objective(
+        demand_rates=demand_rates,
+        primary_survivals=primary_survivals,
+        secondary_survivals=secondary_survivals,
+        weights_single_vehicle=np.array([0, 0, 1]),
+        weights_multiple_vehicles=np.array([1, 1, 0]),
+        beta=beta,
+        R=R,
+        vehicle_station_utilisation_function=utilisation.given_utilisations,
+        allocation_primary=np.array([1000, 1000, 1000, 1000]),
+        allocation_secondary=np.array([1000, 1000, 1000, 1000]),
+        given_utilisations_primary=given_utilisations_primary,
+        given_utilisations_secondary=given_utilisations_secondary,
+        cache=cache,
+    )
+
+    assert g == -10
