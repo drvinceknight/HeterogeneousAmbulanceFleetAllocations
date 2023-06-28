@@ -507,6 +507,7 @@ def test_caching_of_objective():
     - The cache is modified in place.
     - The cache is used when the function is called again. This is done by
       replacing the value of the cache with a nonsensical value.
+    - The cache can hold multiple values.
     """
     cache = {}
 
@@ -565,3 +566,48 @@ def test_caching_of_objective():
     )
 
     assert g == -10
+
+    g = objective.get_objective(
+        demand_rates=demand_rates,
+        primary_survivals=primary_survivals,
+        secondary_survivals=secondary_survivals,
+        weights_single_vehicle=np.array([0, 0, 1]),
+        weights_multiple_vehicles=np.array([1, 1, 0]),
+        beta=beta,
+        R=R,
+        vehicle_station_utilisation_function=utilisation.given_utilisations,
+        allocation_primary=np.array([0, 0, 0, 0]),
+        allocation_secondary=np.array([0, 0, 0, 0]),
+        given_utilisations_primary=given_utilisations_primary,
+        given_utilisations_secondary=given_utilisations_secondary,
+        cache=cache,
+    )
+    assert cache == {
+        ("[1000 1000 1000 1000]", "[1000 1000 1000 1000]"): -10,
+        ("[0 0 0 0]", "[0 0 0 0]"): 0,
+
+    }
+
+    g = objective.get_objective(
+        demand_rates=demand_rates,
+        primary_survivals=primary_survivals,
+        secondary_survivals=secondary_survivals,
+        weights_single_vehicle=np.array([0, 0, 1]),
+        weights_multiple_vehicles=np.array([1, 1, 0]),
+        beta=beta,
+        R=R,
+        vehicle_station_utilisation_function=utilisation.given_utilisations,
+        allocation_primary=np.array([1, 0, 0, 1]),
+        allocation_secondary=np.array([0, 2, 1, 1]),
+        given_utilisations_primary=given_utilisations_primary,
+        given_utilisations_secondary=given_utilisations_secondary,
+        cache=cache,
+    )
+    assert round(g, 4) == 295.1552
+    assert round(cache[('[1 0 0 1]', '[0 2 1 1]')], 4) == 295.1552
+
+    assert cache.keys() == {
+        ("[1000 1000 1000 1000]", "[1000 1000 1000 1000]"),
+        ("[0 0 0 0]", "[0 0 0 0]"),
+        ('[1 0 0 1]', '[0 2 1 1]'),
+    }
