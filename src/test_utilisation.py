@@ -204,3 +204,34 @@ def test_solve_utilisations():
         secondary_utilisations * service_rate_secondary * allocation_secondary
     ).sum() * 1440 == 158.21533513661336
     assert demand_rates[:-1].sum() * 1440 == 175.664826165
+
+
+def test_solve_utilisations_when_flooding():
+    ## Time units in minutes
+    raw_travel_times = np.genfromtxt(
+        "./test_data/travel_times_matrix.csv", delimiter=","
+    )
+    beta = objective.get_beta(travel_times=raw_travel_times)
+    primary_vehicle_travel_times = raw_travel_times / 0.75
+    secondary_vehicle_travel_times = raw_travel_times / 1.215
+    R = objective.get_R(
+        primary_vehicle_travel_times=primary_vehicle_travel_times,
+        secondary_vehicle_travel_times=secondary_vehicle_travel_times,
+    )
+    demand_rates = np.genfromtxt("./test_data/demand.csv", delimiter=",") * 100 / 1440 
+    service_rate_primary = 1 / (4.5 * 60)
+    service_rate_secondary = 1 / (3.5 * 60)
+    allocation_primary = np.ones(67)
+    allocation_secondary = np.ones(67)
+
+    primary_utilisations, secondary_utilisations = utilisation.solve_utilisations(
+        allocation_primary=allocation_primary,
+        allocation_secondary=allocation_secondary,
+        beta=beta,
+        R=R,
+        demand_rates=demand_rates,
+        service_rate_primary=service_rate_primary,
+        service_rate_secondary=service_rate_secondary,
+    )
+    assert np.allclose(primary_utilisations, np.array([0.99 for _ in range(67)]))
+    assert np.allclose(secondary_utilisations, np.array([0.99 for _ in range(67)]))

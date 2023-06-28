@@ -1,6 +1,7 @@
 import numpy as np
 import objective
 import tqdm
+import dask
 
 
 def move_vehicle_of_same_type(
@@ -145,6 +146,27 @@ def mutate_retain_vehicle_numbers(
     )
 
 
+def repeat_mutation(
+    mutation_function,
+    times_to_repeat,
+    primary_allocation,
+    secondary_allocation,
+    max_primary,
+    max_secondary,
+):
+    """
+    Repeats the mutation function a number of times
+    """
+    for _ in range(times_to_repeat):
+        primary_allocation, secondary_allocation = mutation_function(
+            primary_allocation=primary_allocation,
+            secondary_allocation=secondary_allocation,
+            max_primary=max_primary,
+            max_secondary=max_secondary,
+        )
+    return primary_allocation, secondary_allocation
+
+
 def create_initial_population(
     number_of_locations,
     number_of_primary_vehicles,
@@ -194,6 +216,7 @@ def rank_population(
     beta,
     R,
     vehicle_station_utilisation_function,
+    num_workers,
     **kwargs,
 ):
     """
@@ -202,7 +225,7 @@ def rank_population(
     objective_values = []
     for allocation in population:
         objective_values.append(
-            -objective.get_objective(
+            dask.delayed(objective.get_objective)(
                 demand_rates=demand_rates,
                 primary_survivals=primary_survivals,
                 secondary_survivals=secondary_survivals,
@@ -216,6 +239,9 @@ def rank_population(
                 **kwargs,
             )
         )
+    objective_values = -np.array(
+        dask.compute(*objective_values, num_workers=num_workers)
+    )
     ordering = np.argsort(objective_values)
     return np.array(population[ordering]), -np.array(objective_values)[ordering]
 
@@ -230,6 +256,8 @@ def optimise(
     keep_size,
     number_of_iterations,
     mutation_function,
+    initial_number_of_mutatation_repetitions,
+    cooling_rate,
     demand_rates,
     primary_survivals,
     secondary_survivals,
@@ -239,6 +267,7 @@ def optimise(
     R,
     vehicle_station_utilisation_function,
     seed,
+    num_workers,
     progress_bar=False,
     **kwargs,
 ):
@@ -258,11 +287,20 @@ def optimise(
 
     new_pop_size = population_size - keep_size
 
+    steps_to_reach_1 = (initial_number_of_mutatation_repetitions - 1) / cooling_rate
+    repetitions = np.int64(
+        np.ceil(
+            np.interp(
+                x=np.arange(number_of_iterations),
+                xp=[0, steps_to_reach_1, number_of_iterations],
+                fp=[initial_number_of_mutatation_repetitions, 1, 1],
+            )
+        )
+    )
+
     if progress_bar:
-        iterations = tqdm.tqdm(range(number_of_iterations))
-    else:
-        iterations = range(number_of_iterations)
-    for iteration in iterations:
+        repetitions = tqdm.tqdm(repetitions)
+    for number_of_repetitions in repetitions:
         ranked_population, objective_values = rank_population(
             population=population,
             demand_rates=demand_rates,
@@ -273,6 +311,7 @@ def optimise(
             beta=beta,
             R=R,
             vehicle_station_utilisation_function=vehicle_station_utilisation_function,
+            num_workers=num_workers,
             **kwargs,
         )
         objective_by_iteration.append(objective_values)
@@ -280,7 +319,9 @@ def optimise(
         new_population = []
         for new_solution in range(new_pop_size):
             solution_to_mutate = kept_population[np.random.choice(range(keep_size))]
-            mutated_solution = mutation_function(
+            mutated_solution = repeat_mutation(
+                mutation_function=mutation_function,
+                times_to_repeat=number_of_repetitions,
                 primary_allocation=solution_to_mutate[0],
                 secondary_allocation=solution_to_mutate[1],
                 max_primary=max_primary,
@@ -299,6 +340,7 @@ def optimise(
         beta=beta,
         R=R,
         vehicle_station_utilisation_function=vehicle_station_utilisation_function,
+        num_workers=num_workers,
         **kwargs,
     )
 

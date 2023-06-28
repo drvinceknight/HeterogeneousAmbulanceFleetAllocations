@@ -206,6 +206,47 @@ def test_mutate_full_with_seed_5():
     assert np.array_equal(resulting_primary_allocation, np.array([0, 1, 5, 2]))
 
 
+def test_repeat_mutation():
+    primary_allocation = np.array([0, 1, 5, 1])
+    secondary_allocation = np.array([3, 9, 0, 0])
+    max_allocation = 5
+
+    # Make allocations manually
+    np.random.seed(5)
+    allocations = [[np.array(primary_allocation), np.array(secondary_allocation)]]
+    for repeat in range(10):
+        new_primary_allocation, new_secondary_allocation = optimisation.mutate_full(
+            primary_allocation=allocations[-1][0],
+            secondary_allocation=allocations[-1][1],
+            max_primary=max_allocation,
+            max_secondary=max_allocation,
+        )
+        allocations.append(
+            [np.array(new_primary_allocation), np.array(new_secondary_allocation)]
+        )
+
+    # Make allocations with repeat function
+    allocations_repeat = [
+        [np.array(primary_allocation), np.array(secondary_allocation)]
+    ]
+    for repeat in range(10):
+        np.random.seed(5)
+        new_primary_allocation, new_secondary_allocation = optimisation.repeat_mutation(
+            mutation_function=optimisation.mutate_full,
+            times_to_repeat=repeat + 1,
+            primary_allocation=primary_allocation,
+            secondary_allocation=secondary_allocation,
+            max_primary=max_allocation,
+            max_secondary=max_allocation,
+        )
+        allocations_repeat.append(
+            [np.array(new_primary_allocation), np.array(new_secondary_allocation)]
+        )
+
+    for repeat in range(10):
+        assert np.allclose(allocations[repeat], allocations_repeat[repeat])
+
+
 def test_create_initial_population():
     number_of_locations = 6
     population_size = 15
@@ -294,6 +335,7 @@ def test_rank_population():
         beta=beta,
         R=R,
         vehicle_station_utilisation_function=utilisation.given_utilisations,
+        num_workers=7,
         given_utilisations_primary=given_utilisations_primary_61,
         given_utilisations_secondary=given_utilisations_secondary_61,
     )
@@ -361,6 +403,8 @@ def test_optimise():
         keep_size=5,
         number_of_iterations=num_iters,
         mutation_function=optimisation.mutate_retain_vehicle_numbers,
+        initial_number_of_mutatation_repetitions=1,
+        cooling_rate=1,
         demand_rates=demand_rates,
         primary_survivals=primary_survivals,
         secondary_survivals=secondary_survivals,
@@ -370,6 +414,7 @@ def test_optimise():
         R=R,
         vehicle_station_utilisation_function=utilisation.constant_utilisation,
         seed=0,
+        num_workers=7,
         progress_bar=False,
         utilisation_rate_primary=0.7,
         utilisation_rate_secondary=0.4,
