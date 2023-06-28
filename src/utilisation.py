@@ -127,13 +127,18 @@ def solve_utilisations_primary(
     beta,
     demand_rates,
     service_rate_primary,
+    overall_utilisation_limit=0.99,
+    **kwargs
 ):
     """
     Finds the utilisations by solving the equations relating demans to each ambulance location.
     """
     total_demand = demand_rates.sum()
-    if total_demand / (service_rate_primary * sum(allocation_primary)) > 0.99:
-        return np.array([0.99 for _ in allocation_primary])
+    if (
+        total_demand / (service_rate_primary * sum(allocation_primary))
+        > overall_utilisation_limit
+    ):
+        return np.array([overall_utilisation_limit for _ in allocation_primary])
 
     starting_lambdas = np.array(
         [total_demand / len(allocation_primary) for _ in allocation_primary]
@@ -160,11 +165,19 @@ def solve_utilisations_secondary(
     R,
     demand_rates,
     service_rate_secondary,
+    overall_utilisation_limit=0.99,
+    **kwargs
 ):
     """
     Finds the utilisations by solving the equations relating demans to each ambulance location.
     """
     total_demand = demand_rates[:-1].sum()
+    if (
+        total_demand / (service_rate_secondary * sum(allocation_secondary))
+        > overall_utilisation_limit
+    ):
+        return np.array([overall_utilisation_limit for _ in allocation_primary])
+
     starting_lambdas = np.array(
         [total_demand / len(allocation_secondary) for _ in allocation_secondary]
     )
@@ -211,6 +224,7 @@ def solve_utilisations(
         beta=beta,
         demand_rates=demand_rates,
         service_rate_primary=service_rate_primary,
+        **kwargs
     )
     secondary_utilisations = solve_utilisations_secondary(
         allocation_secondary=allocation_secondary,
@@ -220,5 +234,6 @@ def solve_utilisations(
         R=R,
         demand_rates=demand_rates,
         service_rate_secondary=service_rate_secondary,
+        **kwargs
     )
     return primary_utilisations, secondary_utilisations
