@@ -218,7 +218,7 @@ def test_solve_utilisations_when_flooding():
         primary_vehicle_travel_times=primary_vehicle_travel_times,
         secondary_vehicle_travel_times=secondary_vehicle_travel_times,
     )
-    demand_rates = np.genfromtxt("./test_data/demand.csv", delimiter=",") * 100 / 1440 
+    demand_rates = np.genfromtxt("./test_data/demand.csv", delimiter=",") * 100 / 1440
     service_rate_primary = 1 / (4.5 * 60)
     service_rate_secondary = 1 / (3.5 * 60)
     allocation_primary = np.ones(67)
