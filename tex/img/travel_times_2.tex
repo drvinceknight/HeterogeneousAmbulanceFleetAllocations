@@ -1,0 +1,62 @@
+\documentclass{standalone}
+% \documentclass{article}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{calc}
+\usetikzlibrary{shapes,snakes}
+
+\begin{document}
+
+\begin{tikzpicture}
+%% Axes
+\draw[draw=none] (-2.5, -2.5) -- (18, 13);
+\draw[-triangle 90] (-0.5, 0) -- (17, 0);
+\draw[-triangle 90] (0, -0.5) -- (0, 12);
+\node at (17.5, 0) {$t$};
+\node[rotate=90] at (-1, 5.5) {\Large{Distance}};
+
+%% Divinding lines for delay periods
+\node at (2, 12) {$S_1=1$};
+\draw[dashed] (4, 0) -- (4, 12);
+\node at (4, -0.25) {$4$};
+\node at (6, 12) {$S_2=\frac{1}{4}$};
+\draw[dashed] (8, 0) -- (8, 12);
+\node at (8, -0.25) {$8$};
+\node at (10, 12) {$S_3=2$};
+\draw[dashed] (12, 0) -- (12, 12);
+\node at (12, -0.25) {$12$};
+\node at (14, 12) {$S_4=1$};
+\draw[dashed] (16, 0) -- (16, 12);
+\node at (16, -0.25) {$16$};
+
+%% Draw destination line
+\draw[dashed] (0, 11) -- (16.5, 11);
+\draw (0, 11) -- (-0.25, 11);
+\node at(-1.5, 11) {Destination 11};
+
+%% Actual travel
+\node at (3, -0.25) {$3$};
+\draw[thick] (3, 0) -- (4, 1);
+\node at (-0.5, 1) {1};
+\draw (0, 1) -- (-0.25, 1);
+\draw[thick] (4, 1) -- (8, 2);
+\node at (-0.5, 2) {2};
+\draw (0, 2) -- (-0.25, 2);
+\draw[thick] (8, 2) -- (12, 10);
+\node at (-0.5, 10) {10};
+\draw (0, 10) -- (-0.25, 10);
+\draw[thick] (12, 10) -- (13, 11);
+\node at (13, -0.25) {13};
+\draw[dotted] (13, 11) -- (13, 0);
+
+
+%% Travel time
+\draw[triangle 90 - triangle 90] (3, -1) -- (13, -1);
+\node at (8, -1.5) {Travel Time $= 10$};
+
+
+\end{tikzpicture}
+
+\end{document}
