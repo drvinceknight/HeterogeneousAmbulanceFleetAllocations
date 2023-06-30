@@ -203,7 +203,7 @@ def create_initial_population(
 
         # add to population
         population.append([primary_allocation, secondary_allocation])
-    return np.array(population)
+    return np.array(population).astype(np.int64)
 
 
 def rank_population(
