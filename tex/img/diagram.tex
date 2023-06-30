@@ -1,0 +1,27 @@
+\documentclass{standalone}
+
+\begin{document}
+\begin{tikzpicture}
+
+% \draw [cyan, xshift=4cm] plot [smooth, tension=2] coordinates { (0,0) (1,1) (2,-2) (3,0)};
+
+
+\node[align=center] at (-0.2, 0) {Ambulance};
+\node[align=center] at (-0.2, -0.5) {Station ($a$)};
+\node[align=center] at (7.8, 8) {Pick-up};
+\node[align=center] at (7.8, 7.5) {Location ($p$)};
+\node[align=center] at (16.2, 10) {Hospital ($y$)};
+
+
+\draw[-triangle 90] plot [smooth, tension=1] coordinates {(0, 0.5) (0.5, 4) (6, 5) (7.75, 7)};
+\draw[dashed, -triangle 90] plot [smooth, tension=1] coordinates {(8.25, 7) (7.5, 3.5) (2.5, 2) (0.5, 0.5)};
+\draw[-triangle 90] plot [smooth, tension=1] coordinates {(9, 7.75) (11, 8) (13, 9.5) (15, 10)};
+\draw[-triangle 90] plot [smooth, tension=1] coordinates {(16, 9.5) (15.1, 8) (12, 5) (13, 1) (5, -1) (1, -0.25)};
+
+\node at (4, 5) {$\tilde{B}_{pa}$};
+\node at (11.3, 8.75) {$\tilde{C}_{py}$};
+\node at (12.25, 1) {$\tilde{D}_{ya}$};
+\node at (5.5, 3) {$\tilde{F}_{pa}$};
+
+\end{tikzpicture}
+\end{document}

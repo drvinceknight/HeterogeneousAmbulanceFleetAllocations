@@ -167,3 +167,14 @@ results/
 
 # Benchmarks
 src/.benchmarks/
+
+# LaTeX aux files
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.spl
+*.xdv
