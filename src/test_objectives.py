@@ -585,7 +585,6 @@ def test_caching_of_objective():
     assert cache == {
         ("[1000 1000 1000 1000]", "[1000 1000 1000 1000]"): -10,
         ("[0 0 0 0]", "[0 0 0 0]"): 0,
-
     }
 
     g = objective.get_objective(
@@ -604,10 +603,10 @@ def test_caching_of_objective():
         cache=cache,
     )
     assert round(g, 4) == 295.1552
-    assert round(cache[('[1 0 0 1]', '[0 2 1 1]')], 4) == 295.1552
+    assert round(cache[("[1 0 0 1]", "[0 2 1 1]")], 4) == 295.1552
 
     assert cache.keys() == {
         ("[1000 1000 1000 1000]", "[1000 1000 1000 1000]"),
         ("[0 0 0 0]", "[0 0 0 0]"),
-        ('[1 0 0 1]', '[0 2 1 1]'),
+        ("[1 0 0 1]", "[0 2 1 1]"),
     }
