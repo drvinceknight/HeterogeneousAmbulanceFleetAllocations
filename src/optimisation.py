@@ -217,31 +217,30 @@ def rank_population(
     R,
     vehicle_station_utilisation_function,
     num_workers,
+    cache=None,
     **kwargs,
 ):
     """
     Ranks the population according to the objective function
     """
-    objective_values = []
-    for allocation in population:
-        objective_values.append(
-            dask.delayed(objective.get_objective)(
-                demand_rates=demand_rates,
-                primary_survivals=primary_survivals,
-                secondary_survivals=secondary_survivals,
-                weights_single_vehicle=weights_single_vehicle,
-                weights_multiple_vehicles=weights_multiple_vehicles,
-                beta=beta,
-                R=R,
-                vehicle_station_utilisation_function=vehicle_station_utilisation_function,
-                allocation_primary=allocation[0],
-                allocation_secondary=allocation[1],
-                **kwargs,
-            )
+    tasks = [
+        dask.delayed(objective.get_objective)(
+            demand_rates=demand_rates,
+            primary_survivals=primary_survivals,
+            secondary_survivals=secondary_survivals,
+            weights_single_vehicle=weights_single_vehicle,
+            weights_multiple_vehicles=weights_multiple_vehicles,
+            beta=beta,
+            R=R,
+            vehicle_station_utilisation_function=vehicle_station_utilisation_function,
+            allocation_primary=allocation[0],
+            allocation_secondary=allocation[1],
+            cache=cache,
+            **kwargs,
         )
-    objective_values = -np.array(
-        dask.compute(*objective_values, num_workers=num_workers)
-    )
+        for allocation in population
+    ]
+    objective_values = -np.array(dask.compute(*tasks, num_workers=num_workers))
     ordering = np.argsort(objective_values)
     return np.array(population[ordering]), -np.array(objective_values)[ordering]
 
@@ -274,6 +273,7 @@ def optimise(
     """
     Optimise
     """
+    cache = {}
     np.random.seed(seed)
     objective_by_iteration = []
     population = create_initial_population(
@@ -312,18 +312,22 @@ def optimise(
             R=R,
             vehicle_station_utilisation_function=vehicle_station_utilisation_function,
             num_workers=num_workers,
+            cache=cache,
             **kwargs,
         )
         objective_by_iteration.append(objective_values)
         kept_population = ranked_population[:keep_size]
         new_population = []
         for new_solution in range(new_pop_size):
-            solution_to_mutate = kept_population[np.random.choice(range(keep_size))]
+            (
+                primary_allocation_to_mutate,
+                secondary_allocation_to_mutate,
+            ) = kept_population[np.random.choice(range(keep_size))]
             mutated_solution = repeat_mutation(
                 mutation_function=mutation_function,
                 times_to_repeat=number_of_repetitions,
-                primary_allocation=solution_to_mutate[0],
-                secondary_allocation=solution_to_mutate[1],
+                primary_allocation=primary_allocation_to_mutate,
+                secondary_allocation=secondary_allocation_to_mutate,
                 max_primary=max_primary,
                 max_secondary=max_secondary,
             )
@@ -341,6 +345,7 @@ def optimise(
         R=R,
         vehicle_station_utilisation_function=vehicle_station_utilisation_function,
         num_workers=num_workers,
+        cache=cache,
         **kwargs,
     )
 

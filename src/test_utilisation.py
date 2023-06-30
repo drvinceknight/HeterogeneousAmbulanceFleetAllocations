@@ -200,9 +200,11 @@ def test_solve_utilisations():
     assert demand_rates.sum() * 1440 == 262.5826343840001
 
     # More significant demand loss (due to primary vehicles getting there first)
-    assert (
-        secondary_utilisations * service_rate_secondary * allocation_secondary
-    ).sum() * 1440 == 158.21533513661336
+    assert np.isclose(
+        (secondary_utilisations * service_rate_secondary * allocation_secondary).sum()
+        * 1440,
+        158.21533513661336,
+    )
     assert demand_rates[:-1].sum() * 1440 == 175.664826165
 
 
