@@ -362,7 +362,7 @@ def test_rank_population():
         previous_objective_value = next_objective_value
 
 
-def test_optimise():
+def test_optimise(benchmark):
     # Read in data
     raw_travel_times = np.genfromtxt(
         "./test_data/travel_times_matrix.csv", delimiter=","
@@ -393,7 +393,8 @@ def test_optimise():
     max_alloc = 4
     num_vehicles = 20
 
-    best_primary, best_secondary, objective_by_iteration = optimisation.optimise(
+    best_primary, best_secondary, objective_by_iteration = benchmark(
+        optimisation.optimise,
         number_of_locations=67,
         number_of_primary_vehicles=num_vehicles,
         number_of_secondary_vehicles=num_vehicles,
