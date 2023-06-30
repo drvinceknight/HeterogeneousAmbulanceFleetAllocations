@@ -30,7 +30,7 @@ jobs:
     - name: run tests
       run: |
         cd src/
-        python -m pytest .
+        python -m pytest . --benchmark-disable
 
     - name: check code formatting
       run: |
