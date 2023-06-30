@@ -24,4 +24,4 @@ jobs:
     - name: Build pdfs
       run: |
         cd tex
-        latexmk --xelatex main.tex
+        latexmk --pdflatex main.tex
