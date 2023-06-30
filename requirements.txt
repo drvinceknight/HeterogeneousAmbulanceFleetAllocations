@@ -1,6 +1,7 @@
 # TODO Pin these to specific versions
 black
 dask
+mypy
 numpy
 pytest
 pytest-benchmark

@@ -32,6 +32,12 @@ jobs:
         cd src/
         python -m pytest . --benchmark-disable
 
+    - name: run static type check
+      run: |
+        cd src/
+        python -m mypy .
+
     - name: check code formatting
       run: |
         python -m black --check .
+

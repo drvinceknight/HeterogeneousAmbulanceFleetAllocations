@@ -332,7 +332,9 @@ def test_rank_population():
     given_utilisations_secondary_61 = np.genfromtxt(
         "./test_data/secondary_utilisations_61.csv", delimiter=","
     )
-    allocation_61 = np.genfromtxt("./test_data/allocation_61.csv", delimiter=",").astype(np.int64)
+    allocation_61 = np.genfromtxt(
+        "./test_data/allocation_61.csv", delimiter=","
+    ).astype(np.int64)
 
     # Create population
     random.seed(0)

@@ -36,7 +36,9 @@ given_utilisations_primary_61 = np.genfromtxt(
 given_utilisations_secondary_61 = np.genfromtxt(
     "./test_data/secondary_utilisations_61.csv", delimiter=","
 )
-allocation_61 = np.genfromtxt("./test_data/allocation_61.csv", delimiter=",").astype(np.int64)
+allocation_61 = np.genfromtxt("./test_data/allocation_61.csv", delimiter=",").astype(
+    np.int64
+)
 
 
 # Utilisations and allocations for resource level 68
@@ -46,7 +48,9 @@ given_utilisations_primary_68 = np.genfromtxt(
 given_utilisations_secondary_68 = np.genfromtxt(
     "./test_data/secondary_utilisations_68.csv", delimiter=","
 )
-allocation_68 = np.genfromtxt("./test_data/allocation_68.csv", delimiter=",").astype(np.int64)
+allocation_68 = np.genfromtxt("./test_data/allocation_68.csv", delimiter=",").astype(
+    np.int64
+)
 
 
 # Utilisations and allocations for resource level 75
@@ -56,7 +60,9 @@ given_utilisations_primary_75 = np.genfromtxt(
 given_utilisations_secondary_75 = np.genfromtxt(
     "./test_data/secondary_utilisations_75.csv", delimiter=","
 )
-allocation_75 = np.genfromtxt("./test_data/allocation_75.csv", delimiter=",").astype(np.int64)
+allocation_75 = np.genfromtxt("./test_data/allocation_75.csv", delimiter=",").astype(
+    np.int64
+)
 
 
 # Utilisations and allocations for resource level 82
@@ -67,7 +73,9 @@ given_utilisations_primary_82 = np.genfromtxt(
 given_utilisations_secondary_82 = np.genfromtxt(
     "./test_data/secondary_utilisations_82.csv", delimiter=","
 )
-allocation_82 = np.genfromtxt("./test_data/allocation_82.csv", delimiter=",").astype(np.int64)
+allocation_82 = np.genfromtxt("./test_data/allocation_82.csv", delimiter=",").astype(
+    np.int64
+)
 
 
 # Utilisations and allocations for resource level 89
@@ -77,7 +85,9 @@ given_utilisations_primary_89 = np.genfromtxt(
 given_utilisations_secondary_89 = np.genfromtxt(
     "./test_data/secondary_utilisations_89.csv", delimiter=","
 )
-allocation_89 = np.genfromtxt("./test_data/allocation_89.csv", delimiter=",").astype(np.int64)
+allocation_89 = np.genfromtxt("./test_data/allocation_89.csv", delimiter=",").astype(
+    np.int64
+)
 
 
 # Utilisations and allocations for resource level 96
@@ -87,7 +97,9 @@ given_utilisations_primary_96 = np.genfromtxt(
 given_utilisations_secondary_96 = np.genfromtxt(
     "./test_data/secondary_utilisations_96.csv", delimiter=","
 )
-allocation_96 = np.genfromtxt("./test_data/allocation_96.csv", delimiter=",").astype(np.int64)
+allocation_96 = np.genfromtxt("./test_data/allocation_96.csv", delimiter=",").astype(
+    np.int64
+)
 
 
 def test_paramaters():
