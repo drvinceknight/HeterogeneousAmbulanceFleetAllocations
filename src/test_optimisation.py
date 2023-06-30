@@ -24,6 +24,8 @@ def test_move_vehicle_of_same_type():
     assert sum(secondary_allocation) == sum(resulting_secondary_allocation)
     assert np.array_equal(secondary_allocation, resulting_secondary_allocation)
     assert np.array_equal(resulting_primary_allocation, np.array([0, 1, 4, 2]))
+    assert resulting_primary_allocation.dtype.type is np.int64
+    assert resulting_secondary_allocation.dtype.type is np.int64
 
 
 def test_switch_primary_to_secondary():
@@ -45,6 +47,8 @@ def test_switch_primary_to_secondary():
     assert sum(secondary_allocation) + 3 == sum(resulting_secondary_allocation)
     assert np.array_equal(resulting_secondary_allocation, np.array([5, 9, 1, 0]))
     assert np.array_equal(resulting_primary_allocation, np.array([0, 1, 4, 1]))
+    assert resulting_primary_allocation.dtype.type is np.int64
+    assert resulting_secondary_allocation.dtype.type is np.int64
 
 
 def test_switch_secondary_to_primary():
@@ -66,6 +70,8 @@ def test_switch_secondary_to_primary():
     assert sum(secondary_allocation) - 3 == sum(resulting_secondary_allocation)
     assert np.array_equal(resulting_secondary_allocation, np.array([2, 7, 0, 0]))
     assert np.array_equal(resulting_primary_allocation, np.array([1, 1, 5, 1]))
+    assert resulting_primary_allocation.dtype.type is np.int64
+    assert resulting_secondary_allocation.dtype.type is np.int64
 
 
 def test_mutate_retain_vehicle_numbers_with_seed_0():
@@ -89,6 +95,8 @@ def test_mutate_retain_vehicle_numbers_with_seed_0():
     ) + (sum(resulting_secondary_allocation) / 3)
     assert np.array_equal(resulting_secondary_allocation, np.array([3, 9, 0, 0]))
     assert np.array_equal(resulting_primary_allocation, np.array([0, 1, 4, 2]))
+    assert resulting_primary_allocation.dtype.type is np.int64
+    assert resulting_secondary_allocation.dtype.type is np.int64
 
 
 def test_mutate_retain_vehicle_numbers_with_seed_1():
@@ -112,6 +120,8 @@ def test_mutate_retain_vehicle_numbers_with_seed_1():
     ) + (sum(resulting_secondary_allocation) / 3)
     assert np.array_equal(resulting_secondary_allocation, np.array([3, 8, 0, 1]))
     assert np.array_equal(resulting_primary_allocation, np.array([0, 1, 5, 1]))
+    assert resulting_primary_allocation.dtype.type is np.int64
+    assert resulting_secondary_allocation.dtype.type is np.int64
 
 
 def test_mutate_full_with_seed_0():
@@ -135,6 +145,8 @@ def test_mutate_full_with_seed_0():
     ) + (sum(resulting_secondary_allocation) / 3)
     assert np.array_equal(resulting_secondary_allocation, np.array([3, 9, 0, 0]))
     assert np.array_equal(resulting_primary_allocation, np.array([0, 1, 4, 2]))
+    assert resulting_primary_allocation.dtype.type is np.int64
+    assert resulting_secondary_allocation.dtype.type is np.int64
 
 
 def test_mutate_full_with_seed_1():
@@ -158,6 +170,8 @@ def test_mutate_full_with_seed_1():
     ) + (sum(resulting_secondary_allocation) / 3)
     assert np.array_equal(resulting_secondary_allocation, np.array([3, 8, 0, 1]))
     assert np.array_equal(resulting_primary_allocation, np.array([0, 1, 5, 1]))
+    assert resulting_primary_allocation.dtype.type is np.int64
+    assert resulting_secondary_allocation.dtype.type is np.int64
 
 
 def test_mutate_full_with_seed_3():
@@ -181,6 +195,8 @@ def test_mutate_full_with_seed_3():
     ) + (sum(resulting_secondary_allocation) / 3)
     assert np.array_equal(resulting_secondary_allocation, np.array([5, 9, 1, 0]))
     assert np.array_equal(resulting_primary_allocation, np.array([0, 0, 5, 1]))
+    assert resulting_primary_allocation.dtype.type is np.int64
+    assert resulting_secondary_allocation.dtype.type is np.int64
 
 
 def test_mutate_full_with_seed_5():
@@ -204,6 +220,8 @@ def test_mutate_full_with_seed_5():
     ) + (sum(resulting_secondary_allocation) / 3)
     assert np.array_equal(resulting_secondary_allocation, np.array([2, 7, 0, 0]))
     assert np.array_equal(resulting_primary_allocation, np.array([0, 1, 5, 2]))
+    assert resulting_primary_allocation.dtype.type is np.int64
+    assert resulting_secondary_allocation.dtype.type is np.int64
 
 
 def test_repeat_mutation():
