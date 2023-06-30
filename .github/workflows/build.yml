@@ -6,7 +6,10 @@ jobs:
   build:
 
     runs-on: ${{ matrix.os }}
-      os: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        os: [ubuntu-latest]
 
     steps:
     - name: Install latex libs
