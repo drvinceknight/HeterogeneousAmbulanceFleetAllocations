@@ -12,6 +12,7 @@ jobs:
         os: [ubuntu-latest]
 
     steps:
+    - uses: actions/checkout@v2
     - name: Install latex libs
       run: |
         sudo apt-get update
