@@ -266,14 +266,18 @@ def test_create_initial_population():
     )
 
     assert population.shape == (population_size, 2, number_of_locations)
-    for entry in range(population_size):
-        assert population[entry][0].sum() == number_of_primary_vehicles
-        assert population[entry][1].sum() == number_of_secondary_vehicles
-        assert population[entry][0].max() <= max_primary
-        assert population[entry][1].max() <= max_secondary
+    for primary_allocation, secondary_allocation in population:
+        assert primary_allocation.sum() == number_of_primary_vehicles
+        assert secondary_allocation.sum() == number_of_secondary_vehicles
+        assert primary_allocation.max() <= max_primary
+        assert secondary_allocation.max() <= max_secondary
+        assert primary_allocation.dtype.type is np.int64
+        assert secondary_allocation.dtype.type is np.int64
 
-    assert np.allclose(population[0][0], np.array([2, 1, 2, 1, 1, 1]))
-    assert np.allclose(population[0][1], np.array([1, 0, 2, 2, 3, 4]))
+    first_primary_allocation, first_secondary_allocation = population[0]
+
+    assert np.array_equal(first_primary_allocation, np.array([2, 1, 2, 1, 1, 1]))
+    assert np.array_equal(first_secondary_allocation, np.array([1, 0, 2, 2, 3, 4]))
 
 
 def test_rank_population():
