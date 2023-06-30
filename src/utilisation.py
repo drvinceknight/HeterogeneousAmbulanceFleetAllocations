@@ -1,6 +1,6 @@
 import numpy as np
 import objective
-import scipy.optimize
+import scipy.optimize  # type: ignore
 import warnings
 
 warnings.simplefilter("ignore")

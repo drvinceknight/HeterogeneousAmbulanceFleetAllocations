@@ -1,7 +1,9 @@
 # TODO Pin these to specific versions
-pytest
-numpy
 black
-scipy
 dask
+mypy
+numpy
+pytest
+pytest-benchmark
+scipy
 tqdm

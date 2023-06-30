@@ -24,6 +24,8 @@ def test_move_vehicle_of_same_type():
     assert sum(secondary_allocation) == sum(resulting_secondary_allocation)
     assert np.array_equal(secondary_allocation, resulting_secondary_allocation)
     assert np.array_equal(resulting_primary_allocation, np.array([0, 1, 4, 2]))
+    assert resulting_primary_allocation.dtype.type is np.int64
+    assert resulting_secondary_allocation.dtype.type is np.int64
 
 
 def test_switch_primary_to_secondary():
@@ -45,6 +47,8 @@ def test_switch_primary_to_secondary():
     assert sum(secondary_allocation) + 3 == sum(resulting_secondary_allocation)
     assert np.array_equal(resulting_secondary_allocation, np.array([5, 9, 1, 0]))
     assert np.array_equal(resulting_primary_allocation, np.array([0, 1, 4, 1]))
+    assert resulting_primary_allocation.dtype.type is np.int64
+    assert resulting_secondary_allocation.dtype.type is np.int64
 
 
 def test_switch_secondary_to_primary():
@@ -66,6 +70,8 @@ def test_switch_secondary_to_primary():
     assert sum(secondary_allocation) - 3 == sum(resulting_secondary_allocation)
     assert np.array_equal(resulting_secondary_allocation, np.array([2, 7, 0, 0]))
     assert np.array_equal(resulting_primary_allocation, np.array([1, 1, 5, 1]))
+    assert resulting_primary_allocation.dtype.type is np.int64
+    assert resulting_secondary_allocation.dtype.type is np.int64
 
 
 def test_mutate_retain_vehicle_numbers_with_seed_0():
@@ -89,6 +95,8 @@ def test_mutate_retain_vehicle_numbers_with_seed_0():
     ) + (sum(resulting_secondary_allocation) / 3)
     assert np.array_equal(resulting_secondary_allocation, np.array([3, 9, 0, 0]))
     assert np.array_equal(resulting_primary_allocation, np.array([0, 1, 4, 2]))
+    assert resulting_primary_allocation.dtype.type is np.int64
+    assert resulting_secondary_allocation.dtype.type is np.int64
 
 
 def test_mutate_retain_vehicle_numbers_with_seed_1():
@@ -112,6 +120,8 @@ def test_mutate_retain_vehicle_numbers_with_seed_1():
     ) + (sum(resulting_secondary_allocation) / 3)
     assert np.array_equal(resulting_secondary_allocation, np.array([3, 8, 0, 1]))
     assert np.array_equal(resulting_primary_allocation, np.array([0, 1, 5, 1]))
+    assert resulting_primary_allocation.dtype.type is np.int64
+    assert resulting_secondary_allocation.dtype.type is np.int64
 
 
 def test_mutate_full_with_seed_0():
@@ -135,6 +145,8 @@ def test_mutate_full_with_seed_0():
     ) + (sum(resulting_secondary_allocation) / 3)
     assert np.array_equal(resulting_secondary_allocation, np.array([3, 9, 0, 0]))
     assert np.array_equal(resulting_primary_allocation, np.array([0, 1, 4, 2]))
+    assert resulting_primary_allocation.dtype.type is np.int64
+    assert resulting_secondary_allocation.dtype.type is np.int64
 
 
 def test_mutate_full_with_seed_1():
@@ -158,6 +170,8 @@ def test_mutate_full_with_seed_1():
     ) + (sum(resulting_secondary_allocation) / 3)
     assert np.array_equal(resulting_secondary_allocation, np.array([3, 8, 0, 1]))
     assert np.array_equal(resulting_primary_allocation, np.array([0, 1, 5, 1]))
+    assert resulting_primary_allocation.dtype.type is np.int64
+    assert resulting_secondary_allocation.dtype.type is np.int64
 
 
 def test_mutate_full_with_seed_3():
@@ -181,6 +195,8 @@ def test_mutate_full_with_seed_3():
     ) + (sum(resulting_secondary_allocation) / 3)
     assert np.array_equal(resulting_secondary_allocation, np.array([5, 9, 1, 0]))
     assert np.array_equal(resulting_primary_allocation, np.array([0, 0, 5, 1]))
+    assert resulting_primary_allocation.dtype.type is np.int64
+    assert resulting_secondary_allocation.dtype.type is np.int64
 
 
 def test_mutate_full_with_seed_5():
@@ -204,6 +220,8 @@ def test_mutate_full_with_seed_5():
     ) + (sum(resulting_secondary_allocation) / 3)
     assert np.array_equal(resulting_secondary_allocation, np.array([2, 7, 0, 0]))
     assert np.array_equal(resulting_primary_allocation, np.array([0, 1, 5, 2]))
+    assert resulting_primary_allocation.dtype.type is np.int64
+    assert resulting_secondary_allocation.dtype.type is np.int64
 
 
 def test_repeat_mutation():
@@ -266,14 +284,18 @@ def test_create_initial_population():
     )
 
     assert population.shape == (population_size, 2, number_of_locations)
-    for entry in range(population_size):
-        assert population[entry][0].sum() == number_of_primary_vehicles
-        assert population[entry][1].sum() == number_of_secondary_vehicles
-        assert population[entry][0].max() <= max_primary
-        assert population[entry][1].max() <= max_secondary
+    for primary_allocation, secondary_allocation in population:
+        assert primary_allocation.sum() == number_of_primary_vehicles
+        assert secondary_allocation.sum() == number_of_secondary_vehicles
+        assert primary_allocation.max() <= max_primary
+        assert secondary_allocation.max() <= max_secondary
+        assert primary_allocation.dtype.type is np.int64
+        assert secondary_allocation.dtype.type is np.int64
 
-    assert np.allclose(population[0][0], np.array([2, 1, 2, 1, 1, 1]))
-    assert np.allclose(population[0][1], np.array([1, 0, 2, 2, 3, 4]))
+    first_primary_allocation, first_secondary_allocation = population[0]
+
+    assert np.array_equal(first_primary_allocation, np.array([2, 1, 2, 1, 1, 1]))
+    assert np.array_equal(first_secondary_allocation, np.array([1, 0, 2, 2, 3, 4]))
 
 
 def test_rank_population():
@@ -310,7 +332,9 @@ def test_rank_population():
     given_utilisations_secondary_61 = np.genfromtxt(
         "./test_data/secondary_utilisations_61.csv", delimiter=","
     )
-    allocation_61 = np.genfromtxt("./test_data/allocation_61.csv", delimiter=",")
+    allocation_61 = np.genfromtxt(
+        "./test_data/allocation_61.csv", delimiter=","
+    ).astype(np.int64)
 
     # Create population
     random.seed(0)
@@ -362,7 +386,7 @@ def test_rank_population():
         previous_objective_value = next_objective_value
 
 
-def test_optimise():
+def test_optimise(benchmark):
     # Read in data
     raw_travel_times = np.genfromtxt(
         "./test_data/travel_times_matrix.csv", delimiter=","
@@ -393,7 +417,8 @@ def test_optimise():
     max_alloc = 4
     num_vehicles = 20
 
-    best_primary, best_secondary, objective_by_iteration = optimisation.optimise(
+    best_primary, best_secondary, objective_by_iteration = benchmark(
+        optimisation.optimise,
         number_of_locations=67,
         number_of_primary_vehicles=num_vehicles,
         number_of_secondary_vehicles=num_vehicles,

@@ -1,12 +1,16 @@
+from typing import Tuple
 import numpy as np
+import numpy.typing as npt
 import objective
-import tqdm
-import dask
+import tqdm  # type: ignore
+import dask  # type: ignore
 
 
 def move_vehicle_of_same_type(
-    allocation_for_moving, allocation_not_for_moving, max_allocation
-):
+    allocation_for_moving: npt.NDArray[np.int64],
+    allocation_not_for_moving: npt.NDArray[np.int64],
+    max_allocation: int,
+) -> Tuple[npt.NDArray[np.int64], npt.NDArray[np.int64]]:
     """
     Randomly moves on primary from one primary location to another.
     """
@@ -25,11 +29,11 @@ def move_vehicle_of_same_type(
 
 
 def switch_primary_to_secondary(
-    primary_allocation,
-    secondary_allocation,
-    max_allocation,
-    primary_to_secondary_ratio=3,
-):
+    primary_allocation: npt.NDArray[np.int64],
+    secondary_allocation: npt.NDArray[np.int64],
+    max_allocation: int,
+    primary_to_secondary_ratio: int = 3,
+) -> Tuple[npt.NDArray[np.int64], npt.NDArray[np.int64]]:
     """
     Randomly remove a primary vehicle and create `primary_to_secondary_ratio` secondary vehicles.
     """
@@ -168,13 +172,13 @@ def repeat_mutation(
 
 
 def create_initial_population(
-    number_of_locations,
-    number_of_primary_vehicles,
-    number_of_secondary_vehicles,
-    max_primary,
-    max_secondary,
-    population_size,
-):
+    number_of_locations: int,
+    number_of_primary_vehicles: int,
+    number_of_secondary_vehicles: int,
+    max_primary: int,
+    max_secondary: int,
+    population_size: int,
+) -> npt.NDArray[np.int64]:
     """
     Creates a (population_size, 2, number_of_locations) array of population_size allocations.
     Each allocation is a (2, number_of_locations) array consisting of a primary allocation and a secondary allocation.
@@ -203,7 +207,7 @@ def create_initial_population(
 
         # add to population
         population.append([primary_allocation, secondary_allocation])
-    return np.array(population)
+    return np.array(population).astype(np.int64)
 
 
 def rank_population(

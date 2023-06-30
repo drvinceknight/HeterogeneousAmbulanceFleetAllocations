@@ -220,6 +220,7 @@ def get_objective(
 
     Returns the value of the objective function.
     """
+
     if (cache is not None) and (
         (keyname := (str(allocation_primary), str(allocation_secondary))) in cache
     ):

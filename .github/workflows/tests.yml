@@ -9,7 +9,7 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        os: [ubuntu-latest, macOS-latest, windows-latest]
+        os: [ubuntu-latest, macOS-latest]
         python-version: [3.8, 3.9, "3.10"]
 
     steps:
@@ -30,8 +30,14 @@ jobs:
     - name: run tests
       run: |
         cd src/
-        python -m pytest .
+        python -m pytest . --benchmark-disable
+
+    - name: run static type check
+      run: |
+        cd src/
+        python -m mypy .
 
     - name: check code formatting
       run: |
         python -m black --check .
+

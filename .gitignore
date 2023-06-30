@@ -164,3 +164,6 @@ cython_debug/
 
 # Outputs
 results/
+
+# Benchmarks
+src/.benchmarks/

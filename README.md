@@ -18,4 +18,6 @@ To run the experiments from the root of this repository with:
 
 Run:
 
+```bash
 $ python src/experiment.py 10 10 240 40 500 6 0.25 13 60 125 62 False
+```
