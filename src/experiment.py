@@ -3,6 +3,7 @@ import objective
 import utilisation
 import optimisation
 import argparse
+import pathlib
 
 if __name__ == "__main__":
     """
@@ -96,6 +97,8 @@ if __name__ == "__main__":
     demand_rates = (
         np.genfromtxt(f"./data/demand_{args.demand_scenario}.csv", delimiter=",") / 1440
     )
+    results_dir = pathlib.Path("./results")
+    results_dir.mkdir(exist_ok=True)
 
     # Carry out the optimisation for each resource level, and each combination of
     # primary and secondary vehicle numbers (never allowing more secondary vehicles
