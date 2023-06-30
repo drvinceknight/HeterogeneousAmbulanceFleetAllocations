@@ -1,0 +1,23 @@
+name: LaTeX
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ${{ matrix.os }}
+      os: ubuntu-latest
+
+    steps:
+    - name: Install latex libs
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y texlive-latex-extra
+        sudo apt-get install -y texlive-xetex
+        sudo apt-get install -y texlive-lang-greek
+        sudo apt-get install texlive-science
+        sudo apt-get install -y latexmk
+    - name: Build pdfs
+      run: |
+        cd tex
+        latexmk --xelatex main.tex
