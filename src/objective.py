@@ -220,6 +220,9 @@ def get_objective(
 
     Returns the value of the objective function.
     """
+    allocation_primary = np.int64(allocation_primary)
+    allocation_secondary = np.int64(allocation_secondary)
+
     if (cache is not None) and (
         (keyname := (str(allocation_primary), str(allocation_secondary))) in cache
     ):
