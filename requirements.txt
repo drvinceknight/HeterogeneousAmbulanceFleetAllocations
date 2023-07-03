@@ -8,3 +8,4 @@ pytest-benchmark
 scipy
 tqdm
 pandas
+pandas-stubs
