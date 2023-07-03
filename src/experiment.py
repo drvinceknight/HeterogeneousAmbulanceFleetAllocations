@@ -172,7 +172,7 @@ if __name__ == "__main__":
     best_secondary_with_hyperparams = np.append(hyperparams_row, best_secondary)
 
     allocation_titles = hyperparams_row_names + [
-        f"a_{str(i).zfill(2)}" for i in range(67)
+        f"a{str(i).zfill(2)}" for i in range(67)
     ]
     population_titles = (
         hyperparams_row_names
