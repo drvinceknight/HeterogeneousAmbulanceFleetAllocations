@@ -11,6 +11,8 @@ def test_run_experiment():
     args = [
         "python",
         "src/experiment.py",
+        "10",
+        "3",
         "1",
         "1",
         "2",
@@ -19,8 +21,6 @@ def test_run_experiment():
         "6",
         "0.25",
         "13",
-        "1",
-        "1",
         "1",
         "False",
     ]
