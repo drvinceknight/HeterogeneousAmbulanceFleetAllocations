@@ -109,6 +109,7 @@ if __name__ == "__main__":
 
     hyperparams_row = np.array(
         [
+            int(args.scenario_id),
             int(args.demand_scenario),
             args.total_primary,
             args.total_secondary,
@@ -121,6 +122,19 @@ if __name__ == "__main__":
             args.max_secondary,
         ]
     )
+    hyperparams_row_names = [
+        "scenario_id",
+        "demand_scenario",
+        "total_primary",
+        "total_secondary",
+        "population_size",
+        "keep_size",
+        "number_of_iterations",
+        "initial_number_of_mutatation_repetitions",
+        "cooling_rate",
+        "max_primary",
+        "max_secondary",
+    ]
 
     # Carry out the optimisation
     (
@@ -157,6 +171,15 @@ if __name__ == "__main__":
     best_primary_with_hyperparams = np.append(hyperparams_row, best_primary)
     best_secondary_with_hyperparams = np.append(hyperparams_row, best_secondary)
 
+    allocation_titles = hyperparams_row_names + [
+        f"a_{str(i).zfill(2)}" for i in range(67)
+    ]
+    population_titles = (
+        hyperparams_row_names
+        + ["iteration"]
+        + [str(i) for i in range(args.population_size)]
+    )
+
     hyperparams_repeat = (
         np.repeat(hyperparams_row, args.number_of_iterations)
         .reshape(len(hyperparams_row), args.number_of_iterations)
@@ -171,17 +194,23 @@ if __name__ == "__main__":
 
     np.savetxt(
         f"./results/allocation_primary_{args.scenario_id}.csv",
-        best_primary_with_hyperparams,
+        [best_primary_with_hyperparams],
         delimiter=",",
+        header=",".join(allocation_titles),
+        comments="",
     )
     np.savetxt(
         f"./results/allocation_secondary_{args.scenario_id}.csv",
-        best_secondary_with_hyperparams,
+        [best_secondary_with_hyperparams],
         delimiter=",",
+        header=",".join(allocation_titles),
+        comments="",
     )
 
     np.savetxt(
         f"./results/population_objectives_{args.scenario_id}.csv",
         objective_by_iteration_with_hyperparameters,
         delimiter=",",
+        header=",".join(population_titles),
+        comments="",
     )

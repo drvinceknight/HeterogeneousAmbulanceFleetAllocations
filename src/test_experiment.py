@@ -21,7 +21,7 @@ def test_run_experiment():
         "6",
         "0.25",
         "13",
-        "AAAA",
+        "33333",
         "1",
     ]
     result = subprocess.check_call(args, cwd="../")
