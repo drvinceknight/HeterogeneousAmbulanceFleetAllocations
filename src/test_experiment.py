@@ -21,8 +21,8 @@ def test_run_experiment():
         "6",
         "0.25",
         "13",
+        "AAAA",
         "1",
-        "False",
     ]
     result = subprocess.check_call(args, cwd="../")
     assert result == 0

@@ -68,8 +68,15 @@ if __name__ == "__main__":
         type=str,
         help="The demand scenario to use (13, 19, 34, or 45).",
     )
+    parser.add_argument(
+        "scenario_id",
+        type=str,
+        help="Identifier used to save the results file.",
+    )
     parser.add_argument("num_workers", type=int, help="The number of cores to use.")
-    parser.add_argument("progress_bar", type=bool, help="Use a progress bar or not.")
+    parser.add_argument(
+        "--progress_bar", help="Use a progress bar or not.", action="store_true"
+    )
     args = parser.parse_args()
 
     ## Read in all data (time units in minutes)
@@ -99,6 +106,21 @@ if __name__ == "__main__":
     )
     results_dir = pathlib.Path("./results")
     results_dir.mkdir(exist_ok=True)
+
+    hyperparams_row = np.array(
+        [
+            int(args.demand_scenario),
+            args.total_primary,
+            args.total_secondary,
+            args.population_size,
+            args.keep_size,
+            args.number_of_iterations,
+            args.initial_number_of_mutatation_repetitions,
+            args.cooling_rate,
+            args.max_primary,
+            args.max_secondary,
+        ]
+    )
 
     # Carry out the optimisation
     (
@@ -131,18 +153,35 @@ if __name__ == "__main__":
         service_rate_primary=service_rate_primary,
         service_rate_secondary=service_rate_secondary,
     )
+
+    best_primary_with_hyperparams = np.append(hyperparams_row, best_primary)
+    best_secondary_with_hyperparams = np.append(hyperparams_row, best_secondary)
+
+    hyperparams_repeat = (
+        np.repeat(hyperparams_row, args.number_of_iterations)
+        .reshape(len(hyperparams_row), args.number_of_iterations)
+        .T
+    )
+    hyperparams_repeat_with_index = np.vstack(
+        [hyperparams_repeat.T, np.arange(args.number_of_iterations)]
+    ).T
+    objective_by_iteration_with_hyperparameters = np.concatenate(
+        [hyperparams_repeat_with_index, objective_by_iteration], axis=1
+    )
+
     np.savetxt(
-        f"./results/allocation_primary_demand={args.demand_scenario}_primary={args.total_primary}_secondary={args.total_secondary}.csv",
-        best_primary,
+        f"./results/allocation_primary_{args.scenario_id}.csv",
+        best_primary_with_hyperparams,
         delimiter=",",
     )
     np.savetxt(
-        f"./results/allocation_secondary_demand={args.demand_scenario}_primary={args.total_primary}_secondary={args.total_secondary}.csv",
-        best_secondary,
+        f"./results/allocation_secondary_{args.scenario_id}.csv",
+        best_secondary_with_hyperparams,
         delimiter=",",
     )
+
     np.savetxt(
-        f"./results/population_objectives_demand={args.demand_scenario}_primary={args.total_primary}_secondary={args.total_secondary}.csv",
-        objective_by_iteration,
+        f"./results/population_objectives_{args.scenario_id}.csv",
+        objective_by_iteration_with_hyperparameters,
         delimiter=",",
     )

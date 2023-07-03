@@ -13,11 +13,17 @@ To run the experiments from the root of this repository with:
  - initial_number_of_mutatation_repetitions=6
  - cooling_rate=0.25
  - demand_scenario=13
+ - scenario_id=AAAA
  - num_workers=62
- - progress_bar=False
 
 Run:
 
 ```bash
-$ python src/experiment.py 70 26 10 10 240 40 500 6 0.25 13 62 False
+$ python src/experiment.py 70 26 10 10 240 40 500 6 0.25 13 AAAA 62
+```
+
+To also implement a progress bar across the iterations, run:
+
+```bash
+$ python src/experiment.py 70 26 10 10 240 40 500 6 0.25 13 AAAA 62 --progress_bar
 ```
