@@ -83,7 +83,7 @@ def get_lambda_differences_primary(
 
     Parameters
     ----------
-    lhs : float
+    lhs : np.array
         The left hand side of the primary demand rate relationship equation.
     service_rate_primary : float
         The service rates of primary vehicles
@@ -96,7 +96,7 @@ def get_lambda_differences_primary(
 
     Returns
     -------
-    float
+    np.array
     """
     utilisations = np.divide(
         lhs / service_rate_primary,
@@ -127,7 +127,7 @@ def get_lambda_differences_secondary(
 
     Parameters
     ----------
-    lhs : float
+    lhs : np.array
         The left hand side of the secondary demand rate relationship equation.
     service_rate_secondary : float
         The service rates of secondary vehicles
@@ -146,7 +146,7 @@ def get_lambda_differences_secondary(
 
     Returns
     -------
-    float
+    np.array
     """
     utilisations = np.divide(
         lhs / service_rate_secondary,
