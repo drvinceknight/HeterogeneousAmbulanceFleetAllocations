@@ -14,9 +14,28 @@ def constant_utilisation(
     **kwargs
 ):
     """
-    Returns two vectors:
-     + a vector of constant utilisations for primary vehicles
-     + a vector of constant utilisations for secondary vehicles
+    Returns two arrays of constant utilisations
+
+    Parameters
+    ----------
+    allocation_primary : np.array
+        The number of primary vehicles at every station
+    allocation_secondary : np.array
+        The number of secondary vehicles at every station
+    utilisation_rate_primary : float
+        The utilisation rate intended for all primary vehicles
+    utilisation_rate_secondary : float
+        The utilisation rate intended for all secondary vehicles
+    **kwargs : keyword arguments
+        remaining keyword arguments that could be passed to this function from
+        the optimisation algorithm
+
+    Returns
+    -------
+    tuple
+        Returns two vectors:
+         + a vector of constant utilisations for primary vehicles
+         + a vector of constant utilisations for secondary vehicles
     """
     primary_utilisations = np.array(
         [utilisation_rate_primary for _ in allocation_primary]
@@ -31,16 +50,27 @@ def given_utilisations(
     given_utilisations_primary, given_utilisations_secondary, **kwargs
 ):
     """
-    Returns two vectors:
-     + a vector of given primary utilisations
-     + a vector of given secondary utilisations
+    Returns two arrays of utilisations
+
+    Parameters
+    ----------
+    given_utilisations_primary : iterable
+        The utilisation rates intended for primary vehicles
+    given_utilisations_secondary : iterable
+        The utilisation rates intended for secondary vehicles
+    **kwargs : keyword arguments
+        remaining keyword arguments that could be passed to this function from
+        the optimisation algorithm
+
+    Returns
+    -------
+    tuple
+        Returns two vectors:
+         + a vector of given primary utilisations
+         + a vector of given secondary utilisations
     """
     primary_utilisations = np.array(given_utilisations_primary)
     secondary_utilisations = np.array(given_utilisations_secondary)
-    return primary_utilisations, secondary_utilisations
-
-
-    """
     return primary_utilisations, secondary_utilisations
 
 
@@ -48,7 +78,25 @@ def get_lambda_differences_primary(
     lhs, service_rate_primary, allocation_primary, beta, demand_rates
 ):
     """
-    Returns the difference between the LHS and RHS of the primary demand rates relationship equation
+    Returns the difference between the LHS and RHS of the primary demand rates
+    relationship equation.
+
+    Parameters
+    ----------
+    lhs : float
+        The left hand side of the primary demand rate relationship equation.
+    service_rate_primary : float
+        The service rates of primary vehicles
+    allocation_primary : np.array
+        The number of primary vehicles at every station
+    beta : np.array
+        A three dimensional array denoting which vehicles are preferred.
+    demand_rates : np.array
+        The demand rates of given patient classes from given pickup locations.
+
+    Returns
+    -------
+    float
     """
     utilisations = np.divide(
         lhs / service_rate_primary,
@@ -76,6 +124,29 @@ def get_lambda_differences_secondary(
 ):
     """
     Returns the difference between the LHS and RHS of the secondary demand rates relationship equation
+
+    Parameters
+    ----------
+    lhs : float
+        The left hand side of the secondary demand rate relationship equation.
+    service_rate_secondary : float
+        The service rates of secondary vehicles
+    allocation_primary : np.array
+        The number of primary vehicles at every station
+    allocation_secondary : np.array
+        The number of secondary vehicles at every station
+    utilisations_primary : np.array
+        The utilisation rates of primary vehicles
+    beta : np.array
+        A three dimensional array denoting which vehicles are preferred.
+    R : np.array
+        A three dimensional array denoting which primary vehicles are preferred.
+    demand_rates : np.array
+        The demand rates of given patient classes from given pickup locations.
+
+    Returns
+    -------
+    float
     """
     utilisations = np.divide(
         lhs / service_rate_secondary,
@@ -105,7 +176,28 @@ def solve_utilisations_primary(
     **kwargs
 ):
     """
-    Finds the utilisations by solving the equations relating demans to each ambulance location.
+    Finds the utilisations by solving the equations relating demands to each ambulance location.
+
+    Parameters
+    ----------
+    allocation_primary : np.array
+        The number of primary vehicles at every station
+    beta : np.array
+        A three dimensional array denoting which vehicles are preferred.
+    demand_rates : np.array
+        The demand rates of given patient classes from given pickup locations.
+    service_rate_primary : np.array
+        The service rates of primary vehicles
+    overall_utilisation_limit : float
+        A default limit for the utilisation which is used if the theoretic
+        utilisation is above 1.
+    **kwargs : keyword arguments
+        remaining keyword arguments that could be passed to this function from
+        the optimisation algorithm
+
+    Returns
+    -------
+    np.array
     """
     total_demand = demand_rates.sum()
     if (
@@ -143,7 +235,34 @@ def solve_utilisations_secondary(
     **kwargs
 ):
     """
-    Finds the utilisations by solving the equations relating demans to each ambulance location.
+    Finds the utilisations by solving the equations relating demands to each ambulance location.
+
+    Parameters
+    ----------
+    allocation_primary : np.array
+        The number of primary vehicles at every station
+    allocation_secondary : np.array
+        The number of secondary vehicles at every station
+    utilisations_primary : np.array
+        The utilisation rates of primary vehicles
+    beta : np.array
+        A three dimensional array denoting which vehicles are preferred.
+    R : np.array
+        A three dimensional array denoting which primary vehicles are preferred.
+    demand_rates : np.array
+        The demand rates of given patient classes from given pickup locations.
+    service_rate_secondary : np.array
+        The service rates of primary vehicles
+    overall_utilisation_limit : float
+        A default limit for the utilisation which is used if the theoretic
+        utilisation is above 1.
+    **kwargs : keyword arguments
+        remaining keyword arguments that could be passed to this function from
+        the optimisation algorithm
+
+    Returns
+    -------
+    np.array
     """
     total_demand = demand_rates[:-1].sum()
     if (
@@ -185,19 +304,50 @@ def solve_utilisations(
     demand_rates,
     service_rate_primary,
     service_rate_secondary,
+    overall_utilisation_limit=0.99,
     **kwargs
 ):
     """
-    Utilises scipy.optimize.fsolve to find utilisations by finding roots of the demand-utilisation relationships.
-    Returns two vectors:
-     + a vector the solved utilisations for primary vehicles
-     + a vector the solved utilisations for secondary vehicles
+    Utilises MINPACK’s hybrd and hybrj algorithms (implemented using
+    scipy.optimize.fsolve) to find utilisations by finding roots of the
+    demand-utilisation relationships.
+
+    Parameters
+    ----------
+    allocation_primary : np.array
+        The number of primary vehicles at every station
+    allocation_secondary : np.array
+        The number of secondary vehicles at every station
+    beta : np.array
+        A three dimensional array denoting which vehicles are preferred.
+    R : np.array
+        A three dimensional array denoting which primary vehicles are preferred.
+    demand_rates : np.array
+        The demand rates of given patient classes from given pickup locations.
+    service_rate_primary : np.array
+        The service rates of primary vehicles
+    service_rate_secondary : np.array
+        The service rates of primary vehicles
+    overall_utilisation_limit : float
+        A default limit for the utilisation which is used if the theoretic
+        utilisation is above 1.
+    **kwargs : keyword arguments
+        remaining keyword arguments that could be passed to this function from
+        the optimisation algorithm
+
+    Returns
+    -------
+    tuple
+        Returns two vectors:
+         + a vector the solved utilisations for primary vehicles
+         + a vector the solved utilisations for secondary vehicles
     """
     primary_utilisations = solve_utilisations_primary(
         allocation_primary=allocation_primary,
         beta=beta,
         demand_rates=demand_rates,
         service_rate_primary=service_rate_primary,
+        overall_utilisation_limit=overall_utilisation_limit,
         **kwargs
     )
     secondary_utilisations = solve_utilisations_secondary(
@@ -208,6 +358,7 @@ def solve_utilisations(
         R=R,
         demand_rates=demand_rates,
         service_rate_secondary=service_rate_secondary,
+        overall_utilisation_limit=overall_utilisation_limit,
         **kwargs
     )
     return primary_utilisations, secondary_utilisations
