@@ -287,11 +287,11 @@ def test_objective_function_with_allocation_dependent_utilisation():
         weights_multiple_vehicles=weights_multiple_vehicles,
         beta=beta,
         R=R,
-        vehicle_station_utilisation_function=utilisation.proportional_utilisations,
+        vehicle_station_utilisation_function=utilisation.constant_utilisation,
         allocation_primary=allocation_96[:67],
         allocation_secondary=allocation_96[67:],
-        service_rate_primary=4,
-        service_rate_secondary=10,
+        utilisation_rate_primary=.4,
+        utilisation_rate_secondary=.7,
     )
     objective_in_days = g * 1440
-    assert np.isclose(objective_in_days, 261.6860685750398)
+    assert np.isclose(objective_in_days, 255.08170500308506)
