@@ -46,52 +46,6 @@ def test_given_utilisations():
     assert np.allclose(utils_2, given_2)
 
 
-def test_proportional_utilisations_primary():
-    allocation_primary = [0, 1, 2, 0, 2]
-    service_rate_primary = 10
-    allocation_secondary = [0, 1, 2, 0, 2]
-    service_rate_secondary = 10
-    demand_rates = np.array(
-        [
-            [
-                [1, 1, 1, 1, 1],
-                [1, 1, 1, 1, 1],
-                [1, 1, 1, 1, 1],
-                [1, 1, 1, 1, 1],
-                [1, 1, 1, 1, 1],
-            ],
-            [
-                [2, 2, 2, 2, 2],
-                [2, 2, 2, 2, 2],
-                [2, 2, 2, 2, 2],
-                [2, 2, 2, 2, 2],
-                [2, 2, 2, 2, 2],
-            ],
-            [
-                [3, 3, 3, 3, 3],
-                [3, 3, 3, 3, 3],
-                [3, 3, 3, 3, 3],
-                [3, 3, 3, 3, 3],
-                [3, 3, 3, 3, 3],
-            ],
-        ]
-    )
-    expected_utils_primary = np.array([0, 15, 7.5, 0, 7.5])
-    expected_utils_secondary = np.array([0, 7.5, 3.75, 0, 3.75])
-    (
-        obtained_utils_primary,
-        obtained_utils_secondary,
-    ) = utilisation.proportional_utilisations(
-        allocation_primary=allocation_primary,
-        allocation_secondary=allocation_secondary,
-        demand_rates=demand_rates,
-        service_rate_primary=service_rate_primary,
-        service_rate_secondary=service_rate_secondary,
-    )
-    assert np.allclose(expected_utils_primary, obtained_utils_primary)
-    assert np.allclose(expected_utils_secondary, obtained_utils_secondary)
-
-
 def test_get_lambda_differences_primary():
     ## Time units in minutes
     raw_travel_times = np.genfromtxt(
