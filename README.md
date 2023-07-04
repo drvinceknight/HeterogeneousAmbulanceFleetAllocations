@@ -3,6 +3,7 @@ Code for optimising ambulance allocation
 
 
 To run the experiments from the root of this repository with:
+
  - total_primary=70
  - total_secondary=26
  - max_primary=10
