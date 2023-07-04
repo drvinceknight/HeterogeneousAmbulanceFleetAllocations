@@ -1,5 +1,5 @@
 import subprocess
-import pandas as pd
+import pandas as pd  # type: ignore
 
 
 def test_run_experiment():

@@ -1,5 +1,27 @@
 # upgraded-octo-barnacle
-Code for optimising ambulance allocation
+
+Source code for the optimisation problem presented in the paper *Evaluating
+Heterogeneous Ambulance Fleet Allocations in Jakarta*.
+
+## Creating a virtual environment
+
+```bash
+$ python -m venv env/
+```
+
+Activate environment:
+
+```bash
+$ source env/bin/activate
+```
+
+Install all dependencies (including development)
+
+```bash
+$ python -m pip install -r requirements.txt
+```
+
+## Running an experiment
 
 
 To run the experiments from the root of this repository with:
@@ -11,7 +33,7 @@ To run the experiments from the root of this repository with:
  - population_size=240
  - keep_size=40
  - number_of_iterations=500
- - initial_number_of_mutatation_repetitions=6
+ - initial_number_of_mutation_repetitions=6
  - cooling_rate=0.25
  - demand_scenario=13
  - scenario_id=33333
