@@ -353,7 +353,7 @@ def get_objective(
         An integer array of number of primary vehicles at every station
     allocation_secondary : np.array
         An integer array of number of secondary vehicles at every station
-    vehicle_station_utilisation_function : callable 
+    vehicle_station_utilisation_function : callable
           returns two arrays of floats -- must be defined with `(**kwargs)`.
     cache : dict
         a dictionary mapping tuples of str representations of allocations
