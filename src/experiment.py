@@ -19,6 +19,16 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument(
+        "total_primary",
+        type=int,
+        help="Total number of primary vehicles in the allocation.",
+    )
+    parser.add_argument(
+        "total_secondary",
+        type=int,
+        help="Total number of secondary vehicles in the allocation.",
+    )
+    parser.add_argument(
         "max_primary",
         type=int,
         help="Maximum number of primary vehicles to place in the same location.",
@@ -59,17 +69,14 @@ if __name__ == "__main__":
         help="The demand scenario to use (13, 19, 34, or 45).",
     )
     parser.add_argument(
-        "min_resource_level",
-        type=int,
-        help="The minimum resource level to run the optimisation on.",
-    )
-    parser.add_argument(
-        "max_resource_level",
-        type=int,
-        help="The maximum resource level to run the optimisation on.",
+        "scenario_id",
+        type=str,
+        help="Identifier used to save the results file.",
     )
     parser.add_argument("num_workers", type=int, help="The number of cores to use.")
-    parser.add_argument("progress_bar", type=bool, help="Use a progress bar or not.")
+    parser.add_argument(
+        "--progress_bar", help="Use a progress bar or not.", action="store_true"
+    )
     args = parser.parse_args()
 
     ## Read in all data (time units in minutes)
@@ -100,59 +107,110 @@ if __name__ == "__main__":
     results_dir = pathlib.Path("./results")
     results_dir.mkdir(exist_ok=True)
 
-    # Carry out the optimisation for each resource level, and each combination of
-    # primary and secondary vehicle numbers (never allowing more secondary vehicles
-    # than primary vehicles)
-    for resource_level in range(args.min_resource_level, args.max_resource_level + 1):
-        minimum_primary_vehicle_number = int(np.ceil(resource_level * 0.75))
-        for number_of_primary_vehicles in range(
-            minimum_primary_vehicle_number, resource_level + 1
-        ):
-            number_of_secondary_vehicles = 3 * (
-                resource_level - number_of_primary_vehicles
-            )
-            (
-                best_primary,
-                best_secondary,
-                objective_by_iteration,
-            ) = optimisation.optimise(
-                number_of_locations=67,
-                number_of_primary_vehicles=int(number_of_primary_vehicles),
-                number_of_secondary_vehicles=int(number_of_secondary_vehicles),
-                max_primary=args.max_primary,
-                max_secondary=args.max_secondary,
-                population_size=args.population_size,
-                keep_size=args.keep_size,
-                number_of_iterations=args.number_of_iterations,
-                mutation_function=optimisation.mutate_retain_vehicle_numbers,
-                initial_number_of_mutatation_repetitions=args.initial_number_of_mutatation_repetitions,
-                cooling_rate=args.cooling_rate,
-                demand_rates=demand_rates,
-                primary_survivals=primary_survivals,
-                secondary_survivals=secondary_survivals,
-                weights_single_vehicle=weights_single_vehicle,
-                weights_multiple_vehicles=weights_multiple_vehicles,
-                beta=beta,
-                R=R,
-                vehicle_station_utilisation_function=utilisation.solve_utilisations,
-                seed=0,
-                num_workers=args.num_workers,
-                progress_bar=args.progress_bar,
-                service_rate_primary=service_rate_primary,
-                service_rate_secondary=service_rate_secondary,
-            )
-            np.savetxt(
-                f"./results/allocation_primary_demand={args.demand_scenario}_RL={resource_level}_primary={number_of_primary_vehicles}_secondary={number_of_secondary_vehicles}.csv",
-                best_primary,
-                delimiter=",",
-            )
-            np.savetxt(
-                f"./results/allocation_secondary_demand={args.demand_scenario}_RL={resource_level}_primary={number_of_primary_vehicles}_secondary={number_of_secondary_vehicles}.csv",
-                best_secondary,
-                delimiter=",",
-            )
-            np.savetxt(
-                f"./results/population_objectives_demand={args.demand_scenario}_RL={resource_level}_primary={number_of_primary_vehicles}_secondary={number_of_secondary_vehicles}.csv",
-                objective_by_iteration,
-                delimiter=",",
-            )
+    hyperparams_row = np.array(
+        [
+            int(args.scenario_id),
+            int(args.demand_scenario),
+            args.total_primary,
+            args.total_secondary,
+            args.population_size,
+            args.keep_size,
+            args.number_of_iterations,
+            args.initial_number_of_mutatation_repetitions,
+            args.cooling_rate,
+            args.max_primary,
+            args.max_secondary,
+        ]
+    )
+    hyperparams_row_names = [
+        "scenario_id",
+        "demand_scenario",
+        "total_primary",
+        "total_secondary",
+        "population_size",
+        "keep_size",
+        "number_of_iterations",
+        "initial_number_of_mutatation_repetitions",
+        "cooling_rate",
+        "max_primary",
+        "max_secondary",
+    ]
+
+    # Carry out the optimisation
+    (
+        best_primary,
+        best_secondary,
+        objective_by_iteration,
+    ) = optimisation.optimise(
+        number_of_locations=67,
+        number_of_primary_vehicles=args.total_primary,
+        number_of_secondary_vehicles=args.total_secondary,
+        max_primary=args.max_primary,
+        max_secondary=args.max_secondary,
+        population_size=args.population_size,
+        keep_size=args.keep_size,
+        number_of_iterations=args.number_of_iterations,
+        mutation_function=optimisation.mutate_retain_vehicle_numbers,
+        initial_number_of_mutatation_repetitions=args.initial_number_of_mutatation_repetitions,
+        cooling_rate=args.cooling_rate,
+        demand_rates=demand_rates,
+        primary_survivals=primary_survivals,
+        secondary_survivals=secondary_survivals,
+        weights_single_vehicle=weights_single_vehicle,
+        weights_multiple_vehicles=weights_multiple_vehicles,
+        beta=beta,
+        R=R,
+        vehicle_station_utilisation_function=utilisation.solve_utilisations,
+        seed=0,
+        num_workers=args.num_workers,
+        progress_bar=args.progress_bar,
+        service_rate_primary=service_rate_primary,
+        service_rate_secondary=service_rate_secondary,
+    )
+
+    best_primary_with_hyperparams = np.append(hyperparams_row, best_primary)
+    best_secondary_with_hyperparams = np.append(hyperparams_row, best_secondary)
+
+    allocation_titles = hyperparams_row_names + [
+        f"a{str(i).zfill(2)}" for i in range(67)
+    ]
+    population_titles = (
+        hyperparams_row_names
+        + ["iteration"]
+        + [str(i) for i in range(args.population_size)]
+    )
+
+    hyperparams_repeat = (
+        np.repeat(hyperparams_row, args.number_of_iterations)
+        .reshape(len(hyperparams_row), args.number_of_iterations)
+        .T
+    )
+    hyperparams_repeat_with_index = np.vstack(
+        [hyperparams_repeat.T, np.arange(args.number_of_iterations)]
+    ).T
+    objective_by_iteration_with_hyperparameters = np.concatenate(
+        [hyperparams_repeat_with_index, objective_by_iteration], axis=1
+    )
+
+    np.savetxt(
+        f"./results/allocation_primary_{args.scenario_id}.csv",
+        [best_primary_with_hyperparams],
+        delimiter=",",
+        header=",".join(allocation_titles),
+        comments="",
+    )
+    np.savetxt(
+        f"./results/allocation_secondary_{args.scenario_id}.csv",
+        [best_secondary_with_hyperparams],
+        delimiter=",",
+        header=",".join(allocation_titles),
+        comments="",
+    )
+
+    np.savetxt(
+        f"./results/population_objectives_{args.scenario_id}.csv",
+        objective_by_iteration_with_hyperparameters,
+        delimiter=",",
+        header=",".join(population_titles),
+        comments="",
+    )
