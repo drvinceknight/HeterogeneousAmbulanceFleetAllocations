@@ -1158,12 +1158,10 @@ current allocation re-allocates the 81 EAs and 13 RRVs. The hyper-parameters
 used for this optimisation algorithm throughout this study are given in
 Table~\ref{tbl:hyperparameters}, which include approximations for the average
 service times of primary and secondary vehicles derived from the initial
-simulation model.
-Figure~\ref{fig:optimal_current_allocation} shows the new allocation (in
-comparison to Figure~\ref{fig:current_allocation}.
-Table~\ref{tbl:current_optimal_compare} compares the simulation derived KPIs
-between the current and the optimised allocations; it can be seen that a
-number of them increase.
+simulation model. \ref{apx:hyperparameters} shows some initial explorations on
+the hyperparameter choices, giving confidence that the chosen parameters, with
+a large enough number of iterations $N$, are suffiecient to find allocations
+that perform well.
 
 \begin{table}
 \begin{tabular}{lll}
@@ -1182,6 +1180,12 @@ $H$ & 500 & Number of generations.\\
 \caption{Hyper-parameters used in the optimisation for all experiments.}
 \label{tbl:hyperparameters}
 \end{table}
+
+Figure~\ref{fig:optimal_current_allocation} shows the new allocation (in
+comparison to Figure~\ref{fig:current_allocation}.
+Table~\ref{tbl:current_optimal_compare} compares the simulation derived KPIs
+between the current and the optimised allocations; it can be seen that a
+number of them increase.
 
 \begin{figure}
 \begin{center}
@@ -1548,6 +1552,21 @@ in the following way:
     \caption{Comparison between the sampled time on site and the lognormal
              fit.}
   \label{fig:lognorm_fit}
+\end{figure}
+
+
+\section{Exploration of Optimisaiton Hyperparameters}\label{apx:hyperparameters}
+Figure~\ref{fig:hyperparameters_exploration} shows the performance of the
+population-based neighbourhood search evolutionary heuristic algorithm under
+different values of the hyperparameters $N$, $\kappa$, $m_0$, and $c$.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{img/hyperparameter_exploration}
+\caption{Comparison between optimisation performance for low, medium, and high
+values of $N$, $\kappa$, $m_0$, and $c$. Optimisation is run on demand
+scenario 19, for 70 primary and 30 secondary vehicles.}
+\label{fig:hyperparameters_exploration}
 \end{figure}
 
 
