@@ -127,7 +127,6 @@ def mutate_retain_vehicle_numbers(
     max_primary,
     max_secondary,
 ):
-    number_primary_vehicles = sum(primary_allocation)
     number_secondary_vehicles = sum(secondary_allocation)
     possible_mutations = [
         lambda x, y, max_primary, max_secondary: move_vehicle_of_same_type(
