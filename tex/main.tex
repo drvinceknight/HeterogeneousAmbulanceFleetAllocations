@@ -124,7 +124,11 @@
  outcomes within a heterogeneous population. To achieve this, we develop a
  heuristic algorithm for finding better fleet allocations which is used in
  conjunction with a discrete-event simulation model of ambulance services with
- heterogeneous vehicles. Our approach is informed by, and tested on,
+ heterogeneous vehicles. A major contribution of this heuristic is the numerical solution
+ of a system of equations to be able to approximate the utilisation of
+ vehicles. Traditionally this utilisation is problematic as it is both an
+ input and an output of the allocation of vehicles.
+ Our approach is informed by, and tested on,
  real-world data from Jakarta, Indonesia. Using our developed models, decision
  makers are better able to understand ambulance fleet capacity needs and
  locations, and their impact on patient outcomes.
@@ -137,7 +141,9 @@
 \begin{highlights}
 \item Mathematical modelling for maximising survival with heterogeneous
       patients and fleets
-\item Heuristic algorithm for finding better fleet allocations
+\item Population based neighbourhood search algorithm for finding better fleet allocations
+\item Fixed point numerical solution to equation used to approximate utilisation
+    of vehicles
 \item A sequential simulation for ambulance demand and capacity planning
 \item Application to Jakarta for policy recommendations and testing future
       demand scenarios
@@ -550,14 +556,18 @@ at the hospital, and refuelling, which are not generally location dependant.
 Therefore we feel it is reasonable to fix these.
 On the other hand, the demand experienced by vehicles at each location
 $a \in \mathcal{A}$ would be location specific, and would depend on the number
-and utilisation of the vehicles at every other location. For primary vehicles,
+and utilisation of the vehicles at every other location. 
+
+\subsection{Numerical approximation of utilisation}
+
+For primary vehicles,
 which operate independently of secondary vehicles, the relationship between
 demand experienced at each location, $\lambda_a$, and the allocations and
 utilisations of all other locations, is given by
 Equation~\ref{eqn:utilisations_primary}. For secondary vehicles, the
 relationship between demand experienced at each location, $\tilde{\lambda}_a$,
 and the allocations and utilisations of all other locations, is given by
-Equation~\ref{eqn:utilisations_primary}. Note that his also depends on the
+Equation~\ref{eqn:utilisations_primary}. Note that this also depends on the
 utilisations of the primary vehicles, $\pi_a$.
 
 \begin{equation}\label{eqn:utilisations_primary}
@@ -582,9 +592,11 @@ primary vehicle utilisations with Equation~\ref{eqn:utilisation_ratio_primary};
 then using these to solve Equation~\ref{eqn:utilisations_secondary} for the
 $\tilde{\lambda}_a$; and determining the secondary vehicle utilisations with
 Equation~\ref{eqn:utilisation_ratio_secondary}. These can be solved
-numerically by using Scipy's \texttt{fsolve} function \cite{2020SciPy-NMeth}.
+numerically. In our implementation this is solved using the MINPACK hybrd and
+hybrj algorithms by using Scipy's \texttt{fsolve} function~\cite{2020SciPy-NMeth}.
+% TODO Reference MINPACK correctly:  https://github.com/fortran-lang/minpack
 
-
+% TODO We should include some numeric examples here.
 
 \subsection{Heuristic Optimisation}\label{sec:heuristic}
 In order to maximise the MESLMHPHF objective function presented in
@@ -626,10 +638,12 @@ randomly remove one primary vehicle and add secondary vehicles to 3 randomly
 chosen locations; and randomly remove 3 secondary vehicles and add a primary
 vehicle to a randomly chosen location. If it is required that exact vehicle
 numbers need to be retained, then only for first two mutations need be chosen.
+% TODO We could include some diagrams here.
 
 The source code for the optimisation heuristic, including the evaluation of
 the MESLMHPHF objective function and the solution method for the utilisation
-considerations, is given in
+considerations is available at~\cite{}, % TODO Archive
+and development history can be seen at
 \url{https://github.com/drvinceknight/upgraded-octo-barnacle}.
 Numerical results are discussed in Section~\ref{sec:jakarta}.
 
