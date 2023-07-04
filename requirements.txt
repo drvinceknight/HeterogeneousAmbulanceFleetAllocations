@@ -4,7 +4,6 @@ dask==2023.5.0
 mypy==1.4.1
 numpy==1.24.4
 pandas==2.0.3
-pandas-stubs==2.0.2.230605
 pytest-benchmark==4.0.0
 pytest==7.4.0
 scipy==1.9.1
