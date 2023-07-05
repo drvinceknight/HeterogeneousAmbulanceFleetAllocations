@@ -1,10 +1,10 @@
 # Hyperparameters
-pop_size = 100
-keep_size = 15
+pop_size = 85
+keep_size = 20
 initial_mutations = 6
-cooling_rate = 0.1
-num_generations = 200
-max_vehicles = 15
+cooling_rate = 0.125
+num_generations = 150
+max_vehicles = 12
 
 # Parallelising
 n_cores = 100
@@ -45,39 +45,6 @@ resource_levels = [
     106,
     114,
     122,
-    61,
-    69,
-    77,
-    85,
-    93,
-    101,
-    109,
-    117,
-    125,
-    65,
-    73,
-    81,
-    89,
-    97,
-    105,
-    113,
-    121,
-    63,
-    71,
-    79,
-    87,
-    95,
-    103,
-    111,
-    119,
-    67,
-    75,
-    83,
-    91,
-    99,
-    107,
-    115,
-    123,
 ]
 
 vehicle_type_combinations = [current]
@@ -95,7 +62,7 @@ full_command_string = ""
 id_number = 0
 for demand in [13, 19, 34, 45]:
     for combination in vehicle_type_combinations:
-        command = f"python src/experiment.py {combination[0]} {combination[1]} {max_vehicles} {max_vehicles} {pop_size} {keep_size} {num_generations} {initial_mutations} {cooling_rate} {demand} {str(id_number).zfill(6)} {n_cores}\n"
+        command = f"python src/experiment.py {combination[0]} {combination[1]} {max_vehicles} {max_vehicles} {pop_size} {keep_size} {num_generations} {initial_mutations} {cooling_rate} {demand} {str(id_number).zfill(6)} {n_cores} --progress_bar\n"
         full_command_string += command
         id_number += 1
 
