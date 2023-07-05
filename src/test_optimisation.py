@@ -298,6 +298,41 @@ def test_create_initial_population():
     assert np.array_equal(first_secondary_allocation, np.array([1, 0, 2, 2, 3, 4]))
 
 
+def test_create_initial_population_with_randomising_vehicle_numbers():
+    number_of_locations = 6
+    population_size = 15
+    number_of_primary_vehicles = 8
+    number_of_secondary_vehicles = 12
+    max_primary = 3
+    max_secondary = 4
+
+    np.random.seed(0)
+    population = optimisation.create_initial_population(
+        number_of_locations=number_of_locations,
+        number_of_primary_vehicles=number_of_primary_vehicles,
+        number_of_secondary_vehicles=number_of_secondary_vehicles,
+        max_primary=max_primary,
+        max_secondary=max_secondary,
+        population_size=population_size,
+        randomise_vehicle_numbers=True,
+    )
+
+    assert population.shape == (population_size, 2, number_of_locations)
+    for primary_allocation, secondary_allocation in population:
+        assert primary_allocation.sum() + (
+            secondary_allocation.sum() / 3
+        ) == number_of_primary_vehicles + (number_of_secondary_vehicles / 3)
+        assert primary_allocation.max() <= max_primary
+        assert secondary_allocation.max() <= max_secondary
+        assert primary_allocation.dtype.type is np.int64
+        assert secondary_allocation.dtype.type is np.int64
+
+    first_primary_allocation, first_secondary_allocation = population[0]
+
+    assert np.array_equal(first_primary_allocation, np.array([2, 1, 2, 1, 2, 1]))
+    assert np.array_equal(first_secondary_allocation, np.array([1, 0, 2, 2, 1, 3]))
+
+
 def test_rank_population():
     # Read in data
     raw_travel_times = np.genfromtxt(
