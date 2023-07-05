@@ -65,7 +65,9 @@ def switch_secondary_to_primary(
     )
     locations_to_move_to = np.where(primary_allocation < max_allocation)[0]
     from_locations = np.random.choice(
-        locations_with_secondary, size=primary_to_secondary_ratio
+        locations_with_secondary,
+        size=primary_to_secondary_ratio,
+        replace=False,
     )
     to_location = np.random.choice(locations_to_move_to)
     new_primary_allocation = np.array(primary_allocation)
