@@ -60,7 +60,9 @@ def switch_secondary_to_primary(
     """
     Randomly add a primary vehicle and remove `primary_to_secondary_ratio` secondary vehicles.
     """
-    locations_with_secondary = np.where(secondary_allocation)[0]
+    locations_with_secondary = np.repeat(
+        np.arange(len(secondary_allocation)), secondary_allocation
+    )
     locations_to_move_to = np.where(primary_allocation < max_allocation)[0]
     from_locations = np.random.choice(
         locations_with_secondary, size=primary_to_secondary_ratio

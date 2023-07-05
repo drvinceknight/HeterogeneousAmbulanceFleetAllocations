@@ -68,8 +68,8 @@ def test_switch_secondary_to_primary():
 
     assert sum(primary_allocation) + 1 == sum(resulting_primary_allocation)
     assert sum(secondary_allocation) - 3 == sum(resulting_secondary_allocation)
-    assert np.array_equal(resulting_secondary_allocation, np.array([2, 7, 0, 0]))
-    assert np.array_equal(resulting_primary_allocation, np.array([1, 1, 5, 1]))
+    assert np.array_equal(resulting_secondary_allocation, np.array([3, 6, 0, 0]))
+    assert np.array_equal(resulting_primary_allocation, np.array([0, 2, 5, 1]))
     assert resulting_primary_allocation.dtype.type is np.int64
     assert resulting_secondary_allocation.dtype.type is np.int64
 
@@ -219,7 +219,7 @@ def test_mutate_full_with_seed_5():
         resulting_primary_allocation
     ) + (sum(resulting_secondary_allocation) / 3)
     assert np.array_equal(resulting_secondary_allocation, np.array([2, 7, 0, 0]))
-    assert np.array_equal(resulting_primary_allocation, np.array([0, 1, 5, 2]))
+    assert np.array_equal(resulting_primary_allocation, np.array([0, 2, 5, 1]))
     assert resulting_primary_allocation.dtype.type is np.int64
     assert resulting_secondary_allocation.dtype.type is np.int64
 
