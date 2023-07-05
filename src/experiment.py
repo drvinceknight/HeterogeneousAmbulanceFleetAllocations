@@ -99,8 +99,8 @@ if __name__ == "__main__":
     primary_survivals, secondary_survivals = objective.get_survival_time_vectors(
         survival_functions, primary_vehicle_travel_times, secondary_vehicle_travel_times
     )
-    service_rate_primary = 1 / (4.5 * 60)
-    service_rate_secondary = 1 / (3.5 * 60)
+    service_rate_primary = 1 / (3.885893339206694 * 60)
+    service_rate_secondary = 1 / (1.0382054942769607 * 60)
     demand_rates = (
         np.genfromtxt(f"./data/demand_{args.demand_scenario}.csv", delimiter=",") / 1440
     )
