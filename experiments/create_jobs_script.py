@@ -48,21 +48,29 @@ resource_levels = [
 full_command_string = ""
 
 id_number = 90000
+id_number_full = 80000
+
 for demand in [13, 19, 34, 45]:
     for level in resource_levels:
         echo_command = f'echo "Doing resource level {level} on demand {demand}."\n'
-        command = f"python src/experiment.py {level} 0 {max_vehicles} {max_vehicles} {pop_size} {keep_size} {num_generations} {initial_mutations} {cooling_rate} {demand} {id_number} {n_cores} --progress_bar\n"
+        command_single = f"python src/experiment.py {level} 0 {max_vehicles} {max_vehicles} {pop_size} {keep_size} {num_generations} {initial_mutations} {cooling_rate} {demand} {id_number} {n_cores} --progress_bar\n"
+        command_multiple = f"python src/experiment--full-mutation.py {level} {max_vehicles} {max_vehicles} {pop_size} {keep_size} {num_generations} {initial_mutations} {cooling_rate} {demand} {id_number_full} {n_cores} --progress_bar\n"
         full_command_string += echo_command
-        full_command_string += command
+        full_command_string += command_single
+        full_command_string += command_multiple
         id_number += 1
+        id_number_full += 1
 
 for demand in [13, 19, 34, 45]:
     for level in resource_levels:
         echo_command = f'echo "Doing resource level {level + 1} on demand {demand}."\n'
-        command = f"python src/experiment.py {level + 1} 0 {max_vehicles} {max_vehicles} {pop_size} {keep_size} {num_generations} {initial_mutations} {cooling_rate} {demand} {id_number} {n_cores} --progress_bar\n"
+        command_single = f"python src/experiment.py {level + 1} 0 {max_vehicles} {max_vehicles} {pop_size} {keep_size} {num_generations} {initial_mutations} {cooling_rate} {demand} {id_number} {n_cores} --progress_bar\n"
+        command_multiple = f"python src/experiment--full-mutation.py {level + 1} {max_vehicles} {max_vehicles} {pop_size} {keep_size} {num_generations} {initial_mutations} {cooling_rate} {demand} {id_number_full} {n_cores} --progress_bar\n"
         full_command_string += echo_command
-        full_command_string += command
+        full_command_string += command_single
+        full_command_string += command_multiple
         id_number += 1
+        id_number_full += 1
 
 with open("jobs.txt", "w") as f:
     f.write(full_command_string)
