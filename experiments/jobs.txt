@@ -1,8 +1,8 @@
-echo "Doing current on each demand."
-python src/experiment.py 81 13 10 10 100 20 200 6 0.1 13 70000 100 --progress_bar
-python src/experiment.py 81 13 10 10 100 20 200 6 0.1 19 70001 100 --progress_bar
-python src/experiment.py 81 13 10 10 100 20 200 6 0.1 34 70002 100 --progress_bar
-python src/experiment.py 81 13 10 10 100 20 200 6 0.1 45 70003 100 --progress_bar
+# echo "Doing current on each demand."
+# python src/experiment.py 81 13 10 10 100 20 200 6 0.1 13 70000 100 --progress_bar
+# python src/experiment.py 81 13 10 10 100 20 200 6 0.1 19 70001 100 --progress_bar
+# python src/experiment.py 81 13 10 10 100 20 200 6 0.1 34 70002 100 --progress_bar
+# python src/experiment.py 81 13 10 10 100 20 200 6 0.1 45 70003 100 --progress_bar
 # echo "Doing resource level 60 on demand 13."
 # python src/experiment.py 60 0 10 10 100 20 200 6 0.1 13 90000 100 --progress_bar
 # python src/experiment-full-mutation.py 60 10 10 100 20 200 6 0.1 13 80000 100 --progress_bar
@@ -30,372 +30,372 @@ python src/experiment.py 81 13 10 10 100 20 200 6 0.1 45 70003 100 --progress_ba
 # echo "Doing resource level 124 on demand 13."
 # python src/experiment.py 124 0 10 10 100 20 200 6 0.1 13 90008 100 --progress_bar
 # python src/experiment-full-mutation.py 124 10 10 100 20 200 6 0.1 13 80008 100 --progress_bar
-echo "Doing resource level 60 on demand 19."
-python src/experiment.py 60 0 10 10 100 20 200 6 0.1 19 90033 100 --progress_bar
-python src/experiment-full-mutation.py 60 10 10 100 20 200 6 0.1 19 80033 100 --progress_bar
-echo "Doing resource level 68 on demand 19."
-python src/experiment.py 68 0 10 10 100 20 200 6 0.1 19 90034 100 --progress_bar
-python src/experiment-full-mutation.py 68 10 10 100 20 200 6 0.1 19 80034 100 --progress_bar
-echo "Doing resource level 76 on demand 19."
-python src/experiment.py 76 0 10 10 100 20 200 6 0.1 19 90035 100 --progress_bar
-python src/experiment-full-mutation.py 76 10 10 100 20 200 6 0.1 19 80035 100 --progress_bar
-echo "Doing resource level 84 on demand 19."
-python src/experiment.py 84 0 10 10 100 20 200 6 0.1 19 90036 100 --progress_bar
-python src/experiment-full-mutation.py 84 10 10 100 20 200 6 0.1 19 80036 100 --progress_bar
-echo "Doing resource level 92 on demand 19."
-python src/experiment.py 92 0 10 10 100 20 200 6 0.1 19 90037 100 --progress_bar
-python src/experiment-full-mutation.py 92 10 10 100 20 200 6 0.1 19 80037 100 --progress_bar
-echo "Doing resource level 100 on demand 19."
-python src/experiment.py 100 0 10 10 100 20 200 6 0.1 19 90038 100 --progress_bar
-python src/experiment-full-mutation.py 100 10 10 100 20 200 6 0.1 19 80038 100 --progress_bar
-echo "Doing resource level 108 on demand 19."
-python src/experiment.py 108 0 10 10 100 20 200 6 0.1 19 90039 100 --progress_bar
-python src/experiment-full-mutation.py 108 10 10 100 20 200 6 0.1 19 80039 100 --progress_bar
-echo "Doing resource level 116 on demand 19."
-python src/experiment.py 116 0 10 10 100 20 200 6 0.1 19 90040 100 --progress_bar
-python src/experiment-full-mutation.py 116 10 10 100 20 200 6 0.1 19 80040 100 --progress_bar
-echo "Doing resource level 124 on demand 19."
-python src/experiment.py 124 0 10 10 100 20 200 6 0.1 19 90041 100 --progress_bar
-python src/experiment-full-mutation.py 124 10 10 100 20 200 6 0.1 19 80041 100 --progress_bar
-echo "Doing resource level 60 on demand 34."
-python src/experiment.py 60 0 10 10 100 20 200 6 0.1 34 90066 100 --progress_bar
-python src/experiment-full-mutation.py 60 10 10 100 20 200 6 0.1 34 80066 100 --progress_bar
-echo "Doing resource level 68 on demand 34."
-python src/experiment.py 68 0 10 10 100 20 200 6 0.1 34 90067 100 --progress_bar
-python src/experiment-full-mutation.py 68 10 10 100 20 200 6 0.1 34 80067 100 --progress_bar
-echo "Doing resource level 76 on demand 34."
-python src/experiment.py 76 0 10 10 100 20 200 6 0.1 34 90068 100 --progress_bar
-python src/experiment-full-mutation.py 76 10 10 100 20 200 6 0.1 34 80068 100 --progress_bar
-echo "Doing resource level 84 on demand 34."
-python src/experiment.py 84 0 10 10 100 20 200 6 0.1 34 90069 100 --progress_bar
-python src/experiment-full-mutation.py 84 10 10 100 20 200 6 0.1 34 80069 100 --progress_bar
-echo "Doing resource level 92 on demand 34."
-python src/experiment.py 92 0 10 10 100 20 200 6 0.1 34 90070 100 --progress_bar
-python src/experiment-full-mutation.py 92 10 10 100 20 200 6 0.1 34 80070 100 --progress_bar
-echo "Doing resource level 100 on demand 34."
-python src/experiment.py 100 0 10 10 100 20 200 6 0.1 34 90071 100 --progress_bar
-python src/experiment-full-mutation.py 100 10 10 100 20 200 6 0.1 34 80071 100 --progress_bar
-echo "Doing resource level 108 on demand 34."
-python src/experiment.py 108 0 10 10 100 20 200 6 0.1 34 90072 100 --progress_bar
-python src/experiment-full-mutation.py 108 10 10 100 20 200 6 0.1 34 80072 100 --progress_bar
-echo "Doing resource level 116 on demand 34."
-python src/experiment.py 116 0 10 10 100 20 200 6 0.1 34 90073 100 --progress_bar
-python src/experiment-full-mutation.py 116 10 10 100 20 200 6 0.1 34 80073 100 --progress_bar
-echo "Doing resource level 124 on demand 34."
-python src/experiment.py 124 0 10 10 100 20 200 6 0.1 34 90074 100 --progress_bar
-python src/experiment-full-mutation.py 124 10 10 100 20 200 6 0.1 34 80074 100 --progress_bar
-echo "Doing resource level 60 on demand 45."
-python src/experiment.py 60 0 10 10 100 20 200 6 0.1 45 90099 100 --progress_bar
-python src/experiment-full-mutation.py 60 10 10 100 20 200 6 0.1 45 80099 100 --progress_bar
-echo "Doing resource level 68 on demand 45."
-python src/experiment.py 68 0 10 10 100 20 200 6 0.1 45 90100 100 --progress_bar
-python src/experiment-full-mutation.py 68 10 10 100 20 200 6 0.1 45 80100 100 --progress_bar
-echo "Doing resource level 76 on demand 45."
-python src/experiment.py 76 0 10 10 100 20 200 6 0.1 45 90101 100 --progress_bar
-python src/experiment-full-mutation.py 76 10 10 100 20 200 6 0.1 45 80101 100 --progress_bar
-echo "Doing resource level 84 on demand 45."
-python src/experiment.py 84 0 10 10 100 20 200 6 0.1 45 90102 100 --progress_bar
-python src/experiment-full-mutation.py 84 10 10 100 20 200 6 0.1 45 80102 100 --progress_bar
-echo "Doing resource level 92 on demand 45."
-python src/experiment.py 92 0 10 10 100 20 200 6 0.1 45 90103 100 --progress_bar
-python src/experiment-full-mutation.py 92 10 10 100 20 200 6 0.1 45 80103 100 --progress_bar
-echo "Doing resource level 100 on demand 45."
-python src/experiment.py 100 0 10 10 100 20 200 6 0.1 45 90104 100 --progress_bar
-python src/experiment-full-mutation.py 100 10 10 100 20 200 6 0.1 45 80104 100 --progress_bar
-echo "Doing resource level 108 on demand 45."
-python src/experiment.py 108 0 10 10 100 20 200 6 0.1 45 90105 100 --progress_bar
-python src/experiment-full-mutation.py 108 10 10 100 20 200 6 0.1 45 80105 100 --progress_bar
-echo "Doing resource level 116 on demand 45."
-python src/experiment.py 116 0 10 10 100 20 200 6 0.1 45 90106 100 --progress_bar
-python src/experiment-full-mutation.py 116 10 10 100 20 200 6 0.1 45 80106 100 --progress_bar
-echo "Doing resource level 124 on demand 45."
-python src/experiment.py 124 0 10 10 100 20 200 6 0.1 45 90107 100 --progress_bar
-python src/experiment-full-mutation.py 124 10 10 100 20 200 6 0.1 45 80107 100 --progress_bar
+# echo "Doing resource level 60 on demand 19."
+# python src/experiment.py 60 0 10 10 100 20 200 6 0.1 19 90033 100 --progress_bar
+# python src/experiment-full-mutation.py 60 10 10 100 20 200 6 0.1 19 80033 100 --progress_bar
+# echo "Doing resource level 68 on demand 19."
+# python src/experiment.py 68 0 10 10 100 20 200 6 0.1 19 90034 100 --progress_bar
+# python src/experiment-full-mutation.py 68 10 10 100 20 200 6 0.1 19 80034 100 --progress_bar
+# echo "Doing resource level 76 on demand 19."
+# python src/experiment.py 76 0 10 10 100 20 200 6 0.1 19 90035 100 --progress_bar
+# python src/experiment-full-mutation.py 76 10 10 100 20 200 6 0.1 19 80035 100 --progress_bar
+# echo "Doing resource level 84 on demand 19."
+# python src/experiment.py 84 0 10 10 100 20 200 6 0.1 19 90036 100 --progress_bar
+# python src/experiment-full-mutation.py 84 10 10 100 20 200 6 0.1 19 80036 100 --progress_bar
+# echo "Doing resource level 92 on demand 19."
+# python src/experiment.py 92 0 10 10 100 20 200 6 0.1 19 90037 100 --progress_bar
+# python src/experiment-full-mutation.py 92 10 10 100 20 200 6 0.1 19 80037 100 --progress_bar
+# echo "Doing resource level 100 on demand 19."
+# python src/experiment.py 100 0 10 10 100 20 200 6 0.1 19 90038 100 --progress_bar
+# python src/experiment-full-mutation.py 100 10 10 100 20 200 6 0.1 19 80038 100 --progress_bar
+# echo "Doing resource level 108 on demand 19."
+# python src/experiment.py 108 0 10 10 100 20 200 6 0.1 19 90039 100 --progress_bar
+# python src/experiment-full-mutation.py 108 10 10 100 20 200 6 0.1 19 80039 100 --progress_bar
+# echo "Doing resource level 116 on demand 19."
+# python src/experiment.py 116 0 10 10 100 20 200 6 0.1 19 90040 100 --progress_bar
+# python src/experiment-full-mutation.py 116 10 10 100 20 200 6 0.1 19 80040 100 --progress_bar
+# echo "Doing resource level 124 on demand 19."
+# python src/experiment.py 124 0 10 10 100 20 200 6 0.1 19 90041 100 --progress_bar
+# python src/experiment-full-mutation.py 124 10 10 100 20 200 6 0.1 19 80041 100 --progress_bar
+# echo "Doing resource level 60 on demand 34."
+# python src/experiment.py 60 0 10 10 100 20 200 6 0.1 34 90066 100 --progress_bar
+# python src/experiment-full-mutation.py 60 10 10 100 20 200 6 0.1 34 80066 100 --progress_bar
+# echo "Doing resource level 68 on demand 34."
+# python src/experiment.py 68 0 10 10 100 20 200 6 0.1 34 90067 100 --progress_bar
+# python src/experiment-full-mutation.py 68 10 10 100 20 200 6 0.1 34 80067 100 --progress_bar
+# echo "Doing resource level 76 on demand 34."
+# python src/experiment.py 76 0 10 10 100 20 200 6 0.1 34 90068 100 --progress_bar
+# python src/experiment-full-mutation.py 76 10 10 100 20 200 6 0.1 34 80068 100 --progress_bar
+# echo "Doing resource level 84 on demand 34."
+# python src/experiment.py 84 0 10 10 100 20 200 6 0.1 34 90069 100 --progress_bar
+# python src/experiment-full-mutation.py 84 10 10 100 20 200 6 0.1 34 80069 100 --progress_bar
+# echo "Doing resource level 92 on demand 34."
+# python src/experiment.py 92 0 10 10 100 20 200 6 0.1 34 90070 100 --progress_bar
+# python src/experiment-full-mutation.py 92 10 10 100 20 200 6 0.1 34 80070 100 --progress_bar
+# echo "Doing resource level 100 on demand 34."
+# python src/experiment.py 100 0 10 10 100 20 200 6 0.1 34 90071 100 --progress_bar
+# python src/experiment-full-mutation.py 100 10 10 100 20 200 6 0.1 34 80071 100 --progress_bar
+# echo "Doing resource level 108 on demand 34."
+# python src/experiment.py 108 0 10 10 100 20 200 6 0.1 34 90072 100 --progress_bar
+# python src/experiment-full-mutation.py 108 10 10 100 20 200 6 0.1 34 80072 100 --progress_bar
+# echo "Doing resource level 116 on demand 34."
+# python src/experiment.py 116 0 10 10 100 20 200 6 0.1 34 90073 100 --progress_bar
+# python src/experiment-full-mutation.py 116 10 10 100 20 200 6 0.1 34 80073 100 --progress_bar
+# echo "Doing resource level 124 on demand 34."
+# python src/experiment.py 124 0 10 10 100 20 200 6 0.1 34 90074 100 --progress_bar
+# python src/experiment-full-mutation.py 124 10 10 100 20 200 6 0.1 34 80074 100 --progress_bar
+# echo "Doing resource level 60 on demand 45."
+# python src/experiment.py 60 0 10 10 100 20 200 6 0.1 45 90099 100 --progress_bar
+# python src/experiment-full-mutation.py 60 10 10 100 20 200 6 0.1 45 80099 100 --progress_bar
+# echo "Doing resource level 68 on demand 45."
+# python src/experiment.py 68 0 10 10 100 20 200 6 0.1 45 90100 100 --progress_bar
+# python src/experiment-full-mutation.py 68 10 10 100 20 200 6 0.1 45 80100 100 --progress_bar
+# echo "Doing resource level 76 on demand 45."
+# python src/experiment.py 76 0 10 10 100 20 200 6 0.1 45 90101 100 --progress_bar
+# python src/experiment-full-mutation.py 76 10 10 100 20 200 6 0.1 45 80101 100 --progress_bar
+# echo "Doing resource level 84 on demand 45."
+# python src/experiment.py 84 0 10 10 100 20 200 6 0.1 45 90102 100 --progress_bar
+# python src/experiment-full-mutation.py 84 10 10 100 20 200 6 0.1 45 80102 100 --progress_bar
+# echo "Doing resource level 92 on demand 45."
+# python src/experiment.py 92 0 10 10 100 20 200 6 0.1 45 90103 100 --progress_bar
+# python src/experiment-full-mutation.py 92 10 10 100 20 200 6 0.1 45 80103 100 --progress_bar
+# echo "Doing resource level 100 on demand 45."
+# python src/experiment.py 100 0 10 10 100 20 200 6 0.1 45 90104 100 --progress_bar
+# python src/experiment-full-mutation.py 100 10 10 100 20 200 6 0.1 45 80104 100 --progress_bar
+# echo "Doing resource level 108 on demand 45."
+# python src/experiment.py 108 0 10 10 100 20 200 6 0.1 45 90105 100 --progress_bar
+# python src/experiment-full-mutation.py 108 10 10 100 20 200 6 0.1 45 80105 100 --progress_bar
+# echo "Doing resource level 116 on demand 45."
+# python src/experiment.py 116 0 10 10 100 20 200 6 0.1 45 90106 100 --progress_bar
+# python src/experiment-full-mutation.py 116 10 10 100 20 200 6 0.1 45 80106 100 --progress_bar
+# echo "Doing resource level 124 on demand 45."
+# python src/experiment.py 124 0 10 10 100 20 200 6 0.1 45 90107 100 --progress_bar
+# python src/experiment-full-mutation.py 124 10 10 100 20 200 6 0.1 45 80107 100 --progress_bar
 # echo "Doing resource level 64 on demand 13."
 # python src/experiment.py 64 0 10 10 100 20 200 6 0.1 13 90009 100 --progress_bar
 # python src/experiment-full-mutation.py 64 10 10 100 20 200 6 0.1 13 80009 100 --progress_bar
-echo "Doing resource level 72 on demand 13."
-python src/experiment.py 72 0 10 10 100 20 200 6 0.1 13 90010 100 --progress_bar
-python src/experiment-full-mutation.py 72 10 10 100 20 200 6 0.1 13 80010 100 --progress_bar
-echo "Doing resource level 80 on demand 13."
-python src/experiment.py 80 0 10 10 100 20 200 6 0.1 13 90011 100 --progress_bar
-python src/experiment-full-mutation.py 80 10 10 100 20 200 6 0.1 13 80011 100 --progress_bar
+# echo "Doing resource level 72 on demand 13."
+# python src/experiment.py 72 0 10 10 100 20 200 6 0.1 13 90010 100 --progress_bar
+# python src/experiment-full-mutation.py 72 10 10 100 20 200 6 0.1 13 80010 100 --progress_bar
+# echo "Doing resource level 80 on demand 13."
+# python src/experiment.py 80 0 10 10 100 20 200 6 0.1 13 90011 100 --progress_bar
+# python src/experiment-full-mutation.py 80 10 10 100 20 200 6 0.1 13 80011 100 --progress_bar
 echo "Doing resource level 88 on demand 13."
-python src/experiment.py 88 0 10 10 100 20 200 6 0.1 13 90012 100 --progress_bar
-python src/experiment-full-mutation.py 88 10 10 100 20 200 6 0.1 13 80012 100 --progress_bar
+python src/experiment.py 88 0 10 10 100 20 200 6 0.1 13 90012 25 --progress_bar
+python src/experiment-full-mutation.py 88 10 10 100 20 200 6 0.1 13 80012 25 --progress_bar
 echo "Doing resource level 96 on demand 13."
-python src/experiment.py 96 0 10 10 100 20 200 6 0.1 13 90013 100 --progress_bar
-python src/experiment-full-mutation.py 96 10 10 100 20 200 6 0.1 13 80013 100 --progress_bar
+python src/experiment.py 96 0 10 10 100 20 200 6 0.1 13 90013 25 --progress_bar
+python src/experiment-full-mutation.py 96 10 10 100 20 200 6 0.1 13 80013 25 --progress_bar
 echo "Doing resource level 104 on demand 13."
-python src/experiment.py 104 0 10 10 100 20 200 6 0.1 13 90014 100 --progress_bar
-python src/experiment-full-mutation.py 104 10 10 100 20 200 6 0.1 13 80014 100 --progress_bar
+python src/experiment.py 104 0 10 10 100 20 200 6 0.1 13 90014 25 --progress_bar
+python src/experiment-full-mutation.py 104 10 10 100 20 200 6 0.1 13 80014 25 --progress_bar
 echo "Doing resource level 112 on demand 13."
-python src/experiment.py 112 0 10 10 100 20 200 6 0.1 13 90015 100 --progress_bar
-python src/experiment-full-mutation.py 112 10 10 100 20 200 6 0.1 13 80015 100 --progress_bar
+python src/experiment.py 112 0 10 10 100 20 200 6 0.1 13 90015 25 --progress_bar
+python src/experiment-full-mutation.py 112 10 10 100 20 200 6 0.1 13 80015 25 --progress_bar
 echo "Doing resource level 120 on demand 13."
-python src/experiment.py 120 0 10 10 100 20 200 6 0.1 13 90016 100 --progress_bar
-python src/experiment-full-mutation.py 120 10 10 100 20 200 6 0.1 13 80016 100 --progress_bar
+python src/experiment.py 120 0 10 10 100 20 200 6 0.1 13 90016 25 --progress_bar
+python src/experiment-full-mutation.py 120 10 10 100 20 200 6 0.1 13 80016 25 --progress_bar
 echo "Doing resource level 64 on demand 19."
-python src/experiment.py 64 0 10 10 100 20 200 6 0.1 19 90042 100 --progress_bar
-python src/experiment-full-mutation.py 64 10 10 100 20 200 6 0.1 19 80042 100 --progress_bar
+python src/experiment.py 64 0 10 10 100 20 200 6 0.1 19 90042 25 --progress_bar
+python src/experiment-full-mutation.py 64 10 10 100 20 200 6 0.1 19 80042 25 --progress_bar
 echo "Doing resource level 72 on demand 19."
-python src/experiment.py 72 0 10 10 100 20 200 6 0.1 19 90043 100 --progress_bar
-python src/experiment-full-mutation.py 72 10 10 100 20 200 6 0.1 19 80043 100 --progress_bar
+python src/experiment.py 72 0 10 10 100 20 200 6 0.1 19 90043 25 --progress_bar
+python src/experiment-full-mutation.py 72 10 10 100 20 200 6 0.1 19 80043 25 --progress_bar
 echo "Doing resource level 80 on demand 19."
-python src/experiment.py 80 0 10 10 100 20 200 6 0.1 19 90044 100 --progress_bar
-python src/experiment-full-mutation.py 80 10 10 100 20 200 6 0.1 19 80044 100 --progress_bar
+python src/experiment.py 80 0 10 10 100 20 200 6 0.1 19 90044 25 --progress_bar
+python src/experiment-full-mutation.py 80 10 10 100 20 200 6 0.1 19 80044 25 --progress_bar
 echo "Doing resource level 88 on demand 19."
-python src/experiment.py 88 0 10 10 100 20 200 6 0.1 19 90045 100 --progress_bar
-python src/experiment-full-mutation.py 88 10 10 100 20 200 6 0.1 19 80045 100 --progress_bar
+python src/experiment.py 88 0 10 10 100 20 200 6 0.1 19 90045 25 --progress_bar
+python src/experiment-full-mutation.py 88 10 10 100 20 200 6 0.1 19 80045 25 --progress_bar
 echo "Doing resource level 96 on demand 19."
-python src/experiment.py 96 0 10 10 100 20 200 6 0.1 19 90046 100 --progress_bar
-python src/experiment-full-mutation.py 96 10 10 100 20 200 6 0.1 19 80046 100 --progress_bar
+python src/experiment.py 96 0 10 10 100 20 200 6 0.1 19 90046 25 --progress_bar
+python src/experiment-full-mutation.py 96 10 10 100 20 200 6 0.1 19 80046 25 --progress_bar
 echo "Doing resource level 104 on demand 19."
-python src/experiment.py 104 0 10 10 100 20 200 6 0.1 19 90047 100 --progress_bar
-python src/experiment-full-mutation.py 104 10 10 100 20 200 6 0.1 19 80047 100 --progress_bar
+python src/experiment.py 104 0 10 10 100 20 200 6 0.1 19 90047 25 --progress_bar
+python src/experiment-full-mutation.py 104 10 10 100 20 200 6 0.1 19 80047 25 --progress_bar
 echo "Doing resource level 112 on demand 19."
-python src/experiment.py 112 0 10 10 100 20 200 6 0.1 19 90048 100 --progress_bar
-python src/experiment-full-mutation.py 112 10 10 100 20 200 6 0.1 19 80048 100 --progress_bar
+python src/experiment.py 112 0 10 10 100 20 200 6 0.1 19 90048 25 --progress_bar
+python src/experiment-full-mutation.py 112 10 10 100 20 200 6 0.1 19 80048 25 --progress_bar
 echo "Doing resource level 120 on demand 19."
-python src/experiment.py 120 0 10 10 100 20 200 6 0.1 19 90049 100 --progress_bar
-python src/experiment-full-mutation.py 120 10 10 100 20 200 6 0.1 19 80049 100 --progress_bar
+python src/experiment.py 120 0 10 10 100 20 200 6 0.1 19 90049 25 --progress_bar
+python src/experiment-full-mutation.py 120 10 10 100 20 200 6 0.1 19 80049 25 --progress_bar
 echo "Doing resource level 64 on demand 34."
-python src/experiment.py 64 0 10 10 100 20 200 6 0.1 34 90075 100 --progress_bar
-python src/experiment-full-mutation.py 64 10 10 100 20 200 6 0.1 34 80075 100 --progress_bar
+python src/experiment.py 64 0 10 10 100 20 200 6 0.1 34 90075 25 --progress_bar
+python src/experiment-full-mutation.py 64 10 10 100 20 200 6 0.1 34 80075 25 --progress_bar
 echo "Doing resource level 72 on demand 34."
-python src/experiment.py 72 0 10 10 100 20 200 6 0.1 34 90076 100 --progress_bar
-python src/experiment-full-mutation.py 72 10 10 100 20 200 6 0.1 34 80076 100 --progress_bar
+python src/experiment.py 72 0 10 10 100 20 200 6 0.1 34 90076 25 --progress_bar
+python src/experiment-full-mutation.py 72 10 10 100 20 200 6 0.1 34 80076 25 --progress_bar
 echo "Doing resource level 80 on demand 34."
-python src/experiment.py 80 0 10 10 100 20 200 6 0.1 34 90077 100 --progress_bar
-python src/experiment-full-mutation.py 80 10 10 100 20 200 6 0.1 34 80077 100 --progress_bar
+python src/experiment.py 80 0 10 10 100 20 200 6 0.1 34 90077 25 --progress_bar
+python src/experiment-full-mutation.py 80 10 10 100 20 200 6 0.1 34 80077 25 --progress_bar
 echo "Doing resource level 88 on demand 34."
-python src/experiment.py 88 0 10 10 100 20 200 6 0.1 34 90078 100 --progress_bar
-python src/experiment-full-mutation.py 88 10 10 100 20 200 6 0.1 34 80078 100 --progress_bar
+python src/experiment.py 88 0 10 10 100 20 200 6 0.1 34 90078 25 --progress_bar
+python src/experiment-full-mutation.py 88 10 10 100 20 200 6 0.1 34 80078 25 --progress_bar
 echo "Doing resource level 96 on demand 34."
-python src/experiment.py 96 0 10 10 100 20 200 6 0.1 34 90079 100 --progress_bar
-python src/experiment-full-mutation.py 96 10 10 100 20 200 6 0.1 34 80079 100 --progress_bar
+python src/experiment.py 96 0 10 10 100 20 200 6 0.1 34 90079 25 --progress_bar
+python src/experiment-full-mutation.py 96 10 10 100 20 200 6 0.1 34 80079 25 --progress_bar
 echo "Doing resource level 104 on demand 34."
-python src/experiment.py 104 0 10 10 100 20 200 6 0.1 34 90080 100 --progress_bar
-python src/experiment-full-mutation.py 104 10 10 100 20 200 6 0.1 34 80080 100 --progress_bar
+python src/experiment.py 104 0 10 10 100 20 200 6 0.1 34 90080 25 --progress_bar
+python src/experiment-full-mutation.py 104 10 10 100 20 200 6 0.1 34 80080 25 --progress_bar
 echo "Doing resource level 112 on demand 34."
-python src/experiment.py 112 0 10 10 100 20 200 6 0.1 34 90081 100 --progress_bar
-python src/experiment-full-mutation.py 112 10 10 100 20 200 6 0.1 34 80081 100 --progress_bar
+python src/experiment.py 112 0 10 10 100 20 200 6 0.1 34 90081 25 --progress_bar
+python src/experiment-full-mutation.py 112 10 10 100 20 200 6 0.1 34 80081 25 --progress_bar
 echo "Doing resource level 120 on demand 34."
-python src/experiment.py 120 0 10 10 100 20 200 6 0.1 34 90082 100 --progress_bar
-python src/experiment-full-mutation.py 120 10 10 100 20 200 6 0.1 34 80082 100 --progress_bar
+python src/experiment.py 120 0 10 10 100 20 200 6 0.1 34 90082 25 --progress_bar
+python src/experiment-full-mutation.py 120 10 10 100 20 200 6 0.1 34 80082 25 --progress_bar
 echo "Doing resource level 64 on demand 45."
-python src/experiment.py 64 0 10 10 100 20 200 6 0.1 45 90108 100 --progress_bar
-python src/experiment-full-mutation.py 64 10 10 100 20 200 6 0.1 45 80108 100 --progress_bar
+python src/experiment.py 64 0 10 10 100 20 200 6 0.1 45 90108 25 --progress_bar
+python src/experiment-full-mutation.py 64 10 10 100 20 200 6 0.1 45 80108 25 --progress_bar
 echo "Doing resource level 72 on demand 45."
-python src/experiment.py 72 0 10 10 100 20 200 6 0.1 45 90109 100 --progress_bar
-python src/experiment-full-mutation.py 72 10 10 100 20 200 6 0.1 45 80109 100 --progress_bar
+python src/experiment.py 72 0 10 10 100 20 200 6 0.1 45 90109 25 --progress_bar
+python src/experiment-full-mutation.py 72 10 10 100 20 200 6 0.1 45 80109 25 --progress_bar
 echo "Doing resource level 80 on demand 45."
-python src/experiment.py 80 0 10 10 100 20 200 6 0.1 45 90110 100 --progress_bar
-python src/experiment-full-mutation.py 80 10 10 100 20 200 6 0.1 45 80110 100 --progress_bar
+python src/experiment.py 80 0 10 10 100 20 200 6 0.1 45 90110 25 --progress_bar
+python src/experiment-full-mutation.py 80 10 10 100 20 200 6 0.1 45 80110 25 --progress_bar
 echo "Doing resource level 88 on demand 45."
-python src/experiment.py 88 0 10 10 100 20 200 6 0.1 45 90111 100 --progress_bar
-python src/experiment-full-mutation.py 88 10 10 100 20 200 6 0.1 45 80111 100 --progress_bar
+python src/experiment.py 88 0 10 10 100 20 200 6 0.1 45 90111 25 --progress_bar
+python src/experiment-full-mutation.py 88 10 10 100 20 200 6 0.1 45 80111 25 --progress_bar
 echo "Doing resource level 96 on demand 45."
-python src/experiment.py 96 0 10 10 100 20 200 6 0.1 45 90112 100 --progress_bar
-python src/experiment-full-mutation.py 96 10 10 100 20 200 6 0.1 45 80112 100 --progress_bar
+python src/experiment.py 96 0 10 10 100 20 200 6 0.1 45 90112 25 --progress_bar
+python src/experiment-full-mutation.py 96 10 10 100 20 200 6 0.1 45 80112 25 --progress_bar
 echo "Doing resource level 104 on demand 45."
-python src/experiment.py 104 0 10 10 100 20 200 6 0.1 45 90113 100 --progress_bar
-python src/experiment-full-mutation.py 104 10 10 100 20 200 6 0.1 45 80113 100 --progress_bar
+python src/experiment.py 104 0 10 10 100 20 200 6 0.1 45 90113 25 --progress_bar
+python src/experiment-full-mutation.py 104 10 10 100 20 200 6 0.1 45 80113 25 --progress_bar
 echo "Doing resource level 112 on demand 45."
-python src/experiment.py 112 0 10 10 100 20 200 6 0.1 45 90114 100 --progress_bar
-python src/experiment-full-mutation.py 112 10 10 100 20 200 6 0.1 45 80114 100 --progress_bar
+python src/experiment.py 112 0 10 10 100 20 200 6 0.1 45 90114 25 --progress_bar
+python src/experiment-full-mutation.py 112 10 10 100 20 200 6 0.1 45 80114 25 --progress_bar
 echo "Doing resource level 120 on demand 45."
-python src/experiment.py 120 0 10 10 100 20 200 6 0.1 45 90115 100 --progress_bar
-python src/experiment-full-mutation.py 120 10 10 100 20 200 6 0.1 45 80115 100 --progress_bar
+python src/experiment.py 120 0 10 10 100 20 200 6 0.1 45 90115 25 --progress_bar
+python src/experiment-full-mutation.py 120 10 10 100 20 200 6 0.1 45 80115 25 --progress_bar
 echo "Doing resource level 62 on demand 13."
-python src/experiment.py 62 0 10 10 100 20 200 6 0.1 13 90017 100 --progress_bar
-python src/experiment-full-mutation.py 62 10 10 100 20 200 6 0.1 13 80017 100 --progress_bar
+python src/experiment.py 62 0 10 10 100 20 200 6 0.1 13 90017 25 --progress_bar
+python src/experiment-full-mutation.py 62 10 10 100 20 200 6 0.1 13 80017 25 --progress_bar
 echo "Doing resource level 70 on demand 13."
-python src/experiment.py 70 0 10 10 100 20 200 6 0.1 13 90018 100 --progress_bar
-python src/experiment-full-mutation.py 70 10 10 100 20 200 6 0.1 13 80018 100 --progress_bar
+python src/experiment.py 70 0 10 10 100 20 200 6 0.1 13 90018 25 --progress_bar
+python src/experiment-full-mutation.py 70 10 10 100 20 200 6 0.1 13 80018 25 --progress_bar
 echo "Doing resource level 78 on demand 13."
-python src/experiment.py 78 0 10 10 100 20 200 6 0.1 13 90019 100 --progress_bar
-python src/experiment-full-mutation.py 78 10 10 100 20 200 6 0.1 13 80019 100 --progress_bar
+python src/experiment.py 78 0 10 10 100 20 200 6 0.1 13 90019 25 --progress_bar
+python src/experiment-full-mutation.py 78 10 10 100 20 200 6 0.1 13 80019 25 --progress_bar
 echo "Doing resource level 86 on demand 13."
-python src/experiment.py 86 0 10 10 100 20 200 6 0.1 13 90020 100 --progress_bar
-python src/experiment-full-mutation.py 86 10 10 100 20 200 6 0.1 13 80020 100 --progress_bar
+python src/experiment.py 86 0 10 10 100 20 200 6 0.1 13 90020 25 --progress_bar
+python src/experiment-full-mutation.py 86 10 10 100 20 200 6 0.1 13 80020 25 --progress_bar
 echo "Doing resource level 94 on demand 13."
-python src/experiment.py 94 0 10 10 100 20 200 6 0.1 13 90021 100 --progress_bar
-python src/experiment-full-mutation.py 94 10 10 100 20 200 6 0.1 13 80021 100 --progress_bar
+python src/experiment.py 94 0 10 10 100 20 200 6 0.1 13 90021 25 --progress_bar
+python src/experiment-full-mutation.py 94 10 10 100 20 200 6 0.1 13 80021 25 --progress_bar
 echo "Doing resource level 102 on demand 13."
-python src/experiment.py 102 0 10 10 100 20 200 6 0.1 13 90022 100 --progress_bar
-python src/experiment-full-mutation.py 102 10 10 100 20 200 6 0.1 13 80022 100 --progress_bar
+python src/experiment.py 102 0 10 10 100 20 200 6 0.1 13 90022 25 --progress_bar
+python src/experiment-full-mutation.py 102 10 10 100 20 200 6 0.1 13 80022 25 --progress_bar
 echo "Doing resource level 110 on demand 13."
-python src/experiment.py 110 0 10 10 100 20 200 6 0.1 13 90023 100 --progress_bar
-python src/experiment-full-mutation.py 110 10 10 100 20 200 6 0.1 13 80023 100 --progress_bar
+python src/experiment.py 110 0 10 10 100 20 200 6 0.1 13 90023 25 --progress_bar
+python src/experiment-full-mutation.py 110 10 10 100 20 200 6 0.1 13 80023 25 --progress_bar
 echo "Doing resource level 118 on demand 13."
-python src/experiment.py 118 0 10 10 100 20 200 6 0.1 13 90024 100 --progress_bar
-python src/experiment-full-mutation.py 118 10 10 100 20 200 6 0.1 13 80024 100 --progress_bar
+python src/experiment.py 118 0 10 10 100 20 200 6 0.1 13 90024 25 --progress_bar
+python src/experiment-full-mutation.py 118 10 10 100 20 200 6 0.1 13 80024 25 --progress_bar
 echo "Doing resource level 62 on demand 19."
-python src/experiment.py 62 0 10 10 100 20 200 6 0.1 19 90050 100 --progress_bar
-python src/experiment-full-mutation.py 62 10 10 100 20 200 6 0.1 19 80050 100 --progress_bar
+python src/experiment.py 62 0 10 10 100 20 200 6 0.1 19 90050 25 --progress_bar
+python src/experiment-full-mutation.py 62 10 10 100 20 200 6 0.1 19 80050 25 --progress_bar
 echo "Doing resource level 70 on demand 19."
-python src/experiment.py 70 0 10 10 100 20 200 6 0.1 19 90051 100 --progress_bar
-python src/experiment-full-mutation.py 70 10 10 100 20 200 6 0.1 19 80051 100 --progress_bar
+python src/experiment.py 70 0 10 10 100 20 200 6 0.1 19 90051 25 --progress_bar
+python src/experiment-full-mutation.py 70 10 10 100 20 200 6 0.1 19 80051 25 --progress_bar
 echo "Doing resource level 78 on demand 19."
-python src/experiment.py 78 0 10 10 100 20 200 6 0.1 19 90052 100 --progress_bar
-python src/experiment-full-mutation.py 78 10 10 100 20 200 6 0.1 19 80052 100 --progress_bar
+python src/experiment.py 78 0 10 10 100 20 200 6 0.1 19 90052 25 --progress_bar
+python src/experiment-full-mutation.py 78 10 10 100 20 200 6 0.1 19 80052 25 --progress_bar
 echo "Doing resource level 86 on demand 19."
-python src/experiment.py 86 0 10 10 100 20 200 6 0.1 19 90053 100 --progress_bar
-python src/experiment-full-mutation.py 86 10 10 100 20 200 6 0.1 19 80053 100 --progress_bar
+python src/experiment.py 86 0 10 10 100 20 200 6 0.1 19 90053 25 --progress_bar
+python src/experiment-full-mutation.py 86 10 10 100 20 200 6 0.1 19 80053 25 --progress_bar
 echo "Doing resource level 94 on demand 19."
-python src/experiment.py 94 0 10 10 100 20 200 6 0.1 19 90054 100 --progress_bar
-python src/experiment-full-mutation.py 94 10 10 100 20 200 6 0.1 19 80054 100 --progress_bar
+python src/experiment.py 94 0 10 10 100 20 200 6 0.1 19 90054 25 --progress_bar
+python src/experiment-full-mutation.py 94 10 10 100 20 200 6 0.1 19 80054 25 --progress_bar
 echo "Doing resource level 102 on demand 19."
-python src/experiment.py 102 0 10 10 100 20 200 6 0.1 19 90055 100 --progress_bar
-python src/experiment-full-mutation.py 102 10 10 100 20 200 6 0.1 19 80055 100 --progress_bar
+python src/experiment.py 102 0 10 10 100 20 200 6 0.1 19 90055 25 --progress_bar
+python src/experiment-full-mutation.py 102 10 10 100 20 200 6 0.1 19 80055 25 --progress_bar
 echo "Doing resource level 110 on demand 19."
-python src/experiment.py 110 0 10 10 100 20 200 6 0.1 19 90056 100 --progress_bar
-python src/experiment-full-mutation.py 110 10 10 100 20 200 6 0.1 19 80056 100 --progress_bar
+python src/experiment.py 110 0 10 10 100 20 200 6 0.1 19 90056 25 --progress_bar
+python src/experiment-full-mutation.py 110 10 10 100 20 200 6 0.1 19 80056 25 --progress_bar
 echo "Doing resource level 118 on demand 19."
-python src/experiment.py 118 0 10 10 100 20 200 6 0.1 19 90057 100 --progress_bar
-python src/experiment-full-mutation.py 118 10 10 100 20 200 6 0.1 19 80057 100 --progress_bar
+python src/experiment.py 118 0 10 10 100 20 200 6 0.1 19 90057 25 --progress_bar
+python src/experiment-full-mutation.py 118 10 10 100 20 200 6 0.1 19 80057 25 --progress_bar
 echo "Doing resource level 62 on demand 34."
-python src/experiment.py 62 0 10 10 100 20 200 6 0.1 34 90083 100 --progress_bar
-python src/experiment-full-mutation.py 62 10 10 100 20 200 6 0.1 34 80083 100 --progress_bar
+python src/experiment.py 62 0 10 10 100 20 200 6 0.1 34 90083 25 --progress_bar
+python src/experiment-full-mutation.py 62 10 10 100 20 200 6 0.1 34 80083 25 --progress_bar
 echo "Doing resource level 70 on demand 34."
-python src/experiment.py 70 0 10 10 100 20 200 6 0.1 34 90084 100 --progress_bar
-python src/experiment-full-mutation.py 70 10 10 100 20 200 6 0.1 34 80084 100 --progress_bar
+python src/experiment.py 70 0 10 10 100 20 200 6 0.1 34 90084 25 --progress_bar
+python src/experiment-full-mutation.py 70 10 10 100 20 200 6 0.1 34 80084 25 --progress_bar
 echo "Doing resource level 78 on demand 34."
-python src/experiment.py 78 0 10 10 100 20 200 6 0.1 34 90085 100 --progress_bar
-python src/experiment-full-mutation.py 78 10 10 100 20 200 6 0.1 34 80085 100 --progress_bar
+python src/experiment.py 78 0 10 10 100 20 200 6 0.1 34 90085 25 --progress_bar
+python src/experiment-full-mutation.py 78 10 10 100 20 200 6 0.1 34 80085 25 --progress_bar
 echo "Doing resource level 86 on demand 34."
-python src/experiment.py 86 0 10 10 100 20 200 6 0.1 34 90086 100 --progress_bar
-python src/experiment-full-mutation.py 86 10 10 100 20 200 6 0.1 34 80086 100 --progress_bar
+python src/experiment.py 86 0 10 10 100 20 200 6 0.1 34 90086 25 --progress_bar
+python src/experiment-full-mutation.py 86 10 10 100 20 200 6 0.1 34 80086 25 --progress_bar
 echo "Doing resource level 94 on demand 34."
-python src/experiment.py 94 0 10 10 100 20 200 6 0.1 34 90087 100 --progress_bar
-python src/experiment-full-mutation.py 94 10 10 100 20 200 6 0.1 34 80087 100 --progress_bar
+python src/experiment.py 94 0 10 10 100 20 200 6 0.1 34 90087 25 --progress_bar
+python src/experiment-full-mutation.py 94 10 10 100 20 200 6 0.1 34 80087 25 --progress_bar
 echo "Doing resource level 102 on demand 34."
-python src/experiment.py 102 0 10 10 100 20 200 6 0.1 34 90088 100 --progress_bar
-python src/experiment-full-mutation.py 102 10 10 100 20 200 6 0.1 34 80088 100 --progress_bar
+python src/experiment.py 102 0 10 10 100 20 200 6 0.1 34 90088 25 --progress_bar
+python src/experiment-full-mutation.py 102 10 10 100 20 200 6 0.1 34 80088 25 --progress_bar
 echo "Doing resource level 110 on demand 34."
-python src/experiment.py 110 0 10 10 100 20 200 6 0.1 34 90089 100 --progress_bar
-python src/experiment-full-mutation.py 110 10 10 100 20 200 6 0.1 34 80089 100 --progress_bar
+python src/experiment.py 110 0 10 10 100 20 200 6 0.1 34 90089 25 --progress_bar
+python src/experiment-full-mutation.py 110 10 10 100 20 200 6 0.1 34 80089 25 --progress_bar
 echo "Doing resource level 118 on demand 34."
-python src/experiment.py 118 0 10 10 100 20 200 6 0.1 34 90090 100 --progress_bar
-python src/experiment-full-mutation.py 118 10 10 100 20 200 6 0.1 34 80090 100 --progress_bar
+python src/experiment.py 118 0 10 10 100 20 200 6 0.1 34 90090 25 --progress_bar
+python src/experiment-full-mutation.py 118 10 10 100 20 200 6 0.1 34 80090 25 --progress_bar
 echo "Doing resource level 62 on demand 45."
-python src/experiment.py 62 0 10 10 100 20 200 6 0.1 45 90116 100 --progress_bar
-python src/experiment-full-mutation.py 62 10 10 100 20 200 6 0.1 45 80116 100 --progress_bar
+python src/experiment.py 62 0 10 10 100 20 200 6 0.1 45 90116 25 --progress_bar
+python src/experiment-full-mutation.py 62 10 10 100 20 200 6 0.1 45 80116 25 --progress_bar
 echo "Doing resource level 70 on demand 45."
-python src/experiment.py 70 0 10 10 100 20 200 6 0.1 45 90117 100 --progress_bar
-python src/experiment-full-mutation.py 70 10 10 100 20 200 6 0.1 45 80117 100 --progress_bar
+python src/experiment.py 70 0 10 10 100 20 200 6 0.1 45 90117 25 --progress_bar
+python src/experiment-full-mutation.py 70 10 10 100 20 200 6 0.1 45 80117 25 --progress_bar
 echo "Doing resource level 78 on demand 45."
-python src/experiment.py 78 0 10 10 100 20 200 6 0.1 45 90118 100 --progress_bar
-python src/experiment-full-mutation.py 78 10 10 100 20 200 6 0.1 45 80118 100 --progress_bar
+python src/experiment.py 78 0 10 10 100 20 200 6 0.1 45 90118 25 --progress_bar
+python src/experiment-full-mutation.py 78 10 10 100 20 200 6 0.1 45 80118 25 --progress_bar
 echo "Doing resource level 86 on demand 45."
-python src/experiment.py 86 0 10 10 100 20 200 6 0.1 45 90119 100 --progress_bar
-python src/experiment-full-mutation.py 86 10 10 100 20 200 6 0.1 45 80119 100 --progress_bar
+python src/experiment.py 86 0 10 10 100 20 200 6 0.1 45 90119 25 --progress_bar
+python src/experiment-full-mutation.py 86 10 10 100 20 200 6 0.1 45 80119 25 --progress_bar
 echo "Doing resource level 94 on demand 45."
-python src/experiment.py 94 0 10 10 100 20 200 6 0.1 45 90120 100 --progress_bar
-python src/experiment-full-mutation.py 94 10 10 100 20 200 6 0.1 45 80120 100 --progress_bar
+python src/experiment.py 94 0 10 10 100 20 200 6 0.1 45 90120 25 --progress_bar
+python src/experiment-full-mutation.py 94 10 10 100 20 200 6 0.1 45 80120 25 --progress_bar
 echo "Doing resource level 102 on demand 45."
-python src/experiment.py 102 0 10 10 100 20 200 6 0.1 45 90121 100 --progress_bar
-python src/experiment-full-mutation.py 102 10 10 100 20 200 6 0.1 45 80121 100 --progress_bar
+python src/experiment.py 102 0 10 10 100 20 200 6 0.1 45 90121 25 --progress_bar
+python src/experiment-full-mutation.py 102 10 10 100 20 200 6 0.1 45 80121 25 --progress_bar
 echo "Doing resource level 110 on demand 45."
-python src/experiment.py 110 0 10 10 100 20 200 6 0.1 45 90122 100 --progress_bar
-python src/experiment-full-mutation.py 110 10 10 100 20 200 6 0.1 45 80122 100 --progress_bar
+python src/experiment.py 110 0 10 10 100 20 200 6 0.1 45 90122 25 --progress_bar
+python src/experiment-full-mutation.py 110 10 10 100 20 200 6 0.1 45 80122 25 --progress_bar
 echo "Doing resource level 118 on demand 45."
-python src/experiment.py 118 0 10 10 100 20 200 6 0.1 45 90123 100 --progress_bar
-python src/experiment-full-mutation.py 118 10 10 100 20 200 6 0.1 45 80123 100 --progress_bar
+python src/experiment.py 118 0 10 10 100 20 200 6 0.1 45 90123 25 --progress_bar
+python src/experiment-full-mutation.py 118 10 10 100 20 200 6 0.1 45 80123 25 --progress_bar
 echo "Doing resource level 66 on demand 13."
-python src/experiment.py 66 0 10 10 100 20 200 6 0.1 13 90025 100 --progress_bar
-python src/experiment-full-mutation.py 66 10 10 100 20 200 6 0.1 13 80025 100 --progress_bar
+python src/experiment.py 66 0 10 10 100 20 200 6 0.1 13 90025 25 --progress_bar
+python src/experiment-full-mutation.py 66 10 10 100 20 200 6 0.1 13 80025 25 --progress_bar
 echo "Doing resource level 74 on demand 13."
-python src/experiment.py 74 0 10 10 100 20 200 6 0.1 13 90026 100 --progress_bar
-python src/experiment-full-mutation.py 74 10 10 100 20 200 6 0.1 13 80026 100 --progress_bar
+python src/experiment.py 74 0 10 10 100 20 200 6 0.1 13 90026 25 --progress_bar
+python src/experiment-full-mutation.py 74 10 10 100 20 200 6 0.1 13 80026 25 --progress_bar
 echo "Doing resource level 82 on demand 13."
-python src/experiment.py 82 0 10 10 100 20 200 6 0.1 13 90027 100 --progress_bar
-python src/experiment-full-mutation.py 82 10 10 100 20 200 6 0.1 13 80027 100 --progress_bar
+python src/experiment.py 82 0 10 10 100 20 200 6 0.1 13 90027 25 --progress_bar
+python src/experiment-full-mutation.py 82 10 10 100 20 200 6 0.1 13 80027 25 --progress_bar
 echo "Doing resource level 90 on demand 13."
-python src/experiment.py 90 0 10 10 100 20 200 6 0.1 13 90028 100 --progress_bar
-python src/experiment-full-mutation.py 90 10 10 100 20 200 6 0.1 13 80028 100 --progress_bar
+python src/experiment.py 90 0 10 10 100 20 200 6 0.1 13 90028 25 --progress_bar
+python src/experiment-full-mutation.py 90 10 10 100 20 200 6 0.1 13 80028 25 --progress_bar
 echo "Doing resource level 98 on demand 13."e
-python src/experiment.py 98 0 10 10 100 20 200 6 0.1 13 90029 100 --progress_bar
-python src/experiment-full-mutation.py 98 10 10 100 20 200 6 0.1 13 80029 100 --progress_bar
+python src/experiment.py 98 0 10 10 100 20 200 6 0.1 13 90029 25 --progress_bar
+python src/experiment-full-mutation.py 98 10 10 100 20 200 6 0.1 13 80029 25 --progress_bar
 echo "Doing resource level 106 on demand 13."
-python src/experiment.py 106 0 10 10 100 20 200 6 0.1 13 90030 100 --progress_bar
-python src/experiment-full-mutation.py 106 10 10 100 20 200 6 0.1 13 80030 100 --progress_bar
+python src/experiment.py 106 0 10 10 100 20 200 6 0.1 13 90030 25 --progress_bar
+python src/experiment-full-mutation.py 106 10 10 100 20 200 6 0.1 13 80030 25 --progress_bar
 echo "Doing resource level 114 on demand 13."
-python src/experiment.py 114 0 10 10 100 20 200 6 0.1 13 90031 100 --progress_bar
-python src/experiment-full-mutation.py 114 10 10 100 20 200 6 0.1 13 80031 100 --progress_bar
+python src/experiment.py 114 0 10 10 100 20 200 6 0.1 13 90031 25 --progress_bar
+python src/experiment-full-mutation.py 114 10 10 100 20 200 6 0.1 13 80031 25 --progress_bar
 echo "Doing resource level 122 on demand 13."
-python src/experiment.py 122 0 10 10 100 20 200 6 0.1 13 90032 100 --progress_bar
-python src/experiment-full-mutation.py 122 10 10 100 20 200 6 0.1 13 80032 100 --progress_bar
+python src/experiment.py 122 0 10 10 100 20 200 6 0.1 13 90032 25 --progress_bar
+python src/experiment-full-mutation.py 122 10 10 100 20 200 6 0.1 13 80032 25 --progress_bar
 echo "Doing resource level 66 on demand 19."
-python src/experiment.py 66 0 10 10 100 20 200 6 0.1 19 90058 100 --progress_bar
-python src/experiment-full-mutation.py 66 10 10 100 20 200 6 0.1 19 80058 100 --progress_bar
+python src/experiment.py 66 0 10 10 100 20 200 6 0.1 19 90058 25 --progress_bar
+python src/experiment-full-mutation.py 66 10 10 100 20 200 6 0.1 19 80058 25 --progress_bar
 echo "Doing resource level 74 on demand 19."
-python src/experiment.py 74 0 10 10 100 20 200 6 0.1 19 90059 100 --progress_bar
-python src/experiment-full-mutation.py 74 10 10 100 20 200 6 0.1 19 80059 100 --progress_bar
+python src/experiment.py 74 0 10 10 100 20 200 6 0.1 19 90059 25 --progress_bar
+python src/experiment-full-mutation.py 74 10 10 100 20 200 6 0.1 19 80059 25 --progress_bar
 echo "Doing resource level 82 on demand 19."
-python src/experiment.py 82 0 10 10 100 20 200 6 0.1 19 90060 100 --progress_bar
-python src/experiment-full-mutation.py 82 10 10 100 20 200 6 0.1 19 80060 100 --progress_bar
+python src/experiment.py 82 0 10 10 100 20 200 6 0.1 19 90060 25 --progress_bar
+python src/experiment-full-mutation.py 82 10 10 100 20 200 6 0.1 19 80060 25 --progress_bar
 echo "Doing resource level 90 on demand 19."
-python src/experiment.py 90 0 10 10 100 20 200 6 0.1 19 90061 100 --progress_bar
-python src/experiment-full-mutation.py 90 10 10 100 20 200 6 0.1 19 80061 100 --progress_bar
+python src/experiment.py 90 0 10 10 100 20 200 6 0.1 19 90061 25 --progress_bar
+python src/experiment-full-mutation.py 90 10 10 100 20 200 6 0.1 19 80061 25 --progress_bar
 echo "Doing resource level 98 on demand 19."
-python src/experiment.py 98 0 10 10 100 20 200 6 0.1 19 90062 100 --progress_bar
-python src/experiment-full-mutation.py 98 10 10 100 20 200 6 0.1 19 80062 100 --progress_bar
+python src/experiment.py 98 0 10 10 100 20 200 6 0.1 19 90062 25 --progress_bar
+python src/experiment-full-mutation.py 98 10 10 100 20 200 6 0.1 19 80062 25 --progress_bar
 echo "Doing resource level 106 on demand 19."
-python src/experiment.py 106 0 10 10 100 20 200 6 0.1 19 90063 100 --progress_bar
-python src/experiment-full-mutation.py 106 10 10 100 20 200 6 0.1 19 80063 100 --progress_bar
+python src/experiment.py 106 0 10 10 100 20 200 6 0.1 19 90063 25 --progress_bar
+python src/experiment-full-mutation.py 106 10 10 100 20 200 6 0.1 19 80063 25 --progress_bar
 echo "Doing resource level 114 on demand 19."
-python src/experiment.py 114 0 10 10 100 20 200 6 0.1 19 90064 100 --progress_bar
-python src/experiment-full-mutation.py 114 10 10 100 20 200 6 0.1 19 80064 100 --progress_bar
+python src/experiment.py 114 0 10 10 100 20 200 6 0.1 19 90064 25 --progress_bar
+python src/experiment-full-mutation.py 114 10 10 100 20 200 6 0.1 19 80064 25 --progress_bar
 echo "Doing resource level 122 on demand 19."
-python src/experiment.py 122 0 10 10 100 20 200 6 0.1 19 90065 100 --progress_bar
-python src/experiment-full-mutation.py 122 10 10 100 20 200 6 0.1 19 80065 100 --progress_bar
+python src/experiment.py 122 0 10 10 100 20 200 6 0.1 19 90065 25 --progress_bar
+python src/experiment-full-mutation.py 122 10 10 100 20 200 6 0.1 19 80065 25 --progress_bar
 echo "Doing resource level 66 on demand 34."
-python src/experiment.py 66 0 10 10 100 20 200 6 0.1 34 90091 100 --progress_bar
-python src/experiment-full-mutation.py 66 10 10 100 20 200 6 0.1 34 80091 100 --progress_bar
+python src/experiment.py 66 0 10 10 100 20 200 6 0.1 34 90091 25 --progress_bar
+python src/experiment-full-mutation.py 66 10 10 100 20 200 6 0.1 34 80091 25 --progress_bar
 echo "Doing resource level 74 on demand 34."
-python src/experiment.py 74 0 10 10 100 20 200 6 0.1 34 90092 100 --progress_bar
-python src/experiment-full-mutation.py 74 10 10 100 20 200 6 0.1 34 80092 100 --progress_bar
+python src/experiment.py 74 0 10 10 100 20 200 6 0.1 34 90092 25 --progress_bar
+python src/experiment-full-mutation.py 74 10 10 100 20 200 6 0.1 34 80092 25 --progress_bar
 echo "Doing resource level 82 on demand 34."
-python src/experiment.py 82 0 10 10 100 20 200 6 0.1 34 90093 100 --progress_bar
-python src/experiment-full-mutation.py 82 10 10 100 20 200 6 0.1 34 80093 100 --progress_bar
+python src/experiment.py 82 0 10 10 100 20 200 6 0.1 34 90093 25 --progress_bar
+python src/experiment-full-mutation.py 82 10 10 100 20 200 6 0.1 34 80093 25 --progress_bar
 echo "Doing resource level 90 on demand 34."
-python src/experiment.py 90 0 10 10 100 20 200 6 0.1 34 90094 100 --progress_bar
-python src/experiment-full-mutation.py 90 10 10 100 20 200 6 0.1 34 80094 100 --progress_bar
+python src/experiment.py 90 0 10 10 100 20 200 6 0.1 34 90094 25 --progress_bar
+python src/experiment-full-mutation.py 90 10 10 100 20 200 6 0.1 34 80094 25 --progress_bar
 echo "Doing resource level 98 on demand 34."
-python src/experiment.py 98 0 10 10 100 20 200 6 0.1 34 90095 100 --progress_bar
-python src/experiment-full-mutation.py 98 10 10 100 20 200 6 0.1 34 80095 100 --progress_bar
+python src/experiment.py 98 0 10 10 100 20 200 6 0.1 34 90095 25 --progress_bar
+python src/experiment-full-mutation.py 98 10 10 100 20 200 6 0.1 34 80095 25 --progress_bar
 echo "Doing resource level 106 on demand 34."
-python src/experiment.py 106 0 10 10 100 20 200 6 0.1 34 90096 100 --progress_bar
-python src/experiment-full-mutation.py 106 10 10 100 20 200 6 0.1 34 80096 100 --progress_bar
+python src/experiment.py 106 0 10 10 100 20 200 6 0.1 34 90096 25 --progress_bar
+python src/experiment-full-mutation.py 106 10 10 100 20 200 6 0.1 34 80096 25 --progress_bar
 echo "Doing resource level 114 on demand 34."
-python src/experiment.py 114 0 10 10 100 20 200 6 0.1 34 90097 100 --progress_bar
-python src/experiment-full-mutation.py 114 10 10 100 20 200 6 0.1 34 80097 100 --progress_bar
+python src/experiment.py 114 0 10 10 100 20 200 6 0.1 34 90097 25 --progress_bar
+python src/experiment-full-mutation.py 114 10 10 100 20 200 6 0.1 34 80097 25 --progress_bar
 echo "Doing resource level 122 on demand 34."
-python src/experiment.py 122 0 10 10 100 20 200 6 0.1 34 90098 100 --progress_bar
-python src/experiment-full-mutation.py 122 10 10 100 20 200 6 0.1 34 80098 100 --progress_bar
+python src/experiment.py 122 0 10 10 100 20 200 6 0.1 34 90098 25 --progress_bar
+python src/experiment-full-mutation.py 122 10 10 100 20 200 6 0.1 34 80098 25 --progress_bar
 echo "Doing resource level 66 on demand 45."
-python src/experiment.py 66 0 10 10 100 20 200 6 0.1 45 90124 100 --progress_bar
-python src/experiment-full-mutation.py 66 10 10 100 20 200 6 0.1 45 80124 100 --progress_bar
+python src/experiment.py 66 0 10 10 100 20 200 6 0.1 45 90124 25 --progress_bar
+python src/experiment-full-mutation.py 66 10 10 100 20 200 6 0.1 45 80124 25 --progress_bar
 echo "Doing resource level 74 on demand 45."
-python src/experiment.py 74 0 10 10 100 20 200 6 0.1 45 90125 100 --progress_bar
-python src/experiment-full-mutation.py 74 10 10 100 20 200 6 0.1 45 80125 100 --progress_bar
+python src/experiment.py 74 0 10 10 100 20 200 6 0.1 45 90125 25 --progress_bar
+python src/experiment-full-mutation.py 74 10 10 100 20 200 6 0.1 45 80125 25 --progress_bar
 echo "Doing resource level 82 on demand 45."
-python src/experiment.py 82 0 10 10 100 20 200 6 0.1 45 90126 100 --progress_bar
-python src/experiment-full-mutation.py 82 10 10 100 20 200 6 0.1 45 80126 100 --progress_bar
+python src/experiment.py 82 0 10 10 100 20 200 6 0.1 45 90126 25 --progress_bar
+python src/experiment-full-mutation.py 82 10 10 100 20 200 6 0.1 45 80126 25 --progress_bar
 echo "Doing resource level 90 on demand 45."
-python src/experiment.py 90 0 10 10 100 20 200 6 0.1 45 90127 100 --progress_bar
-python src/experiment-full-mutation.py 90 10 10 100 20 200 6 0.1 45 80127 100 --progress_bar
+python src/experiment.py 90 0 10 10 100 20 200 6 0.1 45 90127 25 --progress_bar
+python src/experiment-full-mutation.py 90 10 10 100 20 200 6 0.1 45 80127 25 --progress_bar
 echo "Doing resource level 98 on demand 45."
-python src/experiment.py 98 0 10 10 100 20 200 6 0.1 45 90128 100 --progress_bar
-python src/experiment-full-mutation.py 98 10 10 100 20 200 6 0.1 45 80128 100 --progress_bar
+python src/experiment.py 98 0 10 10 100 20 200 6 0.1 45 90128 25 --progress_bar
+python src/experiment-full-mutation.py 98 10 10 100 20 200 6 0.1 45 80128 25 --progress_bar
 echo "Doing resource level 106 on demand 45."
-python src/experiment.py 106 0 10 10 100 20 200 6 0.1 45 90129 100 --progress_bar
-python src/experiment-full-mutation.py 106 10 10 100 20 200 6 0.1 45 80129 100 --progress_bar
+python src/experiment.py 106 0 10 10 100 20 200 6 0.1 45 90129 25 --progress_bar
+python src/experiment-full-mutation.py 106 10 10 100 20 200 6 0.1 45 80129 25 --progress_bar
 echo "Doing resource level 114 on demand 45."
-python src/experiment.py 114 0 10 10 100 20 200 6 0.1 45 90130 100 --progress_bar
-python src/experiment-full-mutation.py 114 10 10 100 20 200 6 0.1 45 80130 100 --progress_bar
+python src/experiment.py 114 0 10 10 100 20 200 6 0.1 45 90130 25 --progress_bar
+python src/experiment-full-mutation.py 114 10 10 100 20 200 6 0.1 45 80130 25 --progress_bar
 echo "Doing resource level 122 on demand 45."
-python src/experiment.py 122 0 10 10 100 20 200 6 0.1 45 90131 100 --progress_bar
-python src/experiment-full-mutation.py 122 10 10 100 20 200 6 0.1 45 80131 100 --progress_bar
+python src/experiment.py 122 0 10 10 100 20 200 6 0.1 45 90131 25 --progress_bar
+python src/experiment-full-mutation.py 122 10 10 100 20 200 6 0.1 45 80131 25 --progress_bar
