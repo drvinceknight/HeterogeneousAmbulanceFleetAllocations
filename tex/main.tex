@@ -357,6 +357,96 @@ these patients are included in the optimisation when maximising total
 population survival probability.
 
 
+\section{Problem Statement \& Notation}\label{sec:problem_description}
+We first present some notation. We have the following sets:
+
+\begin{itemize}
+  \item $\mathcal{P}$ is the set of pick-up locations, indexed by $p$;
+  \item $\mathcal{A}$ is the set of ambulance locations, indexed by $a$;
+  \item $\mathcal{K}$ is the set of medical specialities, indexed by $k$;
+  \item $\mathcal{Y}$ is the set of hospitals, indexed by $y$.
+\end{itemize}
+
+To incorporate heterogeneous fleets the set of specialities $\mathcal{K}$ is
+partitioned into two sets, $\mathcal{K}_A$, those patients that can be seen by
+secondary vehicles, and $\mathcal{K}_B$, those patients who are seen by
+primary vehicles only.
+
+An allocation is given by the tuple $\left(Z_a, \tilde{Z}_a\right)$, where $Z_a$
+is the number of primary vehicles allocated to ambulance location $a$; and
+$\tilde{Z}_a$ is the number of secondary vehicles allocated to ambulance
+location $a$. Also let:
+
+\begin{itemize}
+  \item $\lambda_{pk}$ be the rate at which patients of speciality $k$ make
+        calls from pick-up location $p$;
+  \item $s_k(t)$ be the survival function function associated with patients of
+        speciality $k$;
+  \item $\pi_a$ be the average utilisation of primary vehicles stationed at
+        location $a$;
+  \item $\tilde{\pi}_a$ be the average utilisation of secondary vehicles
+        stationed at location $a$.
+  \item $b_{pa}$ be the expected travel time from ambulance location $a$ to
+        pick-up location $p$; and let $B_{pa}$ be a random variable representing
+        the time it takes for an ambulance to drive this distance;
+  \item $C_{py}$ be a random variable representing the travel time from pick-up
+        location $p$ to hospital $y$;
+        time it takes for an ambulance to drive this distance;
+  \item $D_{ya}$ be a random variable representing the travel time from hospital
+        $y$ to ambulance location $a$;
+  \item $F_{pa}$ be a random variable representing the travel time from pick-up
+        location $p$ to ambulance location $a$;
+  \item $G_k$ be a random variable representing the time the ambulance spends
+        with patients of speciality $k$ at the pick-up location;
+  \item $J_k$ be a random variable representing the time the ambulance spends
+        with patients of speciality $k$ at the hospital;
+  \item $\Theta$ be a random variable representing the time the ambulance spends
+        re-fuelling, re-stocking, and resting between transit jobs;
+  \item $q_{pky}$ be the probability that a patient of speciality $k$ from
+        pick-up location $p$ is taken to hospital $y$.
+        Note that $\sum_{y \in \mathcal{Y}} q_{pky} < 1$ is possible, that is a
+        patient may not go to any hospital, in which case the ambulance returns
+        to their ambulance location.
+\end{itemize}
+
+To incorporate heterogeneous vehicles, let also $\tilde{\pi}_a$ denote the
+average utilisation of secondary vehicles stationed at location $a$; and
+$\tilde{b}_{pa}$, $\tilde{B}_{pa}$, $\tilde{C}_{py}$, $\tilde{D}_{ya}$, and
+$\tilde{F}_{pa}$ denote the corresponding travel times for secondary vehicles.
+
+Patients will call an ambulance from one of the pick-up locations
+$p \in \mathcal{P}$. If \textit{all} ambulances are busy, then that call will be
+abandoned and it is assumed that the patient will find their own way to the
+hospital through private or public transportation. Otherwise, a central control
+centre will dispatch the closest available primary vehicle. That vehicle will
+travel from its location to the patient ($B_{pa}$), spend some time on the scene
+treating the patient ($G_k$), travel to the hospital ($C_{py}$), spend some time
+handing over the patient at the hospital ($J_k$), travels back to it's original
+location ($D_{ya}$), then spends time refilling and refuelling ($\Theta$).
+There is also a probability that the patient does not need a hospital, and so
+the vehicle will travel from the pick-up location back to it's original vehicle
+location ($F_{pa}$). These routes are shown visually in
+Figure~\ref{fig:travel_routes}. Note that $B_{pa}$ and $F_{pa}$ need not
+necessarily be equal, as travel times need not necessarily be symmetrical.
+
+\begin{figure}
+    \centering
+    \includestandalone[width=0.65\textwidth]{img/diagram}
+    \caption{Ambulance routes for a given transit job.}
+    \label{fig:travel_routes}
+\end{figure}
+
+Therefore the total time an ambulance is busy will be $T_{paky}$ given by
+Equation~\ref{eqn:service_time_withhosp} if a hospital is required, and
+service time $T_{pak}$ given by Equation~\ref{eqn:service_time_nohosp} if no
+hospital is required.
+
+\begin{align}
+T_{paky} &= B_{pa} + G_k + C_{py} + J_{yk} + D_{ya} + \Theta \label{eqn:service_time_withhosp} \\
+T_{pak} &= B_{pa} + G_k + F_{pa} + \Theta \label{eqn:service_time_nohosp}
+\end{align}
+
+
 \section{Optimising Allocations for Maximal Survival}\label{sec:optimising}
 Here we outline a method of finding vehicle allocations that that maximise the
 expected survival of patients.
@@ -398,7 +488,7 @@ targets.
 \begin{equation}\label{eqn:survival_cutoff}
     s_L(t) = \begin{cases}
     1 & \text{ if } 0\leq t \leq L \\
-    0 & \text{ if } t > 8 
+    0 & \text{ if } t > L 
     \end{cases}
 \end{equation}
 
@@ -425,36 +515,7 @@ vehicles, EAs, and secondary vehicles, RRVs), and is constructed by
 appropriately summing these survival curves, described in
 Section~\ref{sec:survival}, across the population, multiplying by ambulance
 availability where appropriate.
-
-We first present some notation. Let $\mathcal{P}$ be the set of pick-up
-locations, indexed by $p$; $\mathcal{A}$ be the set of ambulance locations,
-indexed by $a$; and $\mathcal{K}$ be the set of medical specialities, indexed
-by $k$.
-An allocation is given by $Z_a$ and $\tilde{Z}_a$, where $Z_a$ is the number
-of primary vehicles allocated to ambulance location $a$; and $\tilde{Z}_a$ is
-the number of secondary vehicles allocated to ambulance location $a$. Also
-let:
-
-\begin{itemize}
-  \item $\tilde{t}_{pa}$ be the expected travel time from vehicle location $a$
-        to pick-up location $p$ for primary vehicles;
-  \item $\tilde{\hat{t}}_{pa}$ be the expected travel time from vehicle
-        location $a$ to pick-up location $p$ for secondary vehicles;
-  \item $\lambda_{pk}$ be the rate at which patients of speciality $k$ make
-        calls from pick-up location $p$;
-  \item $s_k(t)$ be the survival function function associated with patients of
-        speciality $k$;
-  \item $\pi_a$ be the average utilisation of primary vehicles stationed at
-        location $a$;
-  \item $\tilde{\pi}_a$ be the average utilisation of secondary vehicles
-        stationed at location $a$.
-\end{itemize}
-
-To incorporate heterogeneous fleets the set of specialities $\mathcal{K}$ is
-partitioned into two sets, $\mathcal{K}_A$, those patients that can be seen by
-secondary vehicles, and $\mathcal{K}_B$, those patients who are seen by
-primary vehicles only. Then the MESLMHPHF is given by
-Equation~\ref{eqn:meslmhphf},
+The MESLMHPHF is given by Equation~\ref{eqn:meslmhphf},
 
 \begin{equation}\label{eqn:meslmhphf}
 g\left(Z_a, \tilde{Z}_a\right) =
@@ -476,19 +537,19 @@ probabilities are given by Equations~\ref{eqn:survival_A}
 and~\ref{eqn:survival_B} respectively,
 
 \begin{equation}\label{eqn:survival_A}
-\Psi_{kpa} = s_k\left( t_{pa} \right)
+\Psi_{kpa} = s_k\left( b_{pa} \right)
 \left(1 - \pi_{a}^{Z_a} \right)
 \prod_{\alpha \in \mathcal{A}}
 \pi_{\alpha}^{\left(Z_{\alpha} \beta_{p\alpha a} \right)}
 \end{equation}
 
 \begin{align}\label{eqn:survival_B}
-\hat{\Psi}_{kpa} &= s_k\left(\hat{t}_{pa}\right)
+\hat{\Psi}_{kpa} &= s_k\left(\tilde{b}_{pa}\right)
 \left(1 - \tilde{\pi}_{a}^{\tilde{Z}_a} \right)
 \prod_{\alpha \in \mathcal{A}}
 \tilde{\pi}_{\alpha}^{\left(\tilde{Z}_{\alpha} \beta_{p\alpha a}\right)}
 \pi_{\alpha}^{\left(Z_{\alpha} R_{p \alpha a}\right) } \nonumber \\
-&+ s_k\left(t_{pa}\right) \left(1 - \pi_{a}^{Z_a} \right)
+&+ s_k\left(b_{pa}\right) \left(1 - \pi_{a}^{Z_a} \right)
 \prod_{\alpha \in \mathcal{A}}
 \pi_{\alpha}^{\left(Z_{\alpha}\beta_{p\alpha a}\right)}
 \tilde{\pi}_{\alpha}^{\left(\tilde{Z}_{\alpha}
@@ -505,14 +566,14 @@ than a secondary vehicle at $a_2$, defined in equation~\ref{eqn:R}.
 \begin{equation}\label{eqn:beta}
 \beta_{p a_1 a_2} = \begin{cases}
     0 & \text{if } a_1 = a_2\\
-    1 & \text{if } t_{p a_1} \leq t_{p a_2}\\
+    1 & \text{if } b_{p a_1} \leq b_{p a_2}\\
     0 & \text{otherwise.}
 \end{cases}
 \end{equation}
 
 \begin{equation}\label{eqn:R}
 R_{p a_1 a_2} = \begin{cases}
-    1 & \text{if } t_{p a_1} \leq \hat{t}_{p a_2}\\
+    1 & \text{if } b_{p a_1} \leq \tilde{b}_{p a_2}\\
     0 & \text{otherwise.}
 \end{cases}
 \end{equation}
@@ -689,38 +750,6 @@ ideas include modelling transit jobs as customers, rather than the patients
 themselves, and simulating primary and secondary vehicles as two simulations
 sequentially, with the output of the former being the input of the latter.
 
-First, in addition to that introduced in Section~\ref{sec:meslmhphf}, let us
-introduce the following notation, let:
-
-\begin{itemize}
-  \item $\mathcal{Y}$ be the set of hospitals, indexed by $y$;
-  \item $\tilde{B}_{pa}$ be the traffic-free travel time from ambulance
-        location $a$ to pick-up location $p$; and let $B_{pa}$ be a random
-        variable representing the time it takes for an ambulance to drive this
-        distance;
-  \item $\tilde{C}_{py}$ be the traffic-free travel time from pick-up location
-        $p$ to hospital $y$; and let $C_{py}$ be a random variable
-        representing the time it takes for an ambulance to drive this
-        distance;
-  \item $\tilde{D}_{ya}$ be the traffic-free travel time from hospital $y$ to
-        ambulance location $a$; and let $D_{ya}$ be a random variable
-        representing the time it takes for an ambulance to drive this distance;
-  \item $\tilde{F}_{pa}$ be the traffic-free travel time from pick-up location
-        $p$ to ambulance location $a$; and let $F_{pa}$ be a random variable
-        representing the time it takes for an ambulance to drive this distance;
-  \item $G_k$ be a random variable representing the time the ambulance spends
-        with patients of speciality $k$ at the pick up location;
-  \item $J_k$ be a random variable representing the time the ambulance spends
-        with patients of speciality $k$ at the hospital;
-  \item $\Theta$ be a random variable representing the time the ambulance spends
-        re-fuelling, re-stocking, and resting between transit jobs;
-  \item $q_{pky}$ be the probability that a patient of speciality $k$ from
-        pick-up location $p$ is taken to hospital $y$.
-        Note that $\sum_y q_{pky} < 1$ is possible, that is a patient may not
-        go to any hospital, in which case the ambulance returns to their
-        ambulance location.
-\end{itemize}
-
 
 \subsection{Simulating Primary Vehicles}\label{sec:simulation_primary}
 For primary vehicles the logic to simulate is as follows: Patients make a call
@@ -745,30 +774,13 @@ $(p, k) \in \mathcal{P} \times \mathcal{K}$ arrive with rate $\lambda_{pk}$.
 Servers can be categorised into classes corresponding to the ambulance
 locations $\mathcal{A}$. Service times are server-dependent, that is the
 service time of a transit job of type $(p, k)$, being served by a server of
-class $a$, will have service time $T_{paky}$ given by
-Equation~\ref{eqn:service_time_withhosp} if a hospital is required, and
-service time $T_{pak}$ given by Equation~\ref{eqn:service_time_nohosp} if no
-hospital is required.
-
-\begin{align}
-T_{paky} &= B_{pa} + G_k + C_{py} + J_{yk} + D_{ya} + \Theta \label{eqn:service_time_withhosp} \\
-T_{pak} &= B_{pa} + G_k + F_{pa} + \Theta \label{eqn:service_time_nohosp}
-\end{align}
-
+class $a$, will have service time $T_{paky}$ if a hospital is required and
+$T_{pak}$ if no hospital is required. These are given by
+Equations~\ref{eqn:service_time_withhosp} and~\ref{eqn:service_time_nohosp}
+respectively, in Section~\ref{sec:problem_description}.
 That is $T_{paky}$ and $T_{pak}$ is the overall time the ambulance spends
 dealing with that transit job and is unavailable to receive any more transit
-jobs. Figure~\ref{fig:travel_routes} shows the route a particular ambulance
-will take when servicing a transit job, where there is a probability
-$1 - \sum_{y} q_{pky}$ that the ambulance will return, possibly on a different
-route, assuming distances are not symmetrical, to the ambulance location after
-a pick-up (dashed line), when patients do not need to go to the hospital.
-
-\begin{figure}
-    \centering
-    \includestandalone[width=0.65\textwidth]{img/diagram}
-    \caption{Ambulance routes for a given transit job.}
-    \label{fig:travel_routes}
-\end{figure}
+jobs.
 
 From a patient's point of view their service only lasts $G_k + C_{py} + J_{yk}$,
 (or $G_k$ if no hospital is required), and their waiting time is $B_{pa}$ plus
@@ -793,10 +805,9 @@ Equation~\ref{eqn:speed},
 S_h = s d_h
 \end{equation}
 
-where $s$ is the average speed that ambulances drive given no traffic. The
-relationship between time travelled and distance covered is piece-wise linear
-with slope $S_h$ in period $h$. Therefore, travel times are calculated using
-this relationship.
+where $s$ is some given baseline speed. The relationship between time travelled
+and distance covered is piece-wise linear with slope $S_h$ in period $h$.
+Therefore, travel times are calculated using this relationship.
 
 As an example, consider the scenario where for the first period $t \in (0, 4)$
 we have $S_1$ = 1; for $t \in (4, 8)$ we have $S_2 = \frac{1}{4}$, for
@@ -825,10 +836,8 @@ Figure~\ref{fig:travel_times_2}.
     \label{fig:travel_times}
 \end{figure}
 
-This is the method used to calculate the expected values of $B_{pa}$,
-$C_{py}$, $D_{ya}$ and $F_{pa}$ for the transit job service times, from the
-traffic-free travel times $\tilde{B}_{pa}$, $\tilde{C}_{py}$, $\tilde{D}_{ya}$
-and $\tilde{F}_{pa}$ respectively.
+This is the method used to calculate the expected values of $B_{pa}$, $C_{py}$,
+$D_{ya}$ and $F_{pa}$.
 Furthermore it is assumed that travel times for each segment of the route
 (from vehicle location to patient, from patient to hospital, and from hospital
 back the the vehicle's location) follow a Triangular distribution around the
@@ -839,7 +848,7 @@ calculated expected travel time, between 75\% and 125\% of the value.
 Additionally, it is assumed that calls arrive according to a Poisson
 distribution, with rates $\lambda{pk}$, and that these rates are time
 dependent. Each day is split into four 6-hour periods, the morning, afternoon,
-evening and night, and each speciality $k$ and pick up location $p$ will have
+evening and night, and each speciality $k$ and pick-up location $p$ will have
 a different call arrival rate for each of these periods.
 
 For some locations and specialities the number of observed calls might be very
@@ -892,15 +901,15 @@ Secondary vehicles are chosen in the same way was primary vehicles, by choosing
 out of the currently free vehicles the one with the smallest expected time to
 patient. Their service times are reactionary to what occurred with the primary
 vehicle.
-Let $B_{pa_2}$ be the time it takes for the secondary vehicle to travel from
-its location $a_2$ to the patient pick-up location $p$; $\hat{B}_{pa_1}$ is the
+Let $\tilde{B}_{pa_2}$ be the time it takes for the secondary vehicle to travel
+from its location $a_2$ to the patient pick-up location $p$; $B_{pa_1}$ is the
 time is took for the primary vehicle to get from its location $a_1$ to the
-patient pick-up location $p$; $\hat{G}_k$ is the time the primary vehicle spent
-with the patient; and $\hat{F}_{pa_2}$ is the time is takes to return to the
+patient pick-up location $p$; $G_k$ is the time the primary vehicle spent
+with the patient; and $\tilde{F}_{pa_2}$ is the time is takes to return to the
 secondary vehicle's location $a_2$ from the patient pick-up location $p$.
-Note that $\hat{B}_{pa_1}$ and $\hat{G}_k$ are exact values obtained from the
-initial simulation of the primary vehicles, while $B_{pa_2}$ and $F_{pa_2}$ are
-random variables to sample in the subsequent simulation.
+Note that $B_{pa_1}$ and $G_k$ are exact values obtained from the
+initial simulation of the primary vehicles, while $\tilde{B}_{pa_2}$ and
+$\tilde{F}_{pa_2}$ are random variables to sample in the subsequent simulation.
 Travel times are calculated as described in Section~\ref{sec:travel_times},
 replacing the primary vehicle delay factor, $d_h$, with a delay factor for
 secondary vehicles, $\tilde{d}_h$. This accounts for secondary vehicles
@@ -923,7 +932,7 @@ Therefore job service times for secondary vehicles, $\tilde{T}_{pak}$, are
 given by:
 
 \begin{equation}
-  \tilde{T}_{pak} = \max\left(B_{pa_2}, \hat{B}_{pa_1} + \hat{G}_k \right) + F_{pa_2}
+  \tilde{T}_{pak} = \max\left(\tilde{B}_{pa_2}, B_{pa_1} + G_k \right) + \tilde{F}_{pa_2}
 \end{equation}
 
 \begin{figure}
@@ -1570,8 +1579,25 @@ Call arrival rates $\lambda_{pk}$ are derived from 2019 demand data slit by
 municipality and speciality, and time of day. Probabilities $q_{pky}$ are
 similarly derived from the 2019 data of transit journeys. All traffic-free
 travel times are found using Google Maps API, while time-dependent traffic
-delays are found from the TomTom website. The other models are parameterised
-in the following way:
+delays are found from the TomTom website and given in
+Table~\ref{tbl:delay_factors}.
+
+\begin{table}
+\begin{center}
+\begin{tabular}{ccccc}
+\toprule
+$h$ & 0000-0500 & 0500-1500 & 1500-1800 & 1800-0000 \\
+\midrule
+$d_h$ & 0.98 & 0.66 & 0.59 & 0.77 \\
+$\tilde{d}_h$ & 1.96 & 0.91 & 0.83 & 1.16 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\caption{Primary and secondary delay factors.}
+\label{tbl:delay_factors}
+\end{table}
+
+The other models are parameterised in the following way:
 \begin{itemize}
   \item From a sample of calls the time at site $G_k$ was found to follow a
         lognormal distribution with parameters $\mu=-0.6219$ and $\sigma=0.8048$.
