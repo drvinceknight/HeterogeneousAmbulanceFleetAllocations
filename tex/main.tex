@@ -390,9 +390,9 @@ targets.
 \end{equation}
 
 \begin{equation}\label{eqn:survival_cutoff}
-    s_L(t) = \begin{cases} 
-    1 \text{ if } 0\leq t \leq L \\
-    0 \text{ if } t > 8 
+    s_L(t) = \begin{cases}
+    1 & \text{ if } 0\leq t \leq L \\
+    0 & \text{ if } t > 8 
     \end{cases}
 \end{equation}
 
@@ -536,7 +536,8 @@ and~\ref{eqn:utilisation_ratio_secondary}. Here we let $\frac{1}{\mu}$ and
 $\frac{1}{\tilde{\mu}}$ be the average job times of primary and secondary
 vehicles, then $\lambda_a$ and $\tilde{\lambda}_a$ represent the share of the
 demand seen by primary and secondary vehicles from vehicle location $a$,
-respectively.
+respectively. Note that here we assume that average job times are not dependant
+on the vehicle location $a$.
 
 \begin{align}
 \pi_a &= \frac{\lambda_a}{\mu} \label{eqn:utilisation_ratio_primary}\\
@@ -583,6 +584,41 @@ then using these to solve Equation~\ref{eqn:utilisations_secondary} for the
 $\tilde{\lambda}_a$; and determining the secondary vehicle utilisations with
 Equation~\ref{eqn:utilisation_ratio_secondary}. These can be solved
 numerically by using Scipy's \texttt{fsolve} function \cite{2020SciPy-NMeth}.
+
+We note that the assumption that the average job times are not dependant on the
+vehicle location $a$ may be unrealistic, given that the travel between locations
+are a key part of an vehicle's job time ($B_{pa}$, $D_{ya}$, $F_{pa}$). However,
+as discussed in Section~\ref{sec:problem_description}, there are a number of
+other components to an ambulance job including time on site ($G_k$), hospital
+handover time ($J_{yk}$), and vehicle refill time ($\Theta$). We justify the
+assumption of job times not being location dependant by considering the
+proportion of an ambulance job's time that is location dependant, $\rho$,
+defined in Equation~\ref{eqn:proportion_location_dependant}.
+
+\begin{equation}\label{eqn:proportion_location_dependant}
+\rho = \begin{cases}
+  \frac{B_{pa} + D_{ya}}{T_{paky}} & \text{ if hospital required,} \\[8pt]
+  \frac{B_{pa} + F_{pa}}{T_{pak}} & \text{ if no hospital required.}
+\end{cases}
+\end{equation}
+
+Then, using the simulation described later in Section~\ref{sec:simulation}, we
+consider the distribution of $\rho$ across all simulated jobs under the current
+situation and allocation in Jakarta, shown in Figure~\ref{fig:rho_distribution}.
+We see for primary vehicle jobs on average 24\% of a job time is location
+dependant, while it is 36.5\% for secondary vehicles. Therefore this assumption
+should not have too much of an effect for primary vehicles, whose job times are
+much longer than secondary vehicles, but leaves open questions about how to
+better handle this assumption for secondary vehicles.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.85\textwidth]{img/location_dependant_service_time_proportion}
+    \caption{Distribution of the proportion of an ambulance job consists of
+    location dependant components, for primary and secondary vehicles.}
+    \label{fig:rho_distribution}
+\end{figure}
+
 
 
 
@@ -1138,11 +1174,11 @@ detailed in Section~\ref{sec:improve_current}.
 \toprule
 Demand Scenario & \textbf{demand\_13} & \textbf{demand\_19} & \textbf{demand\_34} & \textbf{demand\_45} \\
 \midrule
-Ambulance Utilisation & 31.7\% & 38.9\% & 54.9\% & 62.5\% \\
-RRV Utilisation & 40.9\% & 47.7\% & 62.3\% & 68.5\% \\
-Mean Response Time (mins) & 16.80 & 17.98 & 22.18 & 23.97 \\
-Overall Survival & 75.5\% & 67.7\% & 52.6\% & 46.0\% \\
-Percent Abandoned & 0.034\% & 0.315\% & 3.910\% & 10.004\% \\
+Ambulance Utilisation & 28.37\% & 34.71\% & 49.55\% & 56.49\% \\
+RRV Utilisation & 16.67\% & 24.74\% & 44.82\% & 52.04\% \\
+Mean Response Time (mins) & 17.83 & 18.46 & 22.10 & 23.19 \\
+Percent Abandoned & 0\% & 0.439\% & 3.792\% & 9.289\% \\
+Expected Survival & 99.75\% & 99.6\% & 99.2\% & 98.4\% \\
 \bottomrule
 \end{tabular}
 \caption{Calculated KPIs for the current allocation under the four possible
@@ -1201,11 +1237,11 @@ number of them increase.
 \toprule
 Allocation & Baseline & Improved \\
 \midrule
-Ambulance Utilisation & 31.7\% & 31.7\% \\
-RRV Utilisation & 40.9\% & 40.9\% \\
-Mean Response Time (mins) & 16.80 & 16.80 \\
-Overall Survival & 75.5\% & 75.5\% \\
-Percent Abandoned & 0.034\% & 0.034\% \\
+Ambulance Utilisation & 28.30\% & 28.37\% \\
+RRV Utilisation & 20.43\% & 16.67\% \\
+Mean Response Time (mins) & 17.67 & 17.83 \\
+Percent Abandoned & 0\% & 0\% \\
+Expected Survival & 98.34\% & 99.75\% \\
 \bottomrule
 \end{tabular}
 \caption{Comparing KPIs for the current and improved allocations.}
