@@ -28,6 +28,9 @@
 \usepackage{fullpage}
 \usepackage[linesnumbered,lined,ruled,commentsnumbered]{algorithm2e}
 
+\newcommand{\specialcellr}[2][r]{%
+  \begin{tabular}[#1]{@{}r@{}}#2\end{tabular}}
+
 %****************************************************************************
 
 
@@ -987,22 +990,29 @@ effectiveness using the simulation described in Section~\ref{sec:simulation}.
 \label{fig:region_names}
 \end{figure}
 
-The models are parameterised using demand data that covers all 261
-neighbourhoods from 1 January to 31 December 2019, before the COVID-19
-pandemic. Data from 2020-2021 was naturally heavily skewed by the pandemic,
-with significantly lower demand, and so was not considered as representative
-of a typical period for forecasting future needs, hence the decision to use
-the available 2019 demand.
-Working with our ambulance partners, after careful consideration the following
-patient `specialities' ($k in \mathcal{K}$) were agreed based on clinical need
-(although other categories could readily be adopted and included as
-necessary):
+As of October 2022, the 119 service in Jakarta ran a fleet of 81 primary
+Emergency Ambulances (EAs) and 13 secondary motorbike Rapid Response Vehicles
+(RRVs), distributed across 67 ambulance stations throughout the city.
+Figure~\ref{fig:current_allocation} summarise the allocations vehicle
+locations.
 
+\begin{figure}
+\begin{center}
+\includegraphics[width=\textwidth]{img/map_current}
+\caption{Map of current Emergency Ambulance (EA) and Rapid Response Vehicle
+         (RRV) locations and allocations to ambulance bases across Jakarta.}
+\label{fig:current_allocation}
+\end{center}
+\end{figure}
+
+Working with our ambulance partners, after careful consideration the following
+patient `specialities' ($k \in \mathcal{K}$) were agreed based on clinical need
+(although other categories could readily be adopted and included as necessary):
 
 \begin{itemize}
   \item \textbf{A1 - High priority emergency patients}: critical patients who
   require immediate life-saving assistance with a target ambulance response
-  time of 8 minutes.  In our data set there were 168 identified calls that met
+  time of 8 minutes. In our data set there were 168 identified calls that met
   this criterion.
   \item \textbf{A2 - Other emergency patients}: urgent patients that require
   assistance with a target response time of 15 minutes. In our data set there
@@ -1028,30 +1038,27 @@ throughout the city.
 \label{fig:yearly_demand}
 \end{figure}
 
-Firstly, in Sections~\ref{sec:analysis_current} and~\ref{sec:analysis_grid} we
-use the discrete event simulation to find KPIs that to measure the performance
-of the currently used allocations, and two proposed grid allocations for the
-city. \ref{apx:parameters} provides further details on the parameterisation of
-the model.
 
-\subsection{Current Allocation}\label{sec:analysis_current}
-As of October 2022, the 119 service in Jakarta ran a fleet of 81 primary
-Emergency Ambulances (EAs) and 13 secondary motorbike Rapid Response Vehicles
-(RRVs), distributed across 67 ambulance stations throughout the city.
-Figure~\ref{fig:current_allocation} summarise the allocations vehicle
-locations. 
+Firstly, in Section~\ref{sec:analysis_grid} we use the MESLMHPHF objective
+function of expected survival, and the simulation, to find KPIs that to compare
+the performance of two proposed grid allocations to the currently used
+allocation. Then in Section~\ref{sec:demand_scenarios} we outline four possible
+future demand scenarios, and in Section~\ref{sec:optimise_current} we use the
+optimisation model to find and compare optimised allocations for the current
+number of vehicles. Finally in Section~\ref{sec:vehicle_numbers} we investigate
+the number of vehicles required to meet the demand across the given scenarios.
 
-\begin{figure}
-\begin{center}
-\includegraphics[width=\textwidth]{img/map_current}
-\caption{Map of current Emergency Ambulance (EA) and Rapid Response Vehicle
-         (RRV) locations and allocations to ambulance bases across Jakarta.}
-\label{fig:current_allocation}
-\end{center}
-\end{figure}
+All models are parameterised using demand data that covers all 261
+neighbourhoods from 1 January to 31 December 2019, before the COVID-19
+pandemic. Data from 2020-2021 was naturally heavily skewed by the pandemic,
+with significantly lower demand, and so was not considered as representative
+of a typical period for forecasting future needs, hence the decision to use
+the available 2019 demand. \ref{apx:parameters} provides further details on the
+parameterisation of the model.
 
-\subsection{Proposed `Grid' Allocation}\label{sec:analysis_grid}
-Discussions with senior staff at 119 identified that they were seriously
+
+\subsection{Evaluating `Grid' Proposals}\label{sec:analysis_grid}
+The 119 Discussions with senior staff at 119 identified that they were seriously
 considering to re-configure their ambulance allocations into a grid structure,
 placing an ambulance station at regular intervals throughout the city and
 uniformly distributing the vehicles that they felt would ensure coverage. Two
@@ -1076,6 +1083,14 @@ Figure~\ref{fig:grid_allocations} show these proposed allocations.
 \end{center}
 \end{figure}
 
+Running the simulation and MESLMHPHF objective function of expected survival for
+both the current and the two proposed grid allocations gives the results shown
+in Table~\ref{tbl:current_grid_results}. We observe that the two proposed
+grid allocations perform much worse than the current allocation as measured by
+mean response time, survival, and percentage of calls abandoned.
+This is expected as vehicle numbers are lower under the new proposals, as well
+as the allocations focussing on coverage rather than response times or survival.
+
 \begin{table}
 \begin{center}
 \begin{tabular}{rrrr}
@@ -1095,12 +1110,6 @@ Percent Abandoned & 0.034\% & 0.430\% & 1.028\% \\
 \label{tbl:current_grid_results}
 \end{center}
 \end{table}
-
-We run the simulation for both the current and the two proposed grid
-allocations, and results are shown and compared in
-Table~\ref{tbl:current_grid_results}. We observe that the two proposed
-grid allocations perform much worse than the current allocation as measured by
-mean response time, survival, and percentage of calls abandoned.
 
 
 \subsection{Planning for Future Demand}\label{sec:demand_scenarios}
@@ -1150,21 +1159,19 @@ four demand scenarios were considered, corresponding to addressing each of
 these barriers in turn:
 
 \begin{itemize}
-  \item \textbf{demand\_13}: representing the current situation where
-        approximately 13\% of emergency patients (specialities A1 and A2) do
-        use an ambulance.
-  \item \textbf{demand\_19}: representing the situation where visibility is
-        addressed. Here, we distribute the 33.1\% of the respondents who were
-        unaware of the service proportionally between using the ambulance and
-        amongst the remaining issues. Using this methodology we would expect
-        19.4\% of emergency patients to now use an ambulance.  
-  \item \textbf{demand\_34}: representing the situation where reliability and
+  \item \textbf{D13}: representing the current situation where approximately
+        13\% of emergency patients (specialities A1 and A2) do use an ambulance.
+  \item \textbf{D19}: representing the situation where visibility is addressed.
+        Here, we distribute the 33.1\% of the respondents who were unaware of
+        the service proportionally between using the ambulance and amongst the
+        remaining issues. Using this methodology we would expect 19.4\% of
+        emergency patients to now use an ambulance.  
+  \item \textbf{D34}: representing the situation where reliability and
         visibility are addressed. Using the same methodology we would expect
         34.8\% of emergency patients to now use an ambulance.
-  \item \textbf{demand\_45}: representing the situation where cost,
-        reliability and visibility are all addressed. Using the same
-        methodology we would expect 45.4\% of emergency patients to now use an
-        ambulance. 
+  \item \textbf{D45}: representing the situation where cost, reliability and
+        visibility are all addressed. Using the same methodology we would expect
+        45.4\% of emergency patients to now use an ambulance. 
 \end{itemize}
 
 Guided by our findings in \cite{BriceSyaribahNoor2022Esui}, recent changes
@@ -1172,45 +1179,19 @@ mean that the 119 services is now free to use for Jakarta residents, so
 certainly the highest demand (demand\_45) scenario is plausible in the near
 future. After discussions with our partners, it was agreed that for each of
 the scenarios we should assume that non-emergency demand (speciality B)
-remains unchanged.  
-
-Table~\ref{tbl:demand_results} gives the derived KPIs for the current
-allocation for each of these demand scenarios in the simulation. In all
-measured KPIs, the performance worsens as emergency demand increases, thus
-motivating the need to find better allocations and investigate the effect of
-varying resource levels and explicit consideration of patient outcomes,
-detailed in Section~\ref{sec:improve_current}.
-
-\begin{table}
-\begin{center}
-\small
-\begin{tabular}{rrrrr}
-\toprule
-Demand Scenario & \textbf{demand\_13} & \textbf{demand\_19} & \textbf{demand\_34} & \textbf{demand\_45} \\
-\midrule
-Ambulance Utilisation & 28.37\% & 34.71\% & 49.55\% & 56.49\% \\
-RRV Utilisation & 16.67\% & 24.74\% & 44.82\% & 52.04\% \\
-Mean Response Time (mins) & 17.83 & 18.46 & 22.10 & 23.19 \\
-Percent Abandoned & 0\% & 0.439\% & 3.792\% & 9.289\% \\
-Expected Survival & 99.75\% & 99.6\% & 99.2\% & 98.4\% \\
-\bottomrule
-\end{tabular}
-\caption{Calculated KPIs for the current allocation under the four possible
-         demand scenarios.}
-\label{tbl:demand_results}
-\end{center}
-\end{table}
+remains unchanged.
 
 
-\subsection{Improving the Current Allocation}\label{sec:improve_current}
+\subsection{Improving the Current Allocation}\label{sec:optimise_current}
 Applying the optimisation heuristic from Section~\ref{sec:optimising} to the
-current allocation re-allocates the 81 EAs and 13 RRVs. The hyper-parameters
-used for this optimisation algorithm throughout this study are given in
-Table~\ref{tbl:hyperparameters}, which include approximations for the average
-service times of primary and secondary vehicles derived from the initial
+current allocation re-allocates the 81 EAs and 13 RRVs. We do this for each of
+the four scenarios described in Section~\ref{sec:demand_scenarios}. The
+hyper-parameters used for this optimisation algorithm throughout this study are
+given in Table~\ref{tbl:hyperparameters}, which include approximations for the
+average service times of primary and secondary vehicles derived from the initial
 simulation model. \ref{apx:hyperparameters} shows some initial explorations on
 the hyperparameter choices, giving confidence that the chosen parameters, with
-a large enough number of iterations $N$, are suffiecient to find allocations
+a large enough number of iterations $N$, are sufficient to find allocations
 that perform well.
 
 \begin{table}
@@ -1231,39 +1212,24 @@ $H$ & 500 & Number of generations.\\
 \label{tbl:hyperparameters}
 \end{table}
 
-Figure~\ref{fig:optimal_current_allocation} shows the new allocation (in
-comparison to Figure~\ref{fig:current_allocation}.
-Table~\ref{tbl:current_optimal_compare} compares the simulation derived KPIs
-between the current and the optimised allocations; it can be seen that a
-number of them increase.
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=\textwidth]{img/map_current}
-\caption{Improved allocation of 81 EAs and 13 RRVs.}
-\label{fig:optimal_current_allocation}
-\end{center}
-\end{figure}
+Table~\ref{tbl:current_optimal_compare} compares the MESLMHPHF objective
+function value and simulation derived KPIs between the current and the optimised
+allocations, for each demand scenario. It can be seen that a number of them
+increase.
 
 \begin{table}
 \begin{center}
-\begin{tabular}{rrr}
-\toprule
-Allocation & Baseline & Improved \\
-\midrule
-Ambulance Utilisation & 28.30\% & 28.37\% \\
-RRV Utilisation & 20.43\% & 16.67\% \\
-Mean Response Time (mins) & 17.67 & 17.83 \\
-Percent Abandoned & 0\% & 0\% \\
-Expected Survival & 98.34\% & 99.75\% \\
-\bottomrule
-\end{tabular}
-\caption{Comparing KPIs for the current and improved allocations.}
+\resizebox{\textwidth}{!}{%
+\input{tbl/current_vs_optimised.tex}%
+}
+\caption{Calculated KPIs for the current and optimised allocations under the
+four possible demand scenarios.}
 \label{tbl:current_optimal_compare}
 \end{center}
 \end{table}
 
-\subsection{Finding Optimal Allocations for Any Resource Level}\label{sec:experiments}
+
+\subsection{Finding Optimal Allocations for Any Resource Level}\label{sec:vehicle_numbers}
 The heuristic algorithm described in Section~\ref{sec:heuristic} finds
 allocation of ambulances across the 67 current ambulance stations for a given
 number of primary and secondary vehicles. Information supplied by one of the
@@ -1622,7 +1588,7 @@ The other models are parameterised in the following way:
 \end{figure}
 
 
-\section{Exploration of Optimisaiton Hyperparameters}\label{apx:hyperparameters}
+\section{Exploration of Optimisation Hyperparameters}\label{apx:hyperparameters}
 Figure~\ref{fig:hyperparameters_exploration} shows the performance of the
 population-based neighbourhood search evolutionary heuristic algorithm under
 different values of the hyperparameters $N$, $\kappa$, $m_0$, and $c$.
@@ -1634,6 +1600,46 @@ different values of the hyperparameters $N$, $\kappa$, $m_0$, and $c$.
 values of $N$, $\kappa$, $m_0$, and $c$. Optimisation is run on demand
 scenario 19, for 70 primary and 30 secondary vehicles.}
 \label{fig:hyperparameters_exploration}
+\end{figure}
+
+
+\section{Optimised Allocations for Current Vehicle Numbers}
+Figures~\ref{fig:optimal_current_allocation_13},
+\ref{fig:optimal_current_allocation_19}, \ref{fig:optimal_current_allocation_34}
+and~\ref{fig:optimal_current_allocation_45} show the optimised allocations for
+81 primary and 13 secondary vehicles under demand scenarios \textbf{D13},
+\textbf{D19}, \textbf{D34}, and \textbf{D45} respectively.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=\textwidth]{img/map_current}
+\caption{Optimised allocation of 81 EAs and 13 RRVs, under scenario \textbf{D13}.}
+\label{fig:optimal_current_allocation_13}
+\end{center}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=\textwidth]{img/map_current}
+\caption{Optimised allocation of 81 EAs and 13 RRVs, under scenario \textbf{D19}.}
+\label{fig:optimal_current_allocation_19}
+\end{center}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=\textwidth]{img/map_current}
+\caption{Optimised allocation of 81 EAs and 13 RRVs, under scenario \textbf{D34}.}
+\label{fig:optimal_current_allocation_34}
+\end{center}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=\textwidth]{img/map_current}
+\caption{Optimised allocation of 81 EAs and 13 RRVs, under scenario \textbf{D45}.}
+\label{fig:optimal_current_allocation_45}
+\end{center}
 \end{figure}
 
 
