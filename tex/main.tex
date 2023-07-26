@@ -255,6 +255,8 @@ could be readily applied to other locations.
 The paper is structured as follows:
 Section~\ref{sec:litreview} gives an overview of the literature on modelling
 ambulance allocations.
+Section~\ref{sec:problem_description} describes the current ambulance service
+behaviour and sets out the mathematical notation used throughout the paper.
 Section~\ref{sec:optimising} describes an
 optimisation model, including the survival objective, utilisation
 considerations, and a heuristic algorithm to find better fleet allocations.
@@ -315,9 +317,9 @@ Reference   & Year & DES & Queueing Theory & Optimisation \\
 planning approach which features an optimization model and a local search
 heuristic based on Gaussian Processes. Their methodology is applied to the
 city of Porto while reporting on performance metrics such as survival. Our
-approach is different because we use a discrete-event simulation framework and
-a cross-entropy optimisation approach to determine the number of ambulances
-required in each station. 
+approach is different because we use a discrete-event simulation framework
+to evaluate results from a population based heuristic to determine the number of
+ambulances required in each station. 
 
 \citet{boutilier2022drone} develop an integrated location-queueing model that
 incorporates existing EMS response times in a drone network. They use a
@@ -358,6 +360,9 @@ patient groups, with each class weighted dependent upon the relative urgency
 of the incident.  More than just a contribution to the model’s demand input,
 these patients are included in the optimisation when maximising total
 population survival probability.
+Our work directly extends this work, to include heterogeneous vehicle fleets,
+while developing a different fixed-point numerical solution to the problem of
+approximating vehicle utilisations.
 
 
 \section{Problem Statement \& Notation}\label{sec:problem_description}
@@ -387,8 +392,6 @@ location $a$. Also let:
         speciality $k$;
   \item $\pi_a$ be the average utilisation of primary vehicles stationed at
         location $a$;
-  \item $\tilde{\pi}_a$ be the average utilisation of secondary vehicles
-        stationed at location $a$.
   \item $b_{pa}$ be the expected travel time from ambulance location $a$ to
         pick-up location $p$; and let $B_{pa}$ be a random variable representing
         the time it takes for an ambulance to drive this distance;
@@ -424,8 +427,8 @@ hospital through private or public transportation. Otherwise, a central control
 centre will dispatch the closest available primary vehicle. That vehicle will
 travel from its location to the patient ($B_{pa}$), spend some time on the scene
 treating the patient ($G_k$), travel to the hospital ($C_{py}$), spend some time
-handing over the patient at the hospital ($J_k$), travels back to it's original
-location ($D_{ya}$), then spends time refilling and refuelling ($\Theta$).
+handing over the patient at the hospital ($J_k$), travel back to it's original
+location ($D_{ya}$), then spend time refilling and refuelling ($\Theta$).
 There is also a probability that the patient does not need a hospital, and so
 the vehicle will travel from the pick-up location back to it's original vehicle
 location ($F_{pa}$). These routes are shown visually in
@@ -449,17 +452,20 @@ T_{paky} &= B_{pa} + G_k + C_{py} + J_{yk} + D_{ya} + \Theta \label{eqn:service_
 T_{pak} &= B_{pa} + G_k + F_{pa} + \Theta \label{eqn:service_time_nohosp}
 \end{align}
 
+There are two types of vehicle: primary vehicles, typically ambulances, that
+must be dispatched to all patients; and secondary vehicles, typically rapid
+response motorcycles, that can travel faster than primary vehicles, and are
+dispatched to some patients to respond to an emergency faster than the primary
+vehicle. Secondary vehicles cannot transport patients, but are used in
+conjunction with primary vehicles to reduce response times.
+From a resource cost perspective, one primary vehicle costs the same to purchase
+and to run as three secondary vehicles.
+
 
 \section{Optimising Allocations for Maximal Survival}\label{sec:optimising}
 Here we outline a method of finding vehicle allocations that that maximise the
 expected survival of patients.
-We assume that there are two types of vehicle: primary vehicles, typically
-ambulances, that must be dispatched to all patients; and secondary vehicles,
-typically rapid response motorcycles, that can travel faster than primary
-vehicles, and are dispatched to some patients to respond to an emergency
-faster than the primary vehicle. Secondary vehicles cannot transport patients,
-but are used in conjunction with primary vehicles to reduce response times.
-The problem then, is for a given set of vehicle locations (that is ambulance
+The problem is, for a given set of vehicle locations (that is ambulance
 stations), a given total number of primary vehicles, and a given total number
 of secondary vehicles, how many vehicles of each type should be stationed at
 each location to maximise expected survival across all patients.
@@ -527,8 +533,11 @@ g\left(Z_a, \tilde{Z}_a\right) =
 \sum_{k \in \mathcal{K}_B}  w_k \lambda_{pk} \Psi_{kpa} \right)
 \end{equation}
 
-where $w_k$ is a weight associated with patient speciality type $k$ (for this
-study we assume $w_k = 1$ for all $k$). Now $\Psi_{kpa}$ can be interpreted as
+\noindent
+where $w_k$ is a weight associated with patient speciality type $k$. For this
+study we assume $w_k = 1$ for all $k$, which allows the interpretation of
+$g\left(Z_a, \tilde{Z}_a\right)$ as the expected number of patients surviving
+per time unit. Now $\Psi_{kpa}$ can be interpreted as
 the probability of a patient $k \in \mathcal{K}_B$ at pick-up location $p$
 being seen by a primary vehicle from location $a$ and surviving; while
 $\hat{\Psi}_{kpa}$ would be the probability of patients of speciality
@@ -618,19 +627,21 @@ location $a$, although this may be unrealistic, given that the travel between
 locations are a key part of an vehicle's job time ($B_{pa}$, $D_{ya}$, $F_{pa}$).
 However, as discussed in Section~\ref{sec:problem_description}, there are a
 number of other components to an ambulance job including time on site ($G_k$),
-hospital handover time ($J_{yk}$), and vehicle refill time ($\Theta$). We
-justify the assumption of job times not being location dependant by considering
-the proportion of an ambulance job's time that is location dependant, $\rho$,
-defined in Equation~\ref{eqn:proportion_location_dependant}.
+hospital handover time ($J_{yk}$), and vehicle refill time ($\Theta$). For the
+case of Jakarta, we justify the assumption of job times not being location
+dependant by considering the proportion of an ambulance job's time that is
+location dependant, $\rho$, defined in
+Equation~\ref{eqn:proportion_location_dependant},
 
 \begin{equation}\label{eqn:proportion_location_dependant}
 \rho = \begin{cases}
   \frac{B_{pa} + D_{ya}}{T_{paky}} & \text{ if hospital required,} \\[8pt]
-  \frac{B_{pa} + F_{pa}}{T_{pak}} & \text{ if no hospital required.}
+  \frac{B_{pa} + F_{pa}}{T_{pak}} & \text{ if no hospital required,}
 \end{cases}
 \end{equation}
 
-Then, using the simulation described later in Section~\ref{sec:simulation}, we
+\noindent
+then, using the simulation described later in Section~\ref{sec:simulation}, we
 consider the distribution of $\rho$ across all simulated jobs under the current
 situation and allocation in Jakarta, shown in Figure~\ref{fig:rho_distribution}.
 We see for primary vehicle jobs on average 24\% of a job time is location
@@ -692,6 +703,7 @@ Note that, in Equation~\ref{eqn:utilisations_primary}, we have that
 
 $$\sum_{p \in \mathcal{P}} \sum_{k \in \mathcal{K}} \left( 1 - \left(\frac{\lambda_a}{\mu}\right)^{Z_a} \right) \prod_{\alpha \in \mathcal{A}} \left(\frac{\lambda_{\alpha}}{\mu}\right)^{\left(Z_{\alpha} \beta_{p \alpha a}\right)} < 1,$$
 
+\noindent
 and so
 $\sum_{a \in \mathcal{A}} \lambda_a < \sum_{p \in \mathcal{P}} \sum_{k \in \mathcal{K}} \lambda_{pk}$,
 meaning that there is lost demand. This is expected, and represents the patients
@@ -701,6 +713,7 @@ Equation~\ref{eqn:utilisations_secondary}, we have that
 
 $$\sum_{p \in \mathcal{P}} \sum_{k \in \mathcal{K}_A} \left( 1 - \left(\frac{\tilde{\lambda}_a}{\tilde{\mu}}\right)^{\tilde{Z}_a} \right) \prod_{\alpha \in \mathcal{A}} \pi_{\alpha}^{\left(Z_{\alpha} R_{p \alpha a}\right)} \left(\frac{\tilde{\lambda}_{\alpha}}{\tilde{\mu}}\right)^{ \left(\tilde{Z}_{\alpha} \beta_{p \alpha a}\right)} < 1,$$
 
+\noindent
 and so
 $\sum_{a \in \mathcal{A}} \tilde{\lambda}_a < \sum_{p \in \mathcal{P}} \sum_{k \in \mathcal{K}_A} \lambda_{pk}$.
 This lost demand represents both abandoned calls, but also calls where secondary
@@ -742,10 +755,11 @@ Output the top ranking solution.
 \label{alg:heuristic}
 \end{algorithm}
 
-Mutations one of four possible changes: randomly change the location of one
-primary vehicle; randomly change the location of one secondary vehicle;
-randomly remove one primary vehicle and add secondary vehicles to 3 randomly
-chosen locations; and randomly remove 3 secondary vehicles and add a primary
+Mutations consist of one of four possible changes: randomly change the location
+of one primary vehicle; randomly change the location of one secondary vehicle;
+randomly remove one primary vehicle and add secondary vehicles to three randomly
+chosen locations (as one primary vehicle costs the equivalent to three secondary
+vehicles); and randomly remove three secondary vehicles and add a primary
 vehicle to a randomly chosen location. If it is required that exact vehicle
 numbers need to be retained, then only for first two mutations need be chosen.
 
@@ -795,7 +809,7 @@ Servers can be categorised into classes corresponding to the ambulance
 locations $\mathcal{A}$. Service times are server-dependent, that is the
 service time of a transit job of type $(p, k)$, being served by a server of
 class $a$, will have service time $T_{paky}$ if a hospital is required and
-$T_{pak}$ if no hospital is required. These are given by
+$T_{pak}$ if no hospital is required. These were given by
 Equations~\ref{eqn:service_time_withhosp} and~\ref{eqn:service_time_nohosp}
 respectively, in Section~\ref{sec:problem_description}.
 That is $T_{paky}$ and $T_{pak}$ is the overall time the ambulance spends
@@ -825,6 +839,7 @@ Equation~\ref{eqn:speed},
 S_h = s d_h
 \end{equation}
 
+\noindent
 where $s$ is some given baseline speed. The relationship between time travelled
 and distance covered is piece-wise linear with slope $S_h$ in period $h$.
 Therefore, travel times are calculated using this relationship.
@@ -866,13 +881,13 @@ calculated expected travel time, between 75\% and 125\% of the value.
 
 \subsection{Time-dependent Demand}
 Additionally, it is assumed that calls arrive according to a Poisson
-distribution, with rates $\lambda{pk}$, and that these rates are time
+distribution, with rates $\lambda_{pk}$, and that these rates are time
 dependent. Each day is split into four 6-hour periods, the morning, afternoon,
 evening and night, and each speciality $k$ and pick-up location $p$ will have
 a different call arrival rate for each of these periods.
 
 For some locations and specialities the number of observed calls might be very
-low, and so the $\lambda{pk}$ rate would be very low. This can cause
+low, and so the $\lambda_{pk}$ rate would be very low. This can cause
 synchronicity issues when sampling arrivals \citep{pidd2004computer}, where
 artificially long inter-arrival times can be introduced at the beginning of
 one time period due to the low arrival rate in the previous time period.
@@ -882,7 +897,6 @@ dates are sampled at the beginning of the simulation run, first by sampling
 the number of arrivals required in each time period from a Poisson
 distribution, and then by sampling specific dates within that time period
 using a Uniform distribution.
-
 This mechanism, and alternative to thinning \cite{lewisshedler79}, was
 implemented in the Ciw software in version v2.3.3 \cite{ciw233}, and described
 in the documentation here:
@@ -965,7 +979,8 @@ given by:
 
 \subsection{Combined Model}
 Combining the logic presented in Sections~\ref{sec:simulation_primary}
-and~\ref{sec:simulation_secondary} gives the overall simulation logic for
+and~\ref{sec:simulation_secondary} in a sequential manner, with the output of
+one determining the input of the other, gives the overall simulation logic for
 simulating both primary and secondary vehicle types. It is used to quantify
 the effectiveness of a given allocation $(Z_a, \tilde{Z}_a)$ for all
 $a \in \mathcal{A}$, by recording several useful KPIs.
@@ -1059,7 +1074,10 @@ throughout the city.
 Firstly, in Section~\ref{sec:analysis_grid} we use the MESLMHPHF objective
 function of expected survival, and the simulation, to find KPIs that to compare
 the performance of two proposed grid allocations to the currently used
-allocation. Then in Section~\ref{sec:demand_scenarios} we outline four possible
+allocation. An additional KPI is also calculated, the expected survival of A1
+patients, found by taking Equation~\ref{eqn:meslmhphf} and summing over
+$k = \text{A1}$ only.
+Then in Section~\ref{sec:demand_scenarios} we outline four possible
 future demand scenarios, and in Section~\ref{sec:optimise_current} we use the
 optimisation model to find and compare optimised allocations for the current
 number of vehicles. Finally in Section~\ref{sec:vehicle_numbers} we investigate
@@ -1194,7 +1212,7 @@ these barriers in turn:
 
 Guided by our findings in \cite{BriceSyaribahNoor2022Esui}, recent changes
 mean that the 119 services is now free to use for Jakarta residents, so
-certainly the highest demand (demand\_45) scenario is plausible in the near
+certainly the highest demand (\textbf{D45}) scenario is plausible in the near
 future. After discussions with our partners, it was agreed that for each of
 the scenarios we should assume that non-emergency demand (speciality B)
 remains unchanged.
@@ -1386,8 +1404,8 @@ multiple vehicle types (both emergency ambulances and rapid response vehicles)
 were allocated. For equivalent resource levels, introducing secondary vehicles
 increases ambulance utilisation, and so decreases availability, resulting in
 an increase in abandoned calls. However, introducing secondary vehicles also
-results in a large decrease in the mean response times, and so a large
-increase in the percentage of patients seen within target.
+results in a decrease in the mean response time, and a large
+increase in the expected survival, especially those of speciality A1.
 
 An interesting phenomenon occurs when looking at
 Figure~\ref{fig:results_response_multiple}. Here it seems that, when using
@@ -1500,7 +1518,10 @@ can not. For example, the maximum expected survival model is a lot more
 appropriate for use within an optimisation process as the runtimes are a far
 more reasonable than the simulation. On the other hand, the simulation allows
 for greater complexity such as temporal demand, and is able to capture a
-greater range of KPIs.
+greater range of KPIs. Crucially, using mixed methodology such as this allowed
+for independent evaluation of the output of one using the other; but also
+insights from an initial run of the simulation gave helped parametrise and
+justify assumptions of the optimisation.
 
 A key feature of both models, and their novelty, is the consideration of
 heterogeneous fleets. In a highly populated area such as Jakarta (around
