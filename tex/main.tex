@@ -688,6 +688,23 @@ numerically. In our implementation this is solved using the MINPACK hybrd and
 hybrj algorithms by using Scipy's \texttt{fsolve} function
 \cite{2020SciPy-NMeth}.
 
+Note that, in Equation~\ref{eqn:utilisations_primary}, we have that
+
+$$\sum_{p \in \mathcal{P}} \sum_{k \in \mathcal{K}} \left( 1 - \left(\frac{\lambda_a}{\mu}\right)^{Z_a} \right) \prod_{\alpha \in \mathcal{A}} \left(\frac{\lambda_{\alpha}}{\mu}\right)^{\left(Z_{\alpha} \beta_{p \alpha a}\right)} < 1,$$
+
+and so
+$\sum_{a \in \mathcal{A}} \lambda_a < \sum_{p \in \mathcal{P}} \sum_{k \in \mathcal{K}} \lambda_{pk}$,
+meaning that there is lost demand. This is expected, and represents the patients
+who are abandoned, or take private or public transport to a hospital instead of
+waiting for an ambulance. Similarly, in
+Equation~\ref{eqn:utilisations_secondary}, we have that
+
+$$\sum_{p \in \mathcal{P}} \sum_{k \in \mathcal{K}_A} \left( 1 - \left(\frac{\tilde{\lambda}_a}{\tilde{\mu}}\right)^{\tilde{Z}_a} \right) \prod_{\alpha \in \mathcal{A}} \pi_{\alpha}^{\left(Z_{\alpha} R_{p \alpha a}\right)} \left(\frac{\tilde{\lambda}_{\alpha}}{\tilde{\mu}}\right)^{ \left(\tilde{Z}_{\alpha} \beta_{p \alpha a}\right)} < 1,$$
+
+and so
+$\sum_{a \in \mathcal{A}} \tilde{\lambda}_a < \sum_{p \in \mathcal{P}} \sum_{k \in \mathcal{K}_A} \lambda_{pk}$.
+This lost demand represents both abandoned calls, but also calls where secondary
+vehicles are not deployed as a primary vehicle could reach them first.
 
 
 
