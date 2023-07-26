@@ -1224,7 +1224,10 @@ unavailability.
 Looking at the expected survival, that is the value of the MESLMHPHF objective
 function, we see that using an optimal allocation does increase the survival,
 and that the drop in survival due to demand increases is not as severe when
-using an optimised allocation in comparison to the current allocation.
+using an optimised allocation in comparison to the current allocation. We can
+also see that A1 patients are benefiting a lot from the optimised allocations,
+as these are the patients most sensitive to small fluctuations in response time,
+due to their survival function Equation~\ref{eqn:survival_curve}.
 It is worth noting that for the simulation based KPIs, there is not too much
 difference between the currently used allocation and the optimal allocation,
 showing that these KPIs may not be good approximations of survival.
@@ -1270,12 +1273,12 @@ the demand of emergency calls has a negative impact on all KPIs.
 
 \begin{figure}
 \begin{center}
-\begin{subfigure}{0.43\textwidth}
+\begin{subfigure}{0.42\textwidth}
 \includegraphics[width=\textwidth]{img/results/single_Objective}
 \caption{Single vehicle type scenario.}
 \label{fig:results_objective_single}
 \end{subfigure}
-\begin{subfigure}{0.43\textwidth}
+\begin{subfigure}{0.42\textwidth}
 \includegraphics[width=\textwidth]{img/results/multiple_Objective}
 \caption{Multiple vehicle type scenario.}
 \label{fig:results_objective_multiple}
@@ -1287,12 +1290,29 @@ the demand of emergency calls has a negative impact on all KPIs.
 
 \begin{figure}
 \begin{center}
-\begin{subfigure}{0.43\textwidth}
+\begin{subfigure}{0.42\textwidth}
+\includegraphics[width=\textwidth]{img/results/single_A1Survival}
+\caption{Single vehicle type scenario.}
+\label{fig:results_a1survival_single}
+\end{subfigure}
+\begin{subfigure}{0.42\textwidth}
+\includegraphics[width=\textwidth]{img/results/multiple_A1Survival}
+\caption{Multiple vehicle type scenario.}
+\label{fig:results_a1survival_multiple}
+\end{subfigure}
+\end{center}
+\caption{Expected survival of A1 patients results.}
+\label{fig:results_a1survival}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\begin{subfigure}{0.42\textwidth}
 \includegraphics[width=\textwidth]{img/results/single_AmbulanceUtilisation}
 \caption{Single vehicle type scenario.}
 \label{fig:results_ambulance_utilisation_single}
 \end{subfigure}
-\begin{subfigure}{0.43\textwidth}
+\begin{subfigure}{0.42\textwidth}
 \includegraphics[width=\textwidth]{img/results/multiple_AmbulanceUtilisation}
 \caption{Multiple vehicle type scenario.}
 \label{fig:results_ambulance_utilisation_multiple}
@@ -1312,12 +1332,12 @@ the demand of emergency calls has a negative impact on all KPIs.
 
 \begin{figure}
 \begin{center}
-\begin{subfigure}{0.43\textwidth}
+\begin{subfigure}{0.42\textwidth}
 \includegraphics[width=\textwidth]{img/results/single_MeanResponseTime}
 \caption{Single vehicle type scenario.}
 \label{fig:results_response_single}
 \end{subfigure}
-\begin{subfigure}{0.43\textwidth}
+\begin{subfigure}{0.42\textwidth}
 \includegraphics[width=\textwidth]{img/results/multiple_MeanResponseTime}
 \caption{Multiple vehicle type scenario.}
 \label{fig:results_response_multiple}
@@ -1328,12 +1348,12 @@ the demand of emergency calls has a negative impact on all KPIs.
 
 \begin{figure}
 \begin{center}
-\begin{subfigure}{0.43\textwidth}
+\begin{subfigure}{0.42\textwidth}
 \includegraphics[width=\textwidth]{img/results/single_PercentAbandoned}
 \caption{Single vehicle type scenario.}
 \label{fig:results_abandoned_single}
 \end{subfigure}
-\begin{subfigure}{0.43\textwidth}
+\begin{subfigure}{0.42\textwidth}
 \includegraphics[width=\textwidth]{img/results/multiple_PercentAbandoned}
 \caption{Multiple vehicle type scenario.}
 \label{fig:results_abandoned_multiple}
