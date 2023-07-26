@@ -1214,8 +1214,20 @@ $H$ & 500 & Number of generations.\\
 
 Table~\ref{tbl:current_optimal_compare} compares the MESLMHPHF objective
 function value and simulation derived KPIs between the current and the optimised
-allocations, for each demand scenario. It can be seen that a number of them
-increase.
+allocations, for each demand scenario. It can be seen that, as expected, as
+demand increases then utilisation of primary and secondary vehicles increase, as
+the ambulance service is busier. Similarly, mean response time increases with
+demand, this is due to the vehicles being busier, and therefore less chance that
+the most optimally placed vehicle is dispatched. This is confirmed by the
+percentage of calls abandoned increasing with demand, showing ambulance
+unavailability.
+Looking at the expected survival, that is the value of the MESLMHPHF objective
+function, we see that using an optimal allocation does increase the survival,
+and that the drop in survival due to demand increases is not as severe when
+using an optimised allocation in comparison to the current allocation.
+It is worth noting that for the simulation based KPIs, there is not too much
+difference between the currently used allocation and the optimal allocation,
+showing that these KPIs may not be good approximations of survival.
 
 \begin{table}
 \begin{center}
@@ -1243,18 +1255,35 @@ all possible combinations of numbers of primary and secondary vehicles, though
 as every patient must be seen by a primary vehicle, we do not consider the
 case when the number of secondary vehicles exceeds the number of primary
 vehicles.
-Allocations were found for each resource level between 60 and 125 EA
+Allocations were found for each resource level between 60 and 124 EA
 equivalents, and we report KPIs for the best performing, in terms of maximal
 survival, combinations, as well as for the case when the number of secondary
 vehicles is fixed at zero. We call these the multiple vehicle type and single
 vehicle type scenarios.
 
-Figures~\ref{fig:results_ambulance_utilisation}-\ref{fig:results_overall_survival}
+Figures~\ref{fig:results_objective_single}-\ref{fig:results_abandoned_multiple}
 display the obtained KPIs for each of these allocations. It can immediately be
 seen that increasing the resource level has a positive effect on all KPIs,
 with vehicle utilisations, mean response times, and percentage abandoned
 decreasing, and overall survival increasing. Similarly, as expected increasing
 the demand of emergency calls has a negative impact on all KPIs.
+
+\begin{figure}
+\begin{center}
+\begin{subfigure}{0.43\textwidth}
+\includegraphics[width=\textwidth]{img/results/single_Objective}
+\caption{Single vehicle type scenario.}
+\label{fig:results_objective_single}
+\end{subfigure}
+\begin{subfigure}{0.43\textwidth}
+\includegraphics[width=\textwidth]{img/results/multiple_Objective}
+\caption{Multiple vehicle type scenario.}
+\label{fig:results_objective_multiple}
+\end{subfigure}
+\end{center}
+\caption{MESLMHPHF objective expected survival results.}
+\label{fig:results_objective}
+\end{figure}
 
 \begin{figure}
 \begin{center}
@@ -1313,23 +1342,6 @@ the demand of emergency calls has a negative impact on all KPIs.
 \caption{Percent of abandoned calls results.}
 \end{figure}
 
-\begin{figure}
-\begin{center}
-\begin{subfigure}{0.43\textwidth}
-\includegraphics[width=\textwidth]{img/results/single_Objective}
-\caption{Single vehicle type scenario.}
-\label{fig:results_survival_single}
-\end{subfigure}
-\begin{subfigure}{0.43\textwidth}
-\includegraphics[width=\textwidth]{img/results/multiple_Objective}
-\caption{Multiple vehicle type scenario.}
-\label{fig:results_survival_multiple}
-\end{subfigure}
-\end{center}
-\caption{MESLMHPHF objective expected survival results.}
-\label{fig:results_overall_survival}
-\end{figure}
-
 It is particularly interesting to compare the scenario in which single vehicle
 types (only emergency ambulances) were allocated against the scenario where
 multiple vehicle types (both emergency ambulances and rapid response vehicles)
@@ -1339,11 +1351,26 @@ an increase in abandoned calls. However, introducing secondary vehicles also
 results in a large decrease in the mean response times, and so a large
 increase in the percentage of patients seen within target.
 
+An interesting phenomenon occurs when looking at
+Figure~\ref{fig:results_response_multiple}. Here it seems that, when using
+multiple vehicles, mean response time decreases as demand increases, which is
+counter-intuitive. This is however due to an peculiar interplay between the way
+in which demand in increased and the vehicle behaviours: as stated in
+Section~\ref{sec:demand_scenarios} only demand for emergency patients are
+increased (specialities A1 and A2), which are also the patients that can be seen
+by secondary vehicles, and so would have a lower response time than
+non-emergency patients (speciality B). Thus, demand scenario \textbf{D45}
+receives a larger proportion emergency patients than scenario \textbf{D13}, and
+so a larger proportion of patients with lower response times due to being seen
+by secondary vehicles; bringing the overall mean response time down. This does
+not mean however that emergency patients in scenario \textbf{D45} have lower
+response times than those in scenario \textbf{D13}.
+
 It is also noticeable that the increases or decreases in the simulation
 derived KPIs are not necessarily monotonic with increases in resource level.
 This is due to the derived allocations being based on the MESLMHPHF score
 only, which is a measure of survival, while the simulation derived KPIs are
-indirect measures of performance. This may indicate that these indirect
+indirect measures of performance. Again, this may indicate that these indirect
 measures of performance, such as mean response times or percentage within
 target, are not good indicators of survival.
 
@@ -1352,7 +1379,7 @@ algorithm perform better than the current allocation for the same demand and
 resource levels. The current levels include 81 EAs and 13 RRVs, so a resource
 level of 85.33, with multiple vehicles. Comparing the derived allocations for
 this level in
-Figures~\ref{fig:results_ambulance_utilisation}-\ref{fig:results_overall_survival}
+Figures~\ref{fig:results_objective_single}-\ref{fig:results_abandoned_multiple}
 to the results given in Table~\ref{tbl:current_grid_results}, the derived
 allocations give lower ambulance and RRV utilisations, lower mean response
 times, and a higher percentage of patients seen within target.
@@ -1362,26 +1389,24 @@ resources would be required, if optimally located, to achieve a similar level
 of service as is currently offered, when demand increases.
 Table~\ref{tbl:equivalent} shows, for each demand scenario, the minimum
 resource level and vehicle type breakdown required to meet the current level
-in each of the following KPIs: mean response time, overall survival, and
+in each of the following KPIs: mean response time, MESLMHPHF objective, and
 percentage of calls abandoned. For example, in order to maintain the current
-75.48\% overall survival, under the demand\_19 scenario the city would require
-63 EAs and 45 RRVs.
-It is noticeable that fewer resources are required to maintain the current
-mean response time than to maintain the current overall survival.
+0.00\% abandonment, under the scenario \textbf{D19} the city would require
+76 EAs and 0 RRVs.
 
 \begin{table}
 \begin{center}
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{cccc}
 \toprule
-Demand Scenario & Mean Response Time & Overall Survival & Percent Abandoned \\
+Demand Scenario & Mean Response Time &  MESLMHPHF objective & Percent Abandoned \\
 \midrule
-\textbf{demand\_13} & 60, (50, 30) & 60, (50, 30) & 80, (66, 42) \\
-\textbf{demand\_19} & 70, (60, 30) & 78, (63, 45) & 101, (79, 66) \\
-\textbf{demand\_34} & 88, (75, 39) & 106, (83, 69) & $>$ 124 \\
-\textbf{demand\_45} & 99, (85, 42) & $>$ 124 & $>$ 124 \\
+\textbf{D13} & 124 (124, 0) & 60, (36, 72) & 68, (68, 0) \\
+\textbf{D19} & 124 (124, 0) & 60, (40, 60) & 76, (76, 0) \\
+\textbf{D34} & $>$ 124      & 60, (43, 51) & 100 (100, 0) \\
+\textbf{D45} & $>$ 124      & 60, (52, 24) & 124 (124, 0) \\
 \midrule
-Current Level & 16.8 minutes & 75.48\% & 0.0339\% \\
+Current Level & 17.67 minutes & 98.34\% & 0.00\% \\
 \bottomrule
 \end{tabular}%
 }
