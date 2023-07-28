@@ -295,3 +295,27 @@ def test_objective_function_with_allocation_dependent_utilisation():
     )
     objective_in_days = g * 1440
     assert np.isclose(objective_in_days, 255.08170500308506)
+
+
+def test_A1_survivals():
+    """
+    Tests the function that gives the expected number of A1 survivals when using
+    an allocation with a resource level of 61
+     - This objective gives a value of 0.23000257753819806
+    """
+    expected_A1_survivals = objective.get_survival_A1_only(
+        demand_rates=demand_rates,
+        primary_survivals=primary_survivals,
+        secondary_survivals=secondary_survivals,
+        weights_single_vehicle=weights_single_vehicle,
+        weights_multiple_vehicles=weights_multiple_vehicles,
+        beta=beta,
+        R=R,
+        vehicle_station_utilisation_function=utilisation.given_utilisations,
+        allocation_primary=allocation_61[:67],
+        allocation_secondary=allocation_61[67:],
+        given_utilisations_primary=given_utilisations_primary_61,
+        given_utilisations_secondary=given_utilisations_secondary_61,
+    )
+    survival_in_days = expected_A1_survivals * 1440
+    assert np.isclose(survival_in_days, 0.23000257753819806)

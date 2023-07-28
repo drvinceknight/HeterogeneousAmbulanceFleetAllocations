@@ -433,3 +433,104 @@ def get_objective(
         cache[keyname] = g
 
     return g
+
+
+def get_survival_A1_only(
+    demand_rates,
+    primary_survivals,
+    secondary_survivals,
+    weights_single_vehicle,
+    weights_multiple_vehicles,
+    beta,
+    R,
+    vehicle_station_utilisation_function,
+    allocation_primary,
+    allocation_secondary,
+    **kwargs,
+):
+    """
+    Returns the expected number of A1 patients surviving
+
+    Parameters
+    ----------
+    demand_rates : np.array
+        The demand rates of given patient classes from given pickup locations.
+    primary_survivals : np.array
+        The survival probability due to primary vehicles.
+    secondary_survivals : np.array
+        The survival probability due to secondary vehicles.
+    weights_single_vehicle : np.array
+        The weighting given to each class of patients
+    weights_multiple_vehicles : np.array
+        The weighting given to each class of patients
+    beta : np.array
+        A three dimensional array denoting which vehicles are preferred.
+    R : np.array
+        A three dimensional array denoting which primary vehicles are preferred.
+    allocation_primary : np.array
+        An integer array of number of primary vehicles at every station
+    allocation_secondary : np.array
+        An integer array of number of secondary vehicles at every station
+    vehicle_station_utilisation_function : callable
+          returns two arrays of floats -- must be defined with `(**kwargs)`.
+    **kwargs : keyword arguments
+        remaining keyword arguments to be passed to the vehicle station
+        utilisation function.
+
+
+
+    Returns
+    -------
+    float
+        Returns the value of the expected number of A1 patients surviving
+    """
+    (
+        primary_vehicle_station_utilisation,
+        secondary_vehicle_station_utilisation,
+    ) = vehicle_station_utilisation_function(
+        demand_rates=demand_rates,
+        primary_survivals=primary_survivals,
+        secondary_survivals=secondary_survivals,
+        weights_single_vehicle=weights_single_vehicle,
+        weights_multiple_vehicles=weights_multiple_vehicles,
+        beta=beta,
+        R=R,
+        allocation_primary=allocation_primary,
+        allocation_secondary=allocation_secondary,
+        **kwargs,
+    )
+
+    primary_is_not_busy = get_is_not_busy_vector(
+        primary_vehicle_station_utilisation, allocation_primary
+    )
+    secondary_is_not_busy = get_is_not_busy_vector(
+        secondary_vehicle_station_utilisation, allocation_secondary
+    )
+
+    all_closer_busy_primary = get_all_same_closer_busy_vector(
+        primary_vehicle_station_utilisation, allocation_primary, beta
+    )
+
+    all_closer_busy_secondary = get_all_same_closer_busy_vector(
+        secondary_vehicle_station_utilisation, allocation_secondary, beta
+    )
+
+    all_primary_closer_than_secondary_busy = get_all_primary_closer_busy_vector(
+        primary_vehicle_station_utilisation, allocation_primary, R
+    )
+    all_secondary_closer_than_primary_busy = get_all_secondary_closer_busy_vector(
+        secondary_vehicle_station_utilisation, allocation_secondary, R
+    )
+
+    psi_tilde = get_psi_tilde(
+        primary_survivals,
+        secondary_survivals,
+        primary_is_not_busy,
+        secondary_is_not_busy,
+        all_closer_busy_primary,
+        all_closer_busy_secondary,
+        all_secondary_closer_than_primary_busy,
+        all_primary_closer_than_secondary_busy,
+    )
+
+    return (psi_tilde[0].T * demand_rates[0].T).sum()
