@@ -145,7 +145,7 @@
       patients and fleets
 \item Population based neighbourhood search algorithm for finding better fleet
       allocations
-\item Fixed point numerical solution to equation used to approximate utilisation
+\item Fixed point numerical solution of an equation used to approximate utilisation
       of vehicles
 \item A sequential simulation for ambulance demand and capacity planning
 \item Application to Jakarta for policy recommendations and testing future
@@ -641,14 +641,11 @@ Equation~\ref{eqn:proportion_location_dependant},
 \end{equation}
 
 \noindent
-then, using the simulation described later in Section~\ref{sec:simulation}, we
+then, using the simulation described in Section~\ref{sec:simulation}, we
 consider the distribution of $\rho$ across all simulated jobs under the current
 situation and allocation in Jakarta, shown in Figure~\ref{fig:rho_distribution}.
 We see for primary vehicle jobs on average 24\% of a job time is location
-dependant, while it is 36.5\% for secondary vehicles. Therefore this assumption
-should not have too much of an effect for primary vehicles, whose job times are
-much longer than secondary vehicles, but leaves open questions about how to
-better handle this assumption for secondary vehicles.
+dependant, while it is 36.5\% for secondary vehicles.  Considering heterogenous service rates would be an interesting further research question.
 
 \begin{figure}
     \centering
