@@ -571,9 +571,9 @@ and~\ref{eqn:survival_B} respectively,
 Here $R_{p a_1 a_2}$ and $\beta_{p a_1 a_2}$ are binary variables indicating
 the preference of sending a vehicle from one station to another:
 $\beta_{p a_1 a_2}$ indicates if a vehicle of the same type can reach $p$
-quicker from $a_1$ than $a_2$, defined in equation~\ref{eqn:beta}, while
+quicker from $a_1$ than $a_2$, defined in Equation~\ref{eqn:beta}, while
 $R_{p a_1 a_2}$ indicates if a primary vehicle at $a_1$ can reach $p$ quicker
-than a secondary vehicle at $a_2$, defined in equation~\ref{eqn:R}.
+than a secondary vehicle at $a_2$, defined in Equation~\ref{eqn:R}.
 
 \begin{equation}\label{eqn:beta}
 \beta_{p a_1 a_2} = \begin{cases}
@@ -667,7 +667,7 @@ allocations and utilisations of all other locations, is given by
 Equation~\ref{eqn:utilisations_primary}. For secondary vehicles, the
 relationship between demand experienced at each location, $\tilde{\lambda}_a$,
 and the allocations and utilisations of all other locations, is given by
-Equation~\ref{eqn:utilisations_primary}. Note that this also depends on the
+Equation~\ref{eqn:utilisations_secondary}. Note that this also depends on the
 utilisations of the primary vehicles, $\pi_a$.
 
 \begin{equation}\label{eqn:utilisations_primary}
@@ -703,7 +703,7 @@ $$\sum_{p \in \mathcal{P}} \sum_{k \in \mathcal{K}} \left( 1 - \left(\frac{\lamb
 \noindent
 and so
 $\sum_{a \in \mathcal{A}} \lambda_a < \sum_{p \in \mathcal{P}} \sum_{k \in \mathcal{K}} \lambda_{pk}$,
-meaning that there is lost demand. This is expected, and represents the patients
+meaning that there is lost demand. This corresponds to the patients
 who are abandoned, or take private or public transport to a hospital instead of
 waiting for an ambulance. Similarly, in
 Equation~\ref{eqn:utilisations_secondary}, we have that
