@@ -1131,12 +1131,12 @@ Allocation & Baseline & Grid 3km & Grid 5km \\
 \midrule
 Number of EAs & 81 & 70 & 71 \\
 Number of RRVs & 13 & 0 & 0 \\
-Ambulance Utilisation & 28.30\% & 33.41\% & 32.69\% \\
-RRV Utilisation & 20.43\% & - & - \\
-Mean Response Time (mins) & 17.67 & 22.29 & 24.06 \\
+Ambulance Utilisation & 30.99\% & 36.58\% & 35.79\% \\
+RRV Utilisation & 22.47\% & - & - \\
+Mean Response Time (mins) & 17.69 & 22.29 & 24.05 \\
 MESLMHPHF Objective & 98.34\% & 87.95\% & 85.64\% \\
 Expected A1 Survival & 26.05\% & 13.64\% & 12.23\% \\
-Percent Abandoned & 0.00\% & 0.65\% & 0.71\% \\
+Percent Abandoned & 0.00\% & 0.52\% & 0.93\% \\
 \bottomrule
 \end{tabular}
 \caption{Calculated KPIs for the current and proposed grid allocations.}
@@ -1287,10 +1287,7 @@ vehicles), and so we consider three RRVs to be one resource; that is, a
 resource level of 60 could represent 60 primary and 0 secondary vehicles, or
 59 primary and 3 secondary vehicles, or 58 primary and 6 secondary vehicles,
 and so on. For a given resource level we run the optimisation algorithm for
-all possible combinations of numbers of primary and secondary vehicles, though
-as every patient must be seen by a primary vehicle, we do not consider the
-case when the number of secondary vehicles exceeds the number of primary
-vehicles.
+all possible combinations of numbers of primary and secondary vehicles.
 Allocations were found for each resource level between 60 and 124 EA
 equivalents, and we report KPIs for the best performing, in terms of maximal
 survival, combinations, as well as for the case when the number of secondary
@@ -1454,12 +1451,12 @@ percentage of calls abandoned. For example, in order to maintain the current
 \toprule
 Demand Scenario & Mean Response Time &  MESLMHPHF objective & Percent Abandoned \\
 \midrule
-\textbf{D13} & 124 (124, 0) & 60, (36, 72) & 68, (68, 0) \\
-\textbf{D19} & 124 (124, 0) & 60, (40, 60) & 76, (76, 0) \\
-\textbf{D34} & $>$ 124      & 60, (43, 51) & 100 (100, 0) \\
-\textbf{D45} & $>$ 124      & 60, (52, 24) & 124 (124, 0) \\
+\textbf{D13} & 116 (116, 0)  & 60, (36, 72) & 76, (76, 0) \\
+\textbf{D19} & 120 (70, 150) & 60, (40, 60) & 94, (94, 0) \\
+\textbf{D34} & 92 (55, 111)  & 60, (43, 51) & $>$ 124 \\
+\textbf{D45} & 76 (52, 72)   & 60, (52, 24) & $>$ 124 \\
 \midrule
-Current Level & 17.67 minutes & 98.34\% & 0.00\% \\
+Current Level & 17.69 minutes & 98.34\% & 0.00\% \\
 \bottomrule
 \end{tabular}%
 }
