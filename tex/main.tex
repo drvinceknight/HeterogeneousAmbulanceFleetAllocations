@@ -47,8 +47,9 @@
   urlcolor=blue,
   citecolor=black,
   anchorcolor=black,
-  linkcolor=black
+  linkcolor=black,
 ]{hyperref}
+\usepackage{xurl}
 
 %% The next versions of the hyperref command are used if you adopt the
 %% outdated latex-dvips-ps2pdf route in generating your pdf file. In
@@ -84,9 +85,9 @@
 
 \author[inst1]{Geraint Palmer}
 \author[inst1]{Mark Tuson}
-\author[inst1]{Sarie Brice}
-\author[inst1]{Paul Harper}
 \author[inst1]{Vincent Knight}
+\author[inst1]{Paul Harper}
+\author[inst1]{Sarie Brice}
 \author[inst2]{Leanne Smith}
 \author[inst1,inst3]{Daniel Gartner}
 
@@ -128,7 +129,7 @@
  heuristic algorithm for finding better fleet allocations which is used in
  conjunction with a discrete-event simulation model of ambulance services with
  heterogeneous vehicles. A major contribution of this heuristic is the numerical
- solution of a system of equations to be able to approximate the utilisation of
+ solution of a system of equations to approximate the utilisation of
  vehicles. Traditionally this utilisation is problematic as it is both an input
  and an output of the allocation of vehicles. Our approach is informed by, and
  tested on, real-world data from Jakarta, Indonesia. Using our developed models,
@@ -172,7 +173,7 @@ saving patients from life-threatening medical conditions. Most EMS research,
 especially  planning to meet increasing ambulance demands, tends to be
 focussed on high-income countries including, for example, Australia
 \cite{lowthian2011increasing}, Germany \cite{veser2015demographic}, and USA
-\cite{birmingham2021trends}. In contrast, most low and middle-income countries
+\cite{birmingham2021trends}. In contrast, many low and middle-income countries
 (LMICs) lack an organised EMS system, with most ambulances used purely for
 patient transport and not as an emergency care vehicle \cite{plummer2017ems}.
 However, the burden of deaths due to TCCs is much greater in LMICs than in
@@ -180,10 +181,10 @@ high-income countries, the difference being around threefold \cite{ChangPMC}.
 For traffic accidents, strokes and heart attacks, rapid access to appropriate
 treatment is especially vital. 
 
-The application of our research is focused on Indonesia, as supported by an
+The application of our research is focused on Indonesia, supported by an
 award for Global Challenges Research Funds (GCRF). In Indonesia, an LMIC,
 there has been very little prior work on developing an EMS strategy, driven
-largely by inadequate resources including a lack of financial investment and
+by inadequate a lack of financial investment and
 human capital \cite{plummer2017ems,pusponegoro2003terrorism,yusvirazi2018state}.
 Related research by the authors \cite{BriceSyaribahNoor2022Esui} has
 highlighted particular challenges in Indonesia as a lack of a single
@@ -193,13 +194,13 @@ Jakarta, the capital.
 
 When our research programme commenced in October 2019, ambulance services in
 Jakarta were provided by many disparate, mostly private providers that charge
-patients for their use, such as private hospitals. We initially partnered with
+patients for their use. We initially partnered with
 Ambulans 118, a non-government charitable ambulance service established in
 2005 by the Indonesian Surgeons’ Association, that  currently operates in five
 cities across Indonesia: Jakarta, Palembang, Yogyakarta, Surabaya and Makasser.
 Unlike private providers, Ambulans 118 suggests that a donation is made for
-use of its EMS vehicles, but otherwise provides free emergency medical care
-and is also leading on paramedic training across the country. 
+use of its EMS vehicles, but otherwise provides free emergency medical care,
+it is also leading on paramedic training across the country. 
 
 The overarching goal of our research was to work with the Indonesian
 Government, the different ambulance providers, and hospitals, to help them
@@ -207,7 +208,7 @@ forecast emergency demand and make critical decisions on the optimal types,
 capacities and geographical locations of emergency vehicles within a
 potentially co-ordinated EMS system, starting with Jakarta. To facilitate
 this, in collaboration with Ambulans 118 we organised workshops in Jakarta in
-February 2020, thankfully just before the COVID-19 pandemic and lockdowns,
+February 2020,
 which were attended by over 170 people including doctors, nurses, paramedics,
 academics, and officials from the Indonesian Ministry of Health. This paper
 presents some aspects of the overall research programme, specifically focusing
@@ -220,12 +221,12 @@ and the barriers to use of ambulances in Indonesia. Throughout the month of
 December 2020, we undertook comprehensive surveys in Emergency Departments
 (EDs) across Jakarta and published the first known study in to EMS demand
 within the country \cite{BriceSyaribahNoor2022Esui}. Our study showed that the
-utilisation of ambulances by patients attending EDs is considerably low and of
-concern. The low utilisation is contributed to patients’ lack of awareness of
-available ambulance services given a lack of coordination, patients’
+utilisation of ambulances by patients attending EDs is very low and of
+concern. The low utilisation is contributed by patients' lack of awareness of
+available ambulance services, patients'
 disinclination to use ambulances due to high costs, and long response times.
 All of these barriers impact on patient outcomes, especially for those with
-life-threatening conditions. For example, remarkably more trauma patients took
+life-threatening conditions. For example, more trauma patients took
 a car-share ride (20\%) or motorcycle (20\%) to reach the ED than an ambulance
 (just 10\%), while only 14\% of critical cardiovascular patients used an
 ambulance compared to 67\% travelling to hospital by private car or a
@@ -237,7 +238,7 @@ fleets. Here a maximal survival objective is formulated, from vehicle
 allocations and utilisations, which are themselves found by numerically
 solving a relationship on the vehicles' share of the demand. This is then used
 in a heuristic to find allocations that maximise patient survival.
-Secondly, we the develop of a comprehensive sequential discrete event EMS
+Secondly, we develop a comprehensive sequential discrete event EMS
 simulation that models and evaluates heterogeneous fleet allocations of
 emergency vehicles by utilising a novel approach in which transit jobs, rather
 than patients, are framed as the queueing `customers'. Our methodology
@@ -248,7 +249,7 @@ making use of survival functions.
 Thirdly, we demonstrate the use and impact of our modelling framework applied
 to current and proposed ambulance allocations in the city of Jakarta, thus
 supporting Government-level decision making with an overall goal to improve
-the lives of those living in LMICs. This leads to decision support and
+the lives of those living in LMICs. This enables decision support and
 managerial insights in Indonesia, although the developed modelling framework
 could be readily applied to other locations.
 
@@ -282,7 +283,7 @@ measures with coverage and response time being the predominant metrics
 one second, for example, would be considered as a `failure' in many models
 with no appreciation at all of the impact on patient survival or outcome
 \cite{Mclay2010evaluating}. This seems somewhat restrictive and short-sighted,
-which is why we focus on survival as a metric and thus, in the following,
+which is why we focus on survival as a metric and
 compare and contrast papers using that metric with our approach.
 
 Table \ref{tab:RelatedWork} provides an overview of recent research that focus
@@ -294,7 +295,7 @@ our modelling and solution approach.
 \begin{table}[htbp]
 \centering
 \small
-\resizebox{\textwidth}{!}{%
+\resizebox{0.8\textwidth}{!}{%
 \begin{tabular}{llcccc}
 \toprule
 Reference   & Year & DES & Queueing Theory & Optimisation \\
@@ -344,7 +345,7 @@ patient classes. Applications of the model were undertaken using real call
 data from the London Ambulance Service. The difference between their modelling
 approach and our is that we have a different survival function, focus on a
 different heuristic optimization and evaluate our approach with data from a
-development country and have higher traffic volume and congestion in our data. 
+developing country, and have higher traffic volume and congestion in our data. 
 
 Knight, Harper and Smith \cite{Knight2012918} provide a supporting extension
 of the MSLP that allows it to be applied more generally to real-world EMS
@@ -352,7 +353,7 @@ systems, acknowledging that different patients have varying levels of expected
 survival probabilities.  The Maximum Expected Survival Location Model for
 Heterogeneous Patients, MESLMHP, allows multiple classes of patient groups to
 be defined, where previously only cardiac arrest patients formed part of the
-objectives for primary response. In reality, by definition any emergency
+objectives for primary response. In reality any emergency
 patient has a necessity for swift attendance, and a timely response to any
 incident type may impact on clinical outcome in some way. It is for this
 reason MESLMHP is designed to be generic enough to accommodate any number of
@@ -622,15 +623,15 @@ respectively.
 \tilde{\pi}_a &= \frac{\tilde{\lambda_a}}{\tilde{\mu}} \label{eqn:utilisation_ratio_secondary}
 \end{align}
 
-Note that here we assume that average job times are not dependant on the vehicle
+Note that here we assume that average job times are not dependent on the vehicle
 location $a$, although this may be unrealistic, given that the travel between
 locations are a key part of an vehicle's job time ($B_{pa}$, $D_{ya}$, $F_{pa}$).
 However, as discussed in Section~\ref{sec:problem_description}, there are a
 number of other components to an ambulance job including time on site ($G_k$),
 hospital handover time ($J_{yk}$), and vehicle refill time ($\Theta$). For the
 case of Jakarta, we justify the assumption of job times not being location
-dependant by considering the proportion of an ambulance job's time that is
-location dependant, $\rho$, defined in
+dependent by considering the proportion of an ambulance job's time that is
+location dependent, $\rho$, defined in
 Equation~\ref{eqn:proportion_location_dependant},
 
 \begin{equation}\label{eqn:proportion_location_dependant}
@@ -645,13 +646,14 @@ then, using the simulation described in Section~\ref{sec:simulation}, we
 consider the distribution of $\rho$ across all simulated jobs under the current
 situation and allocation in Jakarta, shown in Figure~\ref{fig:rho_distribution}.
 We see for primary vehicle jobs on average 24\% of a job time is location
-dependant, while it is 36.5\% for secondary vehicles.  Considering heterogenous service rates would be an interesting further research question.
+dependent, while it is 36.5\% for secondary vehicles. Considering heterogenous
+service rates would be an interesting further research question.
 
 \begin{figure}
     \centering
     \includegraphics[width=0.85\textwidth]{img/location_dependant_service_time_proportion}
     \caption{Distribution of the proportion of an ambulance job consists of
-    location dependant components, for primary and secondary vehicles.}
+    location dependent components, for primary and secondary vehicles.}
     \label{fig:rho_distribution}
 \end{figure}
 
@@ -762,10 +764,9 @@ numbers need to be retained, then only for first two mutations need be chosen.
 
 The source code for the optimisation heuristic, including the evaluation of
 the MESLMHPHF objective function and the solution method for the utilisation
-considerations, is given in
-\url{https://github.com/drvinceknight/upgraded-octo-barnacle}.
+considerations, is available at \cite{zenodo_opt} and development took place at
+\url{https://github.com/drvinceknight/HeterogeneousAmbulanceFleetAllocations}.
 Numerical results are discussed in Section~\ref{sec:jakarta}.
-
 
 
 
@@ -987,6 +988,9 @@ time, the percentage of abandoned calls (that is a measure of the primary
 vehicle unavailability), and the expected overall survival. Survival is
 modelled using a combination of survival function curves and hard cut-offs,
 and is described in Section~\ref{sec:survival}.
+The source code for the combined simulation, is available at \cite{zenodo_sim} and
+development took place at \url{https://github.com/MarkTuson/ambulance_simulation}.
+
 
 
 
@@ -994,16 +998,13 @@ and is described in Section~\ref{sec:survival}.
 Jakarta, the capital of Indonesia, has a population of 10.5 million
 \cite{BPS_Jakarta} residing within 664 km$^2$. The city is divided into five
 municipalities and one district, each of which is divided into sub districts
-and, in turn, neighbourhoods. There is a total of 42 sub districts and 261
+and, in turn, neighbourhoods. There are in total 42 sub districts and 261
 neighbourhoods within mainland Jakarta (excluding the Thousand Islands regency
-in the north) \cite{BPS_Jakarta_angka}, a map is given in
+in the north) \cite{BPS_Jakarta_angka}; a map is given in
 Figure~\ref{fig:region_names}. 
 
 As described in Section~\ref{sec:intro}, there are many challenges to calling
 for an ambulance in Jakarta, as captured in \cite{BriceSyaribahNoor2022Esui}.
-This work showed and initially fragmented ambulance service with poor data
-collection meaning that estimating the true demand for ambulances in Jakarta
-was itself particularly challenging.
 Based on this work the regional government of Jakarta invested in a new fleet
 of coordinated ambulances accessible via the single emergency number 119.
 This work, in collaboration with Ambulans 118 and the 119 Emergency Ambulance
@@ -1051,7 +1052,7 @@ patient `specialities' ($k \in \mathcal{K}$) were agreed based on clinical need
   minutes. There were 31,725 calls of this type in the data set.
 \end{itemize}
 
-Here secondary vehicles can be called to patients of speciality A1 and A2,
+Secondary vehicles can be called to patients of speciality A1 and A2,
 therefore $\mathcal{K}_A = \{\text{A1}, \text{A2}\}$ and
 $\mathcal{K}_B = \{\text{B}\}$.
 The number of calls from each of these specialities varies by neighbourhood,
@@ -1090,10 +1091,11 @@ parameterisation of the model.
 
 
 \subsection{Evaluating `Grid' Proposals}\label{sec:analysis_grid}
-The 119 Discussions with senior staff at 119 identified that they were seriously
+Discussions with senior staff at 119 identified that they were seriously
 considering to re-configure their ambulance allocations into a grid structure,
 placing an ambulance station at regular intervals throughout the city and
-uniformly distributing the vehicles that they felt would ensure coverage. Two
+uniformly distributing the vehicles that they felt would ensure equitable
+coverage. Two
 possible grid allocations were being considered: one placing an EA every 3km
 across the city (giving a total of 70 vehicles), and another placing three EAs
 every 5km across the city (giving a total of 72 vehicles).
@@ -1147,11 +1149,11 @@ Percent Abandoned & 0.00\% & 0.52\% & 0.93\% \\
 
 \subsection{Planning for Future Demand}\label{sec:demand_scenarios}
 Similarly to many other cities worldwide, ambulance services in Jakarta
-anticipate that demand for services will grow in future years, not least that
+anticipate that demand for services will grow in future years, not least because
 there is now a coordinated service accessible via a single common number `119'
 to call. This should help raise awareness and visibility of an ambulance
 service. In the case of Jakarta, certainly increased use of 119 and therefore
-increased demand would be a desired outcome resulting from proactive actions
+increased demand would be a desired outcome and is pro-actively supported
 by the Indonesian Government. 
 
 We consider four different demand scenarios, developed by considering the
@@ -1258,10 +1260,11 @@ Looking at the expected survival, that is the value of the MESLMHPHF objective
 function, we see that using an optimal allocation does increase the survival,
 and that the drop in survival due to demand increases is not as severe when
 using an optimised allocation in comparison to the current allocation. We can
-also see that A1 patients are benefiting a lot from the optimised allocations,
+also see that in particular A1 patients are benefiting from the optimised allocations,
 as these are the patients most sensitive to small fluctuations in response time,
 due to their survival function Equation~\ref{eqn:survival_curve}.
-It is worth noting that for the simulation based KPIs, there is not too much
+It is worth noting that for the simulation based KPIs (mean response times and
+percent abandoned), there is not too much
 difference between the currently used allocation and the optimal allocation,
 showing that these KPIs may not be good approximations of survival.
 
@@ -1403,8 +1406,8 @@ increase in the expected survival, especially those of speciality A1.
 An interesting phenomenon occurs when looking at
 Figure~\ref{fig:results_response_multiple}. Here it seems that, when using
 multiple vehicles, mean response time decreases as demand increases, which is
-counter-intuitive. This is however due to an peculiar interplay between the way
-in which demand in increased and the vehicle behaviours: as stated in
+counter-intuitive. This is however due to a peculiar interplay between demand
+and vehicle behaviours: as stated in
 Section~\ref{sec:demand_scenarios} only demand for emergency patients are
 increased (specialities A1 and A2), which are also the patients that can be seen
 by secondary vehicles, and so would have a lower response time than
@@ -1433,37 +1436,37 @@ to the results given in Table~\ref{tbl:current_grid_results}, the derived
 allocations give lower ambulance and RRV utilisations, lower mean response
 times, and a higher percentage of patients seen within target.
 
-As experiments were run across all demand scenarios, we can see how much more
-resources would be required, if optimally located, to achieve a similar level
-of service as is currently offered, when demand increases.
-Table~\ref{tbl:equivalent} shows, for each demand scenario, the minimum
-resource level and vehicle type breakdown required to meet the current level
-in each of the following KPIs: mean response time, MESLMHPHF objective, and
-percentage of calls abandoned. For example, in order to maintain the current
-0.00\% abandonment, under the scenario \textbf{D19} the city would require
-76 EAs and 0 RRVs.
+% As experiments were run across all demand scenarios, we can see how much more
+% resources would be required, if optimally located, to achieve a similar level
+% of service as is currently offered, when demand increases.
+% Table~\ref{tbl:equivalent} shows, for each demand scenario, the minimum
+% resource level and vehicle type breakdown required to meet the current level
+% in each of the following KPIs: mean response time, MESLMHPHF objective, and
+% percentage of calls abandoned. For example, in order to maintain the current
+% 0.00\% abandonment, under the scenario \textbf{D19} the city would require
+% 76 EAs and 0 RRVs.
 
-\begin{table}
-\begin{center}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{cccc}
-\toprule
-Demand Scenario & Mean Response Time &  MESLMHPHF objective & Percent Abandoned \\
-\midrule
-\textbf{D13} & 116 (116, 0)  & 60, (36, 72) & 76, (76, 0) \\
-\textbf{D19} & 120 (70, 150) & 60, (40, 60) & 94, (94, 0) \\
-\textbf{D34} & 92 (55, 111)  & 60, (43, 51) & $>$ 124 \\
-\textbf{D45} & 76 (52, 72)   & 60, (52, 24) & $>$ 124 \\
-\midrule
-Current Level & 17.69 minutes & 98.34\% & 0.00\% \\
-\bottomrule
-\end{tabular}%
-}
-\caption{Resources required to maintain current KPI levels when optimising
-         locations under the four demand scenarios.}
-\label{tbl:equivalent}
-\end{center}
-\end{table}
+% \begin{table}
+% \begin{center}
+% \resizebox{\textwidth}{!}{%
+% \begin{tabular}{cccc}
+% \toprule
+% Demand Scenario & Mean Response Time &  MESLMHPHF objective & Percent Abandoned \\
+% \midrule
+% \textbf{D13} & 116 (116, 0)  & 60, (36, 72) & 76, (76, 0) \\
+% \textbf{D19} & 120 (70, 150) & 60, (40, 60) & 94, (94, 0) \\
+% \textbf{D34} & 92 (55, 111)  & 60, (43, 51) & $>$ 124 \\
+% \textbf{D45} & 76 (52, 72)   & 60, (52, 24) & $>$ 124 \\
+% \midrule
+% Current Level & 17.69 minutes & 98.34\% & 0.00\% \\
+% \bottomrule
+% \end{tabular}%
+% }
+% \caption{Resources required to maintain current KPI levels when optimising
+%          locations under the four demand scenarios.}
+% \label{tbl:equivalent}
+% \end{center}
+% \end{table}
 
 
 
@@ -1476,15 +1479,15 @@ investment decisions for a coordinated and free to use EMS.
 
 Firstly, we have considered patient survival and outcomes within a developed
 MESLMHPHF model. By considering geospatial travel times and accounting for the
-varying needs of different patient types though categorising patients by
+varying needs of different patient types through categorising patients by
 speciality and through using different survival function profiles, an expected
-overall survival was given. This could be used within a optimisation
-processes, in this case by using a population-based neighbourhood search
-evolutionary heuristic, to find vehicle fleet allocations that maximise
+overall survival was given. This was used within a optimisation
+processes, with a population-based neighbourhood search
+evolutionary heuristic, to find vehicle fleet allocations that maximised
 expected survival. This expected survival function extends previous work in
 \cite{Knight2012918} to include more than one vehicle type.
 A particular novelty here was numerically solving utilisation relationships,
-Equations~\ref{eqn:utilisations_primary} and~\ref{eqn:utilisations_secondary},
+equations~\ref{eqn:utilisations_primary} and~\ref{eqn:utilisations_secondary},
 to calculate the expected survival.
 
 Secondly, a discrete event simulation model has been used to evaluate existing
