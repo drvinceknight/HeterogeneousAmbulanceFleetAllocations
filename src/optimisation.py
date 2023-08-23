@@ -60,10 +60,14 @@ def switch_secondary_to_primary(
     """
     Randomly add a primary vehicle and remove `primary_to_secondary_ratio` secondary vehicles.
     """
-    locations_with_secondary = np.where(secondary_allocation)[0]
+    locations_with_secondary = np.repeat(
+        np.arange(len(secondary_allocation)), secondary_allocation
+    )
     locations_to_move_to = np.where(primary_allocation < max_allocation)[0]
     from_locations = np.random.choice(
-        locations_with_secondary, size=primary_to_secondary_ratio
+        locations_with_secondary,
+        size=primary_to_secondary_ratio,
+        replace=False,
     )
     to_location = np.random.choice(locations_to_move_to)
     new_primary_allocation = np.array(primary_allocation)
@@ -177,18 +181,31 @@ def create_initial_population(
     max_primary: int,
     max_secondary: int,
     population_size: int,
+    randomise_vehicle_numbers: bool = False,
 ) -> npt.NDArray[np.int64]:
     """
     Creates a (population_size, 2, number_of_locations) array of population_size allocations.
     Each allocation is a (2, number_of_locations) array consisting of a primary allocation and a secondary allocation.
     """
     population = []
+    n_primary = number_of_primary_vehicles
+    n_secondary = number_of_secondary_vehicles
+    total_number_of_vehicles = int(n_primary + (n_secondary / 3))
     for entry in range(population_size):
+        # If randomise_vehicle_numbers, randomise the vehicle numbers
+        if randomise_vehicle_numbers:
+            n_primary = np.random.choice(
+                np.arange(
+                    int(np.ceil(total_number_of_vehicles * 0.75)),
+                    total_number_of_vehicles + 1,
+                )
+            )
+            n_secondary = (total_number_of_vehicles - n_primary) * 3
         # create primary allocation
         primary_allocation = np.zeros(number_of_locations)
         temp = np.random.choice(
             np.arange(number_of_locations).repeat(max_primary),
-            number_of_primary_vehicles,
+            n_primary,
             replace=False,
         )
         locs, numbs = np.unique(temp, return_counts=True)
@@ -198,7 +215,7 @@ def create_initial_population(
         secondary_allocation = np.zeros(number_of_locations)
         temp = np.random.choice(
             np.arange(number_of_locations).repeat(max_secondary),
-            number_of_secondary_vehicles,
+            n_secondary,
             replace=False,
         )
         locs, numbs = np.unique(temp, return_counts=True)
@@ -270,6 +287,7 @@ def optimise(
     vehicle_station_utilisation_function,
     seed,
     num_workers,
+    randomise_vehicle_numbers=False,
     progress_bar=False,
     **kwargs,
 ):
@@ -286,6 +304,7 @@ def optimise(
         max_primary=max_primary,
         max_secondary=max_secondary,
         population_size=population_size,
+        randomise_vehicle_numbers=randomise_vehicle_numbers,
     )
 
     new_pop_size = population_size - keep_size
