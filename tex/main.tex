@@ -1236,11 +1236,11 @@ Parameter & Value Used & Explanation \\
 \midrule
 $\mu$ & $\frac{1}{3.886 \times 60}$ & Average primary vehicle service rate.\\
 $\tilde{\mu}$ & $\frac{1}{1.038 \times 60}$ & Average secondary vehicle service rate.\\
-$N$ & 240 & Population size.\\
-$\kappa$ & 40 & Number of solutions to keep per generation.\\
+$N$ & 100 & Population size.\\
+$\kappa$ & 20 & Number of solutions to keep per generation.\\
 $m_0$ & 6 & Initial number of mutations.\\
-$c$ & 0.25 & Cooling rate, rate at which number of mutations decreases.\\
-$H$ & 500 & Number of generations.\\
+$c$ & 0.1 & Cooling rate, rate at which number of mutations decreases.\\
+$H$ & 200 & Number of generations.\\
 \bottomrule
 \end{tabular}
 \caption{Hyper-parameters used in the optimisation for all experiments.}
@@ -1588,23 +1588,6 @@ they serve, including the exploration of the roll-out of 119 beyond Jakarta to
 other regions of Indonesia. 
 
 
-
-% \section*{CRediT authorship contribution statement}
-% From Computers and OR, select from:\\
-
-% Conceptualisation; Funding acquisition; Investigation; Methodology; Project administration; Resources; Software; Supervision; Validation; Writing - original draft; Writing - review \& editing.\\
-
-
-% {\bf Geraint Palmer:} Conceptualisation, Investigation, Methodology, Software, Writing – original draft\\
-% {\bf Sarie Brice:} Conceptualisation, Investigation, Methodology, Writing – original draft\\
-% {\bf Daniel Gartner:} Conceptualisation, Funding acquisition, Methodology, review \& editing.\\
-% {\bf Paul Harper:} Conceptualisation, Investigation, Methodology, Funding acquisition, Resources, Project administration, Writing – review \& editing.\\
-% {\bf Vince Knight:} Conceptualisation, Funding acquisition, Investigation, Methodology, Software, review \& editing.\\
-% {\bf Leanne Smith:} Methodology.\\
-% {\bf Mark Tuson:} Conceptualisation, Investigation, Methodology, Software, Writing – original draft\\
-
-
-
 \section*{Acknowledgements}
 The study was funded by EPSRC with grant no: EP/T003197/1. We would like to
 express our sincere gratitude to Indonesian emergency ambulance providers
@@ -1678,7 +1661,7 @@ different values of the hyperparameters $N$, $\kappa$, $m_0$, and $c$.
 \includegraphics[width=\textwidth]{img/hyperparameter_exploration}
 \caption{Comparison between optimisation performance for low, medium, and high
 values of $N$, $\kappa$, $m_0$, and $c$. Optimisation is run on demand
-scenario 19, for 70 primary and 30 secondary vehicles.}
+scenario \textbf{D19}, for a resource level of 75.}
 \label{fig:hyperparameters_exploration}
 \end{figure}
 
@@ -1727,8 +1710,18 @@ and~\ref{fig:optimal_current_allocation_45} show the optimised allocations for
 % AUTHOR: Include your bib file here
 \bibliography{literature}
 
-%\section*{AUTHOR BIOGRAPHIES}
 
+%\section*{AUTHOR BIOGRAPHIES}
+\section*{CRediT authorship contribution statement}
+\begin{itemize}
+  \item {\bf Geraint Palmer:} Conceptualisation, Investigation, Methodology, Software, Writing – original draft
+  \item {\bf Mark Tuson:} Conceptualisation, Investigation, Methodology, Software, Writing – original draft
+  \item {\bf Vince Knight:} Conceptualisation, Funding acquisition, Investigation, Methodology, Software, review \& editing.
+  \item {\bf Paul Harper:} Conceptualisation, Investigation, Methodology, Funding acquisition, Resources, Project administration, Writing – review \& editing.
+  \item {\bf Sarie Brice:} Conceptualisation, Investigation, Methodology, Writing – original draft
+  \item {\bf Leanne Smith:} Methodology.
+  \item {\bf Daniel Gartner:} Conceptualisation, Funding acquisition, Methodology, review \& editing.
+\end{itemize}
 
 
 \end{document}
