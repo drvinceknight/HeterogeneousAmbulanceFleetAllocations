@@ -5,6 +5,8 @@
 \usepackage{graphicx}
 \usepackage{mathptmx}
 \usepackage{placeins}
+% \usepackage{fullpage}
+\usepackage[left=16mm, right=16mm, top=23mm, bottom=23mm]{geometry}
 %
 %****************************************************************************
 % AUTHOR: You may want to use some of these packages. (Optional)
@@ -25,7 +27,6 @@
 \usetikzlibrary{shapes}
 
 \usepackage{natbib}
-\usepackage{fullpage}
 \usepackage[linesnumbered,lined,ruled,commentsnumbered]{algorithm2e}
 
 \newcommand{\specialcellr}[2][r]{%
@@ -141,17 +142,17 @@
 
 %%Research highlights
 % Please use 'Highlights' in the file name and include 3 to 5 bullet points (maximum 85 characters, including spaces, per bullet point).
-\begin{highlights}
-\item Mathematical modelling for maximising survival with heterogeneous
-      patients and fleets
-\item Population based neighbourhood search algorithm for finding better fleet
-      allocations
-\item Fixed point numerical solution of an equation used to approximate utilisation
-      of vehicles
-\item A sequential simulation for ambulance demand and capacity planning
-\item Application to Jakarta for policy recommendations and testing future
-      demand scenarios
-\end{highlights}
+% \begin{highlights}
+% \item Mathematical modelling for maximising survival with heterogeneous
+%       patients and fleets
+% \item Population based neighbourhood search algorithm for finding better fleet
+%       allocations
+% \item Fixed point numerical solution of an equation used to approximate utilisation
+%       of vehicles
+% \item A sequential simulation for ambulance demand and capacity planning
+% \item Application to Jakarta for policy recommendations and testing future
+%       demand scenarios
+% \end{highlights}
 
 \begin{keyword}
 % maximum of six keywords
@@ -423,7 +424,7 @@ necessarily be equal, as travel times need not necessarily be symmetrical.
 
 \begin{figure}
     \centering
-    \includestandalone[width=0.65\textwidth]{img/diagram}
+    \includestandalone[width=0.4\textwidth]{img/diagram}
     \caption{Ambulance routes for a given transit job.}
     \label{fig:travel_routes}
 \end{figure}
@@ -489,7 +490,7 @@ targets.
 
 \begin{figure}[ht]
 \centering
-  \includegraphics[width=0.5\textwidth]{img/Survival_Function.pdf}
+  \includegraphics[width=0.4\textwidth]{img/Survival_Function.pdf}
     \caption{Survival function $s(t)$, estimated by \cite{Valenzuela20001206}
              compared with a current EMS target, $s_L(t)$ with $L=8$,
              represented as a step function (binary coverage).}
@@ -636,7 +637,7 @@ service rates would be an interesting further research question.
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.85\textwidth]{img/location_dependant_service_time_proportion}
+    \includegraphics[width=0.7\textwidth]{img/location_dependant_service_time_proportion}
     \caption{Distribution of the proportion of an ambulance job consists of
     location dependent components, for primary and secondary vehicles.}
     \label{fig:rho_distribution}
@@ -1007,7 +1008,7 @@ effectiveness using the simulation described in Section~\ref{sec:simulation}.
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.55\textwidth,trim={0 6cm 0 5cm}, clip]{img/jakarta_region_names.pdf}
+\includegraphics[width=0.4\textwidth,trim={0 6cm 0 5cm}, clip]{img/jakarta_region_names.pdf}
 \end{center}
 \caption{Map of Jakarta's Municipalities.}
 \label{fig:region_names}
@@ -1021,7 +1022,7 @@ locations.
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=\textwidth]{img/map_current}
+\includegraphics[width=0.8\textwidth]{img/map_current}
 \caption{Map of current Emergency Ambulance (EA) and Rapid Response Vehicle
          (RRV) locations and allocations to ambulance bases across Jakarta.}
 \label{fig:current_allocation}
@@ -1055,7 +1056,7 @@ throughout the city.
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=\textwidth]{img/yearly_demand.pdf}
+\includegraphics[width=0.85\textwidth]{img/yearly_demand.pdf}
 \end{center}
 \caption{Number of calls received by speciality and neighbourhood.}
 \label{fig:yearly_demand}
@@ -1096,12 +1097,12 @@ Figure~\ref{fig:grid_allocations} show these proposed allocations.
 
 \begin{figure}
 \begin{center}
-\begin{subfigure}{0.48\textwidth}
+\begin{subfigure}{0.37\textwidth}
 \includegraphics[width=\textwidth]{img/map_grid3km_proposed}
 \caption{3km grid.}
 \end{subfigure}
-\hfill
-\begin{subfigure}{0.48\textwidth}
+\hspace{8mm}
+\begin{subfigure}{0.37\textwidth}
 \includegraphics[width=\textwidth]{img/map_grid5km_proposed}
 \caption{5km grid.}
 \end{subfigure}
@@ -1296,14 +1297,14 @@ with vehicle utilisations, mean response times, and percentage abandoned
 decreasing, and overall survival increasing. Similarly, as expected increasing
 the demand of emergency calls has a negative impact on all KPIs.
 
-\begin{figure}
+\begin{figure}[htb!]
 \begin{center}
-\begin{subfigure}{0.42\textwidth}
+\begin{subfigure}{0.4\textwidth}
 \includegraphics[width=\textwidth]{img/plots/single_Objective}
 \caption{Single vehicle type scenario.}
 \label{fig:results_objective_single}
 \end{subfigure}
-\begin{subfigure}{0.42\textwidth}
+\begin{subfigure}{0.4\textwidth}
 \includegraphics[width=\textwidth]{img/plots/multiple_Objective}
 \caption{Multiple vehicle type scenario.}
 \label{fig:results_objective_multiple}
@@ -1313,14 +1314,14 @@ the demand of emergency calls has a negative impact on all KPIs.
 \label{fig:results_objective}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[htb!]
 \begin{center}
-\begin{subfigure}{0.42\textwidth}
+\begin{subfigure}{0.4\textwidth}
 \includegraphics[width=\textwidth]{img/plots/single_A1Survival}
 \caption{Single vehicle type scenario.}
 \label{fig:results_a1survival_single}
 \end{subfigure}
-\begin{subfigure}{0.42\textwidth}
+\begin{subfigure}{0.4\textwidth}
 \includegraphics[width=\textwidth]{img/plots/multiple_A1Survival}
 \caption{Multiple vehicle type scenario.}
 \label{fig:results_a1survival_multiple}
@@ -1330,14 +1331,14 @@ the demand of emergency calls has a negative impact on all KPIs.
 \label{fig:results_a1survival}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[htb!]
 \begin{center}
-\begin{subfigure}{0.42\textwidth}
+\begin{subfigure}{0.4\textwidth}
 \includegraphics[width=\textwidth]{img/plots/single_AmbulanceUtilisation}
 \caption{Single vehicle type scenario.}
 \label{fig:results_ambulance_utilisation_single}
 \end{subfigure}
-\begin{subfigure}{0.42\textwidth}
+\begin{subfigure}{0.4\textwidth}
 \includegraphics[width=\textwidth]{img/plots/multiple_AmbulanceUtilisation}
 \caption{Multiple vehicle type scenario.}
 \label{fig:results_ambulance_utilisation_multiple}
@@ -1347,22 +1348,22 @@ the demand of emergency calls has a negative impact on all KPIs.
 \label{fig:results_ambulance_utilisation}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[htb!]
 \begin{center}
-\includegraphics[width=0.45\textwidth]{img/plots/multiple_RRVUtilisation}
+\includegraphics[width=0.4\textwidth]{img/plots/multiple_RRVUtilisation}
 \end{center}
 \caption{RRV utilisation results.}
 \label{fig:results_rrv_utilisation_multiple}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[htb!]
 \begin{center}
-\begin{subfigure}{0.42\textwidth}
+\begin{subfigure}{0.4\textwidth}
 \includegraphics[width=\textwidth]{img/plots/single_MeanResponseTime}
 \caption{Single vehicle type scenario.}
 \label{fig:results_response_single}
 \end{subfigure}
-\begin{subfigure}{0.42\textwidth}
+\begin{subfigure}{0.4\textwidth}
 \includegraphics[width=\textwidth]{img/plots/multiple_MeanResponseTime}
 \caption{Multiple vehicle type scenario.}
 \label{fig:results_response_multiple}
@@ -1371,14 +1372,14 @@ the demand of emergency calls has a negative impact on all KPIs.
 \caption{Mean response time results.}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[htb!]
 \begin{center}
-\begin{subfigure}{0.42\textwidth}
+\begin{subfigure}{0.4\textwidth}
 \includegraphics[width=\textwidth]{img/plots/single_PercentAbandoned}
 \caption{Single vehicle type scenario.}
 \label{fig:results_abandoned_single}
 \end{subfigure}
-\begin{subfigure}{0.42\textwidth}
+\begin{subfigure}{0.4\textwidth}
 \includegraphics[width=\textwidth]{img/plots/multiple_PercentAbandoned}
 \caption{Multiple vehicle type scenario.}
 \label{fig:results_abandoned_multiple}
@@ -1637,7 +1638,7 @@ The other models are parameterised in the following way:
 
 \begin{figure}[ht]
 \centering
-  \includegraphics[width=0.6\textwidth]{img/time_on_site_fit.pdf}
+  \includegraphics[width=0.45\textwidth]{img/time_on_site_fit.pdf}
     \caption{Comparison between the sampled time on site and the lognormal
              fit.}
   \label{fig:lognorm_fit}
@@ -1651,7 +1652,7 @@ different values of the hyperparameters $N$, $\kappa$, $m_0$, and $c$.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=\textwidth]{img/hyperparameter_exploration}
+\includegraphics[width=0.7\textwidth]{img/hyperparameter_exploration}
 \caption{Comparison between optimisation performance for low, medium, and high
 values of $N$, $\kappa$, $m_0$, and $c$. Optimisation is run on demand
 scenario \textbf{D19}, for a resource level of 75.}
@@ -1668,7 +1669,7 @@ and~\ref{fig:optimal_current_allocation_45} show the optimised allocations for
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=\textwidth]{img/map_optimised_13}
+\includegraphics[width=0.65\textwidth]{img/map_optimised_13}
 \caption{Optimised allocation of 81 EAs and 13 RRVs, under scenario \textbf{D13}.}
 \label{fig:optimal_current_allocation_13}
 \end{center}
@@ -1676,7 +1677,7 @@ and~\ref{fig:optimal_current_allocation_45} show the optimised allocations for
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=\textwidth]{img/map_optimised_19}
+\includegraphics[width=0.65\textwidth]{img/map_optimised_19}
 \caption{Optimised allocation of 81 EAs and 13 RRVs, under scenario \textbf{D19}.}
 \label{fig:optimal_current_allocation_19}
 \end{center}
@@ -1684,7 +1685,7 @@ and~\ref{fig:optimal_current_allocation_45} show the optimised allocations for
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=\textwidth]{img/map_optimised_34}
+\includegraphics[width=0.65\textwidth]{img/map_optimised_34}
 \caption{Optimised allocation of 81 EAs and 13 RRVs, under scenario \textbf{D34}.}
 \label{fig:optimal_current_allocation_34}
 \end{center}
@@ -1692,7 +1693,7 @@ and~\ref{fig:optimal_current_allocation_45} show the optimised allocations for
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=\textwidth]{img/map_optimised_45}
+\includegraphics[width=0.65\textwidth]{img/map_optimised_45}
 \caption{Optimised allocation of 81 EAs and 13 RRVs, under scenario \textbf{D45}.}
 \label{fig:optimal_current_allocation_45}
 \end{center}
@@ -1704,17 +1705,17 @@ and~\ref{fig:optimal_current_allocation_45} show the optimised allocations for
 \bibliography{literature}
 
 
-%\section*{AUTHOR BIOGRAPHIES}
-\section*{CRediT authorship contribution statement}
-\begin{itemize}
-  \item {\bf Geraint Palmer:} Conceptualisation, Investigation, Methodology, Software, Writing – original draft
-  \item {\bf Mark Tuson:} Conceptualisation, Investigation, Methodology, Software, Writing – original draft
-  \item {\bf Vince Knight:} Conceptualisation, Funding acquisition, Investigation, Methodology, Software, review \& editing.
-  \item {\bf Paul Harper:} Conceptualisation, Investigation, Methodology, Funding acquisition, Resources, Project administration, Writing – review \& editing.
-  \item {\bf Sarie Brice:} Conceptualisation, Investigation, Methodology, Writing – original draft
-  \item {\bf Leanne Smith:} Methodology.
-  \item {\bf Daniel Gartner:} Conceptualisation, Funding acquisition, Methodology, review \& editing.
-\end{itemize}
+% %\section*{AUTHOR BIOGRAPHIES}
+% \section*{CRediT authorship contribution statement}
+% \begin{itemize}
+%   \item {\bf Geraint Palmer:} Conceptualisation, Investigation, Methodology, Software, Writing – original draft
+%   \item {\bf Mark Tuson:} Conceptualisation, Investigation, Methodology, Software, Writing – original draft
+%   \item {\bf Vince Knight:} Conceptualisation, Funding acquisition, Investigation, Methodology, Software, review \& editing.
+%   \item {\bf Paul Harper:} Conceptualisation, Investigation, Methodology, Funding acquisition, Resources, Project administration, Writing – review \& editing.
+%   \item {\bf Sarie Brice:} Conceptualisation, Investigation, Methodology, Writing – original draft
+%   \item {\bf Leanne Smith:} Methodology.
+%   \item {\bf Daniel Gartner:} Conceptualisation, Funding acquisition, Methodology, review \& editing.
+% \end{itemize}
 
 
 \end{document}
