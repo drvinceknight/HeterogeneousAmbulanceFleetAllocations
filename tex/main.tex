@@ -274,8 +274,10 @@ paper.
 \section{Literature Review}\label{sec:litreview}
 There is a rich literature on Operational Research applied to EMS location and
 related allocation problems. Literature reviews that include these topics are
-\citet{aringhieri2017emergency, belanger2019recent, farahani2019or, Li2011, Liu2021, reuter2017logistics}
-and \citet{wang2021emergency}.
+\citet{aringhieri2017emergency, belanger2019recent, farahani2019or, Li2011, Liu2021, reuter2017logistics, mukhopadhyay22}
+and \citet{wang2021emergency}. Ambulance allocation problems such as that
+concerned in this paper can be categorised as a \textit{preparedness}
+problem \citep{mukhopadhyay22}.
 
 Emergency medical services can be evaluated using different performance
 measures with coverage and response time being the predominant metrics
@@ -285,34 +287,9 @@ with no appreciation at all of the impact on patient survival or outcome
 \cite{Mclay2010evaluating}. This seems somewhat restrictive and short-sighted,
 which is why we focus on survival as a metric and
 compare and contrast papers using that metric with our approach.
-
-Table \ref{tab:RelatedWork} provides an overview of recent research that focus
-on the survival metric. We break down related papers into discrete event
-simulation~(DES), queueing theory and optimisation methods, and we provide a
-summary of each paper from the table as well as compare and contrast them with
+Here we break consider some closely related papers, providing a
+summary of each and comparing and contrasting them with
 our modelling and solution approach.
-
-\begin{table}[htbp]
-\centering
-\small
-\resizebox{0.8\textwidth}{!}{%
-\begin{tabular}{llcccc}
-\toprule
-Reference   & Year & DES & Queueing Theory & Optimisation \\
-\midrule
-\citet{amorim2019integrated} & 2019 &  & & \checkmark \\
-\citet{boutilier2022drone} & 2022 &  & \checkmark \\
-\citet{Erkut200842} & 2008 & & & \checkmark\\
-\citet{Knight2012918} & 2012 & & \checkmark & \checkmark \\
-\citet{MCormack2015} & 2015 & \checkmark & & \checkmark\\
-\bottomrule
-\end{tabular}%
-}
-\caption{Break down of related research that focuses on survival.}
-\label{tab:RelatedWork}
-\end{table}
-
-\FloatBarrier
 
 \citet{amorim2019integrated} propose an integrated strategic and tactical
 planning approach which features an optimization model and a local search
@@ -345,7 +322,15 @@ patient classes. Applications of the model were undertaken using real call
 data from the London Ambulance Service. The difference between their modelling
 approach and our is that we have a different survival function, focus on a
 different heuristic optimization and evaluate our approach with data from a
-developing country, and have higher traffic volume and congestion in our data. 
+developing country, and have higher traffic volume and congestion in our data.
+
+Bélanger et al.~\cite{belanger20} combine optimisation and simulation to find
+both ambulance locations and dispatch policies. Here, binary integer programming 
+is used to minimise total response time, where ambulance availability, or
+utilisation is unknown. In this work this is overcome by iteratively feeding the
+solution of the optimisation programme into a simulation to find the
+availability parameters, until convergence. Out work differs as we solve for
+ambulance utilisation explicitly.
 
 Knight, Harper and Smith \cite{Knight2012918} provide a supporting extension
 of the MSLP that allows it to be applied more generally to real-world EMS
@@ -772,7 +757,9 @@ Numerical results are discussed in Section~\ref{sec:jakarta}.
 
 \section{Simulating Allocations}\label{sec:simulation}
 Discrete event simulation (DES) is a common methodology that allows us to
-investigate given scenarios under uncertainty. Here it will be used to
+investigate given scenarios under uncertainty. It is a common methodology for
+modelling emergency medical services, with a review given
+in \cite{aboueljinane13}. Here it will be used to
 quantify the effectiveness of given ambulance allocations by measuring a range
 of key performance indicators (KPIs), such as the average response time, the
 percentage of abandoned calls, vehicle utilisations, and expected survival
@@ -826,11 +813,15 @@ distances and approximate hourly traffic levels, described in
 Section~\ref{sec:travel_times}.
 
 \subsection{Travel Time Calculations}\label{sec:travel_times}
-Each day is split into a set of periods, $\mathcal{H}$ indexed by $h$. Within
-each period traffic levels are considered constant but differ from period to
-period. Traffic levels influence the speed of the ambulance through a delay
-factor $d_h$ associated with each period. Therefore, the expected speed $S_h$
-at which an ambulance travels during period $h$ is given by
+Travel times within a city such as Jakarta are not constant throughout the day
+due to the variability in traffic, and it is necessary to capture these in
+models of emergency medical services \citep{schmiddoerner10}.
+Here, each day is split into a set of periods, $\mathcal{H}$ indexed by $h$.
+Within each period traffic levels are modelled as piecewise linear functions
+similar to \cite{horn00}, and are here considered constant but differing from
+period to period. Traffic levels influence the speed of the ambulance through a
+delay factor $d_h$ associated with each period. Therefore, the expected speed
+$S_h$ at which an ambulance travels during period $h$ is given by
 Equation~\ref{eqn:speed},
 
 \begin{equation}\label{eqn:speed}
@@ -945,7 +936,9 @@ $\tilde{F}_{pa_2}$ are random variables to sample in the subsequent simulation.
 Travel times are calculated as described in Section~\ref{sec:travel_times},
 replacing the primary vehicle delay factor, $d_h$, with a delay factor for
 secondary vehicles, $\tilde{d}_h$. This accounts for secondary vehicles
-travelling faster and reacting to traffic differently to primary vehicles.
+travelling faster and reacting to traffic differently to primary vehicles,
+similar to the method used in \cite{hendersonmason04} to differentiate the
+travel times of ambulances with and without flashing lights.
 
 Exact synchronicity considerations are shown in Figure~\ref{fig:sequential_logic}:
 \begin{itemize}
