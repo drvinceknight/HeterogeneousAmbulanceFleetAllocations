@@ -1,4 +1,4 @@
-\documentclass[preprint,12pt]{elsarticle}
+\documentclass[numbers,webpdf,imaman]{ima-authoring-template}%
 
 \usepackage{latexsym}
 \usepackage{subcaption}
@@ -26,8 +26,8 @@
 \usetikzlibrary{calc}
 \usetikzlibrary{shapes}
 
-\usepackage{natbib}
-\usepackage[linesnumbered,lined,ruled,commentsnumbered]{algorithm2e}
+% \usepackage[round]{natbib}
+% \usepackage[linesnumbered,lined,ruled,commentsnumbered]{algorithm2e}
 
 \newcommand{\specialcellr}[2][r]{%
   \begin{tabular}[#1]{@{}r@{}}#2\end{tabular}}
@@ -43,14 +43,14 @@
 %% This version of the command is used if you use pdflatex. In this case you
 %% cannot use ps or eps files for graphics, but pdf, jpeg, png etc are fine.
 
-\usepackage[
-  colorlinks=true,
-  urlcolor=blue,
-  citecolor=black,
-  anchorcolor=black,
-  linkcolor=black,
-]{hyperref}
-\usepackage{xurl}
+% \usepackage[
+%   colorlinks=true,
+%   urlcolor=blue,
+%   citecolor=black,
+%   anchorcolor=black,
+%   linkcolor=black,
+% ]{hyperref}
+% \usepackage{xurl}
 
 %% The next versions of the hyperref command are used if you adopt the
 %% outdated latex-dvips-ps2pdf route in generating your pdf file. In
@@ -69,6 +69,7 @@
 %*
 %* AUTHOR: YOUR CALL!  Document-specific macros can come here.
 %*
+\setcitestyle{authoryear,open={(},close={)}} %Citation-related commands
 %****************************************************************************
 % Packages added manually
 \usepackage{xcolor}
@@ -79,115 +80,100 @@
 %*
 \begin{document}
 
-\begin{frontmatter}
+\DOI{DOI HERE}
+\copyrightyear{2023}
+\vol{00}
+\pubyear{2024}
+\access{Advance Access Publication Date: Day Month Year}
+\appnotes{Paper}
+\copyrightstatement{Published by Oxford University Press on behalf of the Institute of Mathematics and its Applications. All rights reserved.}
+\firstpage{1}
+
+\title[Optimising Heterogeneous Ambulance Fleet Allocations in Jakarta]{Optimising Heterogeneous Ambulance Fleet Allocations in Jakarta}
 
 
-\title{Optimising Heterogeneous Ambulance Fleet Allocations in Jakarta}
-
-\author[inst1]{Geraint Palmer}
-\author[inst1]{Mark Tuson}
-\author[inst1]{Vincent Knight}
-\author[inst1]{Paul Harper}
-\author[inst1]{Sarie Brice}
-\author[inst2]{Leanne Smith}
-\author[inst1,inst3]{Daniel Gartner}
-
-
-\affiliation[inst1]{organization={School of Mathematics, Cardiff University},%Department and Organization
-            addressline={Abacws, Senghennydd Road}, 
-            city={Cardiff},
-            postcode={CF24 4AG}, 
-            state={Wales},
-            country={United Kingdom}}
-            
-\affiliation[inst2]{organization={Welsh Ambulance Services NHS Trust},%Department and Organization
-            addressline={Beacon House, William Brown Close}, 
-            city={Cwmbran},
-            postcode={NP44 3AB}, 
-            state={Wales},
-            country={United Kingdom}}
-
-\affiliation[inst3]{organization={Aneurin Bevan University Health Board},%Department and Organization
-            addressline={Lodge Road}, 
-            city={Caerleon},
-            postcode={NP18 3XQ}, 
-            state={Wales},
-            country={United Kingdom}}
-
-%% Text of abstract  100-200 words
-
-%A self-contained abstract of about 100-200 words outlining the aims, scope and conclusions of the paper must be supplied..
- \begin{abstract}
- Ambulance services have a duty of care to the clinical outcomes of the
- population they serve, and therefore aim to maximise the chances of survival
- and improve patient outcomes following a medical emergency. Despite this,
- although the ambulance allocation problem has been widely studied,
- it has predominantly focused on minimising response times or maximising
- coverage alone, and not explicitly for considering patient outcomes. In this
- paper we propose a modelling approach to consider where to best allocate
- different types of emergency response vehicles in order to maximise patient
- outcomes within a heterogeneous population. To achieve this, we develop a
- metaheuristic algorithm for finding better fleet allocations which is used in
- conjunction with a discrete-event simulation model of ambulance services with
- heterogeneous vehicles. A major contribution of this metaheuristic is the numerical
- solution of a system of equations to approximate the utilisation of
- vehicles. Traditionally this utilisation is problematic as it is both an input
- and an output of the allocation of vehicles. Our approach is informed by, and
- tested on, real-world data from Jakarta, Indonesia. Using our developed models,
- decision makers are better able to understand ambulance fleet capacity needs
- and allocations, and their impact on patient outcomes.
-
-\end{abstract}
+% \author{
+% Geraint Ian Palmer*, Mark Tuson, Vincent Knight, Paul Harper, and Sarie Brice
+% \address{
+%     \orgdiv{School of Mathematics},
+%     \orgname{Cardiff University},
+%     \orgaddress{\street{Abacws},
+%     \postcode{CF24 4AG},
+%     \state{Cardiff, Wales},
+%     \country{United Kingdom}
+% }}}
+% \author{Leanne Smith
+% \address{
+%     \orgname{Welsh Ambulance Services NHS Trust},
+%     \orgaddress{\street{Beacon House},
+%     \postcode{NP44 3AB},
+%     \state{Cwmbran, Wales},
+%     \country{United Kingdom}
+% }}}
+% \author{Daniel Gartner
+% \address{
+%     \orgname{Aneurin Bevan University Health Board},
+%     \orgaddress{\street{Lodge Road},
+%     \postcode{NP18 3XQ},
+%     \state{Caerleon, Wales},
+%     \country{United Kingdom}
+% }}}
 
 
-%%Research highlights
-% Please use 'Highlights' in the file name and include 3 to 5 bullet points (maximum 85 characters, including spaces, per bullet point).
-% \begin{highlights}
-% \item Mathematical modelling for maximising survival with heterogeneous
-%       patients and fleets
-% \item Population based neighbourhood search algorithm for finding better fleet
-%       allocations
-% \item Fixed point numerical solution of an equation used to approximate utilisation
-%       of vehicles
-% \item A sequential simulation for ambulance demand and capacity planning
-% \item Application to Jakarta for policy recommendations and testing future
-%       demand scenarios
-% \end{highlights}
+% \corresp[*]{Corresponding author: \href{email:palmergi1@cardiff.ac.uk}{palmergi1@cardiff.ac.uk}}
 
-\begin{keyword}
-% maximum of six keywords
-%% keywords here, in the form: keyword \sep keyword
-Ambulance Planning \sep Emergency Medical Services \sep Simulation \sep Health Care \sep Optimisation \sep Mathematical Modelling
-\end{keyword}
+\received{Date}{0}{Year}
+\revised{Date}{0}{Year}
+\accepted{Date}{0}{Year}
 
-\end{frontmatter}
+\abstract{Ambulance services have a duty of care to the clinical outcomes of the
+population they serve, and therefore aim to maximise the chances of survival and
+improve patient outcomes following a medical emergency. Despite this, although
+the ambulance allocation problem has been widely studied, it has predominantly
+focused on minimising response times or maximising coverage alone, and not
+explicitly for considering patient outcomes. In this paper we propose a
+modelling approach to consider where to best allocate different types of
+emergency response vehicles in order to maximise patient outcomes within a
+heterogeneous population. To achieve this, we develop a metaheuristic algorithm
+for finding better fleet allocations which is used in conjunction with a
+discrete-event simulation model of ambulance services with heterogeneous
+vehicles. A major contribution of this metaheuristic is the numerical solution
+of a system of equations to approximate the utilisation of vehicles.
+Traditionally this utilisation is problematic as it is both an input and an
+output of the allocation of vehicles. Our approach is informed by, and tested
+on, real-world data from Jakarta, Indonesia. Using our developed models,
+decision makers are better able to understand ambulance fleet capacity needs and
+allocations, and their impact on patient outcomes.}
+
+\keywords{Ambulance Planning; Emergency Medical Services; Simulation;
+Health Care; Optimisation; Mathematical Modelling}
 
 
-\newpage
+\maketitle
 
 
 \section{Introduction and Background}\label{sec:intro}
 Time-critical conditions (TCCs) are a substantial cause of mortality
-worldwide, responsible for an estimated 54\% of all deaths \cite{FraserBMJ}.
+worldwide, responsible for an estimated 54\% of all deaths \citep{FraserBMJ}.
 Emergency medical services (EMS) play a pivotal role in responding to TCCs and
 saving patients from life-threatening medical conditions. Most EMS research,
 especially  planning to meet increasing ambulance demands, tends to be
 focussed on high-income countries including, for example, Australia
-\cite{lowthian2011increasing}, Germany \cite{veser2015demographic}, and USA
-\cite{birmingham2021trends}. In contrast, many low and middle-income countries
+\citep{lowthian2011increasing}, Germany \citep{veser2015demographic}, and USA
+\citep{birmingham2021trends}. In contrast, many low and middle-income countries
 (LMICs) lack an organised EMS system, with most ambulances used purely for
-patient transport and not as an emergency care vehicle \cite{plummer2017ems}.
+patient transport and not as an emergency care vehicle \citep{plummer2017ems}.
 However, the burden of deaths due to TCCs is much greater in LMICs than in
-high-income countries, the difference being around threefold \cite{ChangPMC}.
+high-income countries, the difference being around threefold \citep{ChangPMC}.
 For traffic accidents, strokes and heart attacks, rapid access to appropriate
 treatment is especially vital. 
 
 The application of our research is focused on Indonesia, supported by an
 award for Global Challenges Research Funds (GCRF). In Indonesia, an LMIC,
 there has been very little prior work on developing an EMS strategy, driven
-by inadequate a lack of financial investment and
-human capital \cite{plummer2017ems,pusponegoro2003terrorism,yusvirazi2018state}.
-Related research by the authors \cite{BriceSyaribahNoor2022Esui} has
+by inadequate a lack of financial investment and human capital
+\citep{plummer2017ems,pusponegoro2003terrorism,yusvirazi2018state}.
+Related research by the authors \citep{BriceSyaribahNoor2022Esui} has
 highlighted particular challenges in Indonesia as a lack of a single
 coordinated EMS, the ability or willingness to pay for an ambulance, a large
 geographical area, and areas of severe traffic congestion especially in
@@ -195,37 +181,36 @@ Jakarta, the capital.
 
 When our research programme commenced in October 2019, ambulance services in
 Jakarta were provided by many disparate, mostly private providers that charge
-patients for their use. We initially partnered with
-Ambulans 118, a non-government charitable ambulance service established in
-2005 by the Indonesian Surgeons’ Association, that  currently operates in five
-cities across Indonesia: Jakarta, Palembang, Yogyakarta, Surabaya and Makasser.
-Unlike private providers, Ambulans 118 suggests that a donation is made for
-use of its EMS vehicles, but otherwise provides free emergency medical care,
-it is also leading on paramedic training across the country. 
+patients for their use. We initially partnered with Ambulans 118, a
+non-government charitable ambulance service established in 2005 by the
+Indonesian Surgeons’ Association, that  currently operates in five cities across
+Indonesia: Jakarta, Palembang, Yogyakarta, Surabaya and Makasser. Unlike private
+providers, Ambulans 118 suggests that a donation is made for use of its EMS
+vehicles, but otherwise provides free emergency medical care, it is also leading
+on paramedic training across the country. 
 
-The overarching goal of our research was to work with the Indonesian
-Government, the different ambulance providers, and hospitals, to help them
-forecast emergency demand and make critical decisions on the best types,
-capacities and geographical allocations of emergency vehicles within a
-potentially co-ordinated EMS system, starting with Jakarta. To facilitate
-this, in collaboration with Ambulans 118 we organised workshops in Jakarta in
-February 2020,
-which were attended by over 170 people including doctors, nurses, paramedics,
-academics, and officials from the Indonesian Ministry of Health. This paper
-presents some aspects of the overall research programme, specifically focusing
-on the development of a simulation model and allocation metaheuristic
-for maximising patient survival.  
+The overarching goal of our research was to work with the Indonesian Government,
+the different ambulance providers, and hospitals, to help them forecast
+emergency demand and make critical decisions on the best types, capacities and
+geographical allocations of emergency vehicles within a potentially co-ordinated
+EMS system, starting with Jakarta. To facilitate this, in collaboration with
+Ambulans 118 we organised workshops in Jakarta in February 2020, which were
+attended by over 170 people including doctors, nurses, paramedics, academics,
+and officials from the Indonesian Ministry of Health. This paper presents some
+aspects of the overall research programme, specifically focusing on the
+development of a simulation model and allocation metaheuristic for maximising
+patient survival.  
 
 Fundamental to the project and the research described in this paper was an
 initial study that we carried out in order to better understand patient needs
 and the barriers to use of ambulances in Indonesia. Throughout the month of
 December 2020, we undertook comprehensive surveys in Emergency Departments
 (EDs) across Jakarta and published the first known study in to EMS demand
-within the country \cite{BriceSyaribahNoor2022Esui}. Our study showed that the
+within the country \citep{BriceSyaribahNoor2022Esui}. Our study showed that the
 utilisation of ambulances by patients attending EDs is very low and of
 concern. The low utilisation is contributed by patients' lack of awareness of
-available ambulance services, patients'
-disinclination to use ambulances due to high costs, and long response times.
+available ambulance services, patients' disinclination to use ambulances due to
+high costs, and long response times.
 All of these barriers impact on patient outcomes, especially for those with
 life-threatening conditions. For example, more trauma patients took
 a car-share ride (20\%) or motorcycle (20\%) to reach the ED than an ambulance
@@ -234,7 +219,7 @@ ambulance compared to 67\% travelling to hospital by private car or a
 car-share ride.
 
 The first contribution of this paper is an extension the work of
-\cite{Knight2012918} to consider both heterogeneous patients and heterogeneous
+\citet{Knight2012918} to consider both heterogeneous patients and heterogeneous
 fleets. Here a maximal survival objective is formulated, from vehicle
 allocations and utilisations, which are themselves found by numerically
 solving a relationship on the vehicles' share of the demand. This is then used
@@ -283,10 +268,10 @@ problem \citep{mukhopadhyay22}.
 
 Emergency medical services can be evaluated using different performance
 measures with coverage and response time being the predominant metrics
-\cite{Mclay2010evaluating}. However, missing a response time target by just
+\citep{Mclay2010evaluating}. However, missing a response time target by just
 one second, for example, would be considered as a `failure' in many models
 with no appreciation at all of the impact on patient survival or outcome
-\cite{Mclay2010evaluating}. This seems somewhat restrictive and short-sighted,
+\citep{Mclay2010evaluating}. This seems somewhat restrictive and short-sighted,
 which is why we focus on survival as a metric and
 compare and contrast papers using that metric with our approach.
 Here we consider some closely related papers, providing a summary of each and
@@ -306,7 +291,7 @@ p-median approach and an Erlang loss model. Although survival is not their
 main optimisation criterion,  they report how many patients would survive
 using their approach.
 
-Erkut et al.~\cite{Erkut200842} can be considered the first modelling approach
+\citet{Erkut200842} can be considered the first modelling approach
 that considers decaying survival probabilities during response time. The
 rationale is, because survival can be thought of as a more robust and generic
 objective for EMS performance measurement than coverage or average response
@@ -315,7 +300,7 @@ Problem model (MSLP), the authors use data from Edmonton, Canada and show that
 maximising survival is superior to other objectives in clinical outcome for
 cardiac arrest patients.
 
-McCormack and Coates~(2015)~\cite{MCormack2015} focus on the optimisation of
+\citet{MCormack2015} focus on the optimisation of
 EMS vehicle fleet allocation and base station location through the use of a
 genetic algorithm (GA) with an integrated EMS simulation model. Their
 objective is maximization of the overall expected survival probability across
@@ -325,7 +310,7 @@ approach and our is that we have a different survival function, focus on a
 different heuristic optimisation and evaluate our approach with data from a
 developing country, and have higher traffic volume and congestion in our data.
 
-Bélanger et al.~\cite{belanger20} combine optimisation and simulation to find
+\citet{belanger20} combine optimisation and simulation to find
 both ambulance locations and dispatch policies. Here, binary integer programming 
 is used to minimise total response time, where ambulance availability, or
 utilisation is unknown. In this work this is overcome by iteratively feeding the
@@ -333,15 +318,15 @@ solution of the optimisation programme into a simulation to find the
 availability parameters, until convergence. Our work differs as we solve for
 ambulance utilisation explicitly.
 
-Toro-D\'iaz et al.~(2013, 2015)~\cite{torodiaz13, torodiaz15} build
+\citet{torodiaz13, torodiaz15} build
 optimisation models for both the allocation and the dispatch, or preference,
 rules for EMS services. They utilise the hypercube queueing model for ambulance
 availability with a integer programming and metaheuristic algorithms. In
 particular, they consider a number of different objectives including mean
-response times, expected coverage \cite{daskin83}, and the Gini index on
+response times, expected coverage \citep{daskin83}, and the Gini index on
 individual response times as measures of fairness in the system.
 
-Knight, Harper and Smith \cite{Knight2012918} provide a supporting extension
+\citet{Knight2012918} provide a supporting extension
 of the MSLP that allows it to be applied more generally to real-world EMS
 systems, acknowledging that different patients have varying levels of expected
 survival probabilities.  The Maximum Expected Survival Location Model for
@@ -419,7 +404,7 @@ Patients will call an ambulance from one of the pick-up locations
 $p \in \mathcal{P}$. If \textit{all} ambulances are busy, then that call will be
 abandoned and it is assumed that the patient will find their own way to the
 hospital through private or public transportation, which is an appropriate and
-justified assumption for the case of Jakarta \cite{BriceSyaribahNoor2022Esui}.
+justified assumption for the case of Jakarta \citep{BriceSyaribahNoor2022Esui}.
 Otherwise, a central control centre will dispatch the closest available primary
 vehicle. That vehicle will travel from its location to the patient ($B_{pa}$),
 spend some time on the scene treating the patient ($G_k$), travel to the
@@ -439,7 +424,7 @@ driver urgency on each leg of the journey.
 
 \begin{figure}
     \centering
-    \includestandalone[width=0.5\textwidth]{img/diagram}
+    \includestandalone[width=0.475\textwidth]{img/diagram}
     \caption{Ambulance routes for a given transit job.}
     \label{fig:travel_routes}
 \end{figure}
@@ -482,17 +467,26 @@ to wait for care, and mixture of theoretical survival functions and step
 functions can be utilised.
 Survival probabilities for critical incidents, calculated from a theoretical
 monotonically decaying survival function reported in the literature
-\cite{Valenzuela20001206} are used to demonstrate an attainable level of
+\citep{Valenzuela20001206} are used to demonstrate an attainable level of
 success from a response. One particular survival curve $s(t)$ of
 Equation~\ref{eqn:survival_curve}, represents survival until hospital
 discharge following cardiac arrest; its origins are explained in detail by
-\cite{Knight2012918}, and gives the probability of survival if seen within a
+\citet{Knight2012918}, and gives the probability of survival if seen within a
 time $t$ in the form of a logistic function. Figure~\ref{fig:survivalfunction}
 shows the difference between using this survival curve and a hard cut-off of 8
 minutes.
 However, hard cut-off curves like Equation~\ref{eqn:survival_cutoff}, with a
 cutoff of $L$ can still be used to represent meeting artificially selected
 targets, for example for transportation jobs.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.4\textwidth]{img/Survival_Function.pdf}
+\caption{Survival function $s(t)$, estimated by \citet{Valenzuela20001206}
+compared with $s_L(t)$ with a hard cutoff of $L=8$, represented as a step
+function.}
+\label{fig:survivalfunction}
+\end{figure}
 
 \begin{equation}\label{eqn:survival_curve}
     s(t) = \left(1 + e^{0.26+0.139t}\right)^{-1}
@@ -505,21 +499,12 @@ targets, for example for transportation jobs.
     \end{cases}
 \end{equation}
 
-\begin{figure}[ht]
-\centering
-  \includegraphics[width=0.4\textwidth]{img/Survival_Function.pdf}
-    \caption{Survival function $s(t)$, estimated by \cite{Valenzuela20001206}
-             compared with $s_L(t)$ with a hard cutoff of $L=8$, represented as
-             a step function.}
-  \label{fig:survivalfunction}
-\end{figure}
-
 
 \subsection{Maximal Expected Survival Location Model with Heterogeneous
             Patients and Heterogeneous Fleet}\label{sec:meslmhphf}
 Here we propose a Maximal Expected Survival Location Model with Heterogeneous
 Patients and Heterogeneous Fleet (MESLMHPHF). It is an extension of the
-MESLMHP model given in \cite{Knight2012918}, which did not consider
+MESLMHP model given in \citet{Knight2012918}, which did not consider
 heterogeneous fleets. This is a model of survival that can be used as an
 objective function for optimisation algorithms. It is a weighted expected
 survival function as the objective function which considers heterogeneous
@@ -617,7 +602,7 @@ The models above assume that the utilisations of each vehicle type at each
 vehicle location is known, which is a potentially restrictive assumption.
 These utilisations $\pi_a$ and $\tilde{\pi}_a$ depend on the demand to station
 $a$, which itself depends on the vehicle allocations. One method of overcoming
-this, used in \cite{Knight2012918}, is to consider utilisation as the ratio of
+this, used in \citet{Knight2012918}, is to consider utilisation as the ratio of
 demand and service rates, shown in Equations~\ref{eqn:utilisation_ratio_primary}
 and~\ref{eqn:utilisation_ratio_secondary}. Here we let $\frac{1}{\mu}$ and
 $\frac{1}{\tilde{\mu}}$ be the average job times of primary and secondary
@@ -708,7 +693,7 @@ $\tilde{\lambda}_a$; and determining the secondary vehicle utilisations with
 Equation~\ref{eqn:utilisation_ratio_secondary}. These can be solved
 numerically. In our implementation this is solved using the MINPACK hybrd and
 hybrj algorithms by using Scipy's \texttt{fsolve} function
-\cite{2020SciPy-NMeth}. It should be noted that in this section we assume that
+\citep{2020SciPy-NMeth}. It should be noted that in this section we assume that
 all $\lambda_{pk}$ are static and not time-dependant, which is an assumption
 that will be used throughout the optimisation methodology, however in the
 simulation we can account for time-dependent demand.
@@ -749,23 +734,25 @@ the initial mutation rate; $c$ the cooling rate; and $H$ the number of
 generations. The metaheuristic is described in Algorithm~\ref{alg:heuristic}.
 
 \begin{algorithm}
-\SetAlgoLined
-Create a population of $N$ random allocations ($Z_a$, $\tilde{Z}_a$)\;
-\For{$i \leftarrow 0$ \KwTo $H$}{
-  Rank the population according to Equation~\ref{eqn:meslmhphf}\;
-  Keep the top $\kappa$ solutions\;
-  $m \leftarrow \lceil m_0 - \max\left(m_0, i \times c\right)\rceil$\;
-  \For{$j \leftarrow 0$ \KwTo $N - \kappa$}{
-    Randomly choose and copy a solution from the population\;
-    Mutate that copy of the solution $m$ times\;
-    Place mutated copy in a separate population\;
-  }
-  Combine populations;\
-}
-Rank the population according to Equation~\ref{eqn:meslmhphf};\
-Output the top ranking solution.
+\algnewcommand\algorithmicto{\textbf{to }}
 \caption{Evolutionary Algorithm used to find better allocations.}
 \label{alg:heuristic}
+\begin{algorithmic}[1]
+\State Create a population of $N$ random allocations ($Z_a$, $\tilde{Z}_a$)\;
+\For{$i \leftarrow 0$ \algorithmicto $H$}
+  \State Rank the population according to Equation~\ref{eqn:meslmhphf}\;
+  \State Keep the top $\kappa$ solutions\;
+  \State $m \leftarrow \lceil m_0 - \max\left(m_0, i \times c\right)\rceil$\;
+  \For{$j \leftarrow 0$ \algorithmicto $N - \kappa$}
+    \State Randomly choose and copy a solution from the population\;
+    \State Mutate that copy of the solution $m$ times\;
+    \State Place mutated copy in a separate population\;
+  \EndFor
+  \State Combine populations;\
+\EndFor
+\State Rank the population according to Equation~\ref{eqn:meslmhphf};\
+\State Output the top ranking solution.
+\end{algorithmic}
 \end{algorithm}
 
 Mutations consist of one of four possible changes: randomly change the location
@@ -778,7 +765,7 @@ numbers need to be retained, then only for first two mutations need be chosen.
 
 The source code for the optimisation metaheuristic, including the evaluation of
 the MESLMHPHF objective function and the solution method for the utilisation
-considerations, is available at \cite{zenodo_opt} and development took place at
+considerations, is available at \citet{zenodo_opt} and development took place at
 \url{https://github.com/drvinceknight/HeterogeneousAmbulanceFleetAllocations}.
 Numerical results are discussed in Section~\ref{sec:jakarta}.
 
@@ -786,19 +773,18 @@ Numerical results are discussed in Section~\ref{sec:jakarta}.
 \section{Simulating Allocations}\label{sec:simulation}
 Discrete event simulation (DES) is a common methodology that allows us to
 investigate given scenarios under uncertainty. It is a common methodology for
-modelling emergency medical services, with a review given
-in \cite{aboueljinane13}. Here it will be used to
-quantify the effectiveness of given ambulance allocations by measuring a range
-of key performance indicators (KPIs), such as the average response time, the
-percentage of abandoned calls, vehicle utilisations, and expected survival
-based on response times. The simulation is built using the Ciw library
-\cite{palmer2019ciw}, and the model logic is described below. Its central
-ideas include modelling transit jobs as customers, rather than the patients
-themselves, and simulating primary and secondary vehicles as two simulations
-sequentially, with the output of the former being the input of the latter.
-Separating out primary and secondary vehicle logic simplifies the model logic,
-allows for modular simulations that can be run in isolation, and so easier to
-adapt and to maintain.
+modelling emergency medical services, with a review given in
+\citet{aboueljinane13}. Here it will be used to quantify the effectiveness of
+given ambulance allocations by measuring a range of key performance indicators
+(KPIs), such as the average response time, the percentage of abandoned calls,
+vehicle utilisations, and expected survival based on response times. The
+simulation is built using the Ciw library \citep{palmer2019ciw}, and the model
+logic is described below. Its central ideas include modelling transit jobs as
+customers, rather than the patients themselves, and simulating primary and
+secondary vehicles as two simulations sequentially, with the output of the
+former being the input of the latter. Separating out primary and secondary
+vehicle logic simplifies the model logic, allows for modular simulations that
+can be run in isolation, and so easier to adapt and to maintain.
 
 
 \subsection{Simulating Primary Vehicles}\label{sec:simulation_primary}
@@ -816,7 +802,7 @@ ambulance returns to their original ambulance location.
 
 Rather than considering patients as customers in a queue, here the situation
 is re-framed to model transit jobs as customers, with the ambulances as
-servers. This is similar to the approach of \cite{kergosien15}, whereas
+servers. This is similar to the approach of \citet{kergosien15}, whereas
 ambulances are now simple servers, their stations are nodes in a queueing
 network, with a routing decision representing the ambulance preference.
 
@@ -851,7 +837,7 @@ due to the variability in traffic, and it is necessary to capture these in
 models of emergency medical services \citep{schmiddoerner10}.
 Here, each day is split into a set of periods, $\mathcal{H}$ indexed by $h$.
 Within each period traffic levels are modelled as piecewise linear functions
-similar to \cite{horn00}, and are here considered constant but differing from
+similar to \citet{horn00}, and are here considered constant but differing from
 period to period. Traffic levels influence the speed of the ambulance through a
 delay factor $d_h$ associated with each period. Therefore, the expected speed
 $S_h$ at which an ambulance travels during period $h$ is given by
@@ -919,8 +905,8 @@ dates are sampled at the beginning of the simulation run, first by sampling
 the number of arrivals required in each time period from a Poisson
 distribution, and then by sampling specific dates within that time period
 using a Uniform distribution.
-This mechanism, and alternative to thinning \cite{lewisshedler79}, was
-implemented in the Ciw software in version v2.3.3 \cite{ciw233}, and described
+This mechanism, and alternative to thinning \citep{lewisshedler79}, was
+implemented in the Ciw software in version v2.3.3 \citep{ciw233}, and described
 in the documentation here:
 \url{https://ciw.readthedocs.io/en/latest/Guides/time_dependent.html}.
 
@@ -935,7 +921,7 @@ vehicle can reach them before the closest primary vehicle.
 Here secondary vehicles are simulated in a second discrete event simulation,
 run sequentially, but simulating the exact same time period and events as the
 first simulation. This is similar to sequential hybrid simulation methodology
-\cite{brailsfordetal19, morganetal17}, however in this case the two combined
+\citep{brailsfordetal19, morganetal17}, however in this case the two combined
 components are both DES, and are combined to simplify the logic of each
 component, maintain modularity and so ease model reusability and future
 adaptations.
@@ -974,7 +960,7 @@ Travel times are calculated as described in Section~\ref{sec:travel_times},
 replacing the primary vehicle delay factor, $d_h$, with a delay factor for
 secondary vehicles, $\tilde{d}_h$. This accounts for secondary vehicles
 travelling faster and reacting to traffic differently to primary vehicles,
-similar to the method used in \cite{hendersonmason04} to differentiate the
+similar to the method used in \citet{hendersonmason04} to differentiate the
 travel times of ambulances with and without flashing lights.
 
 Exact synchronicity considerations are shown in Figure~\ref{fig:sequential_logic}:
@@ -996,10 +982,6 @@ Exact synchronicity considerations are shown in Figure~\ref{fig:sequential_logic
 Therefore job service times for secondary vehicles, $\tilde{T}_{pak}$, are
 given by:
 
-\begin{equation}
-  \tilde{T}_{pak} = \max\left(\tilde{B}_{pa_2}, B_{pa_1} + G_k \right) + \tilde{F}_{pa_2}
-\end{equation}
-
 \begin{figure}
     \centering
     \includestandalone[scale=0.6]{img/synchronicity}
@@ -1007,6 +989,10 @@ given by:
     vehicle's (PV) actions.}
     \label{fig:sequential_logic}
 \end{figure}
+
+\begin{equation}
+  \tilde{T}_{pak} = \max\left(\tilde{B}_{pa_2}, B_{pa_1} + G_k \right) + \tilde{F}_{pa_2}
+\end{equation}
 
 \subsection{Combined Model}
 Combining the logic presented in Sections~\ref{sec:simulation_primary}
@@ -1021,7 +1007,7 @@ time, the percentage of abandoned calls (that is a measure of the primary
 vehicle unavailability), and the expected overall survival. Survival is
 modelled using a combination of survival function curves and hard cut-offs,
 and is described in Section~\ref{sec:survival}.
-The source code for the combined simulation, is available at \cite{zenodo_sim} and
+The source code for the combined simulation, is available at \citet{zenodo_sim} and
 development took place at \url{https://github.com/MarkTuson/ambulance_simulation}.
 
 
@@ -1029,15 +1015,15 @@ development took place at \url{https://github.com/MarkTuson/ambulance_simulation
 
 \section{The Case of Jakarta}\label{sec:jakarta}
 Jakarta, the capital of Indonesia, has a population of 10.5 million
-\cite{BPS_Jakarta} residing within 664 km$^2$. The city is divided into five
+\citep{BPS_Jakarta} residing within 664 km$^2$. The city is divided into five
 municipalities and one district, each of which is divided into sub districts
 and, in turn, neighbourhoods. There are in total 42 sub districts and 261
 neighbourhoods within mainland Jakarta (excluding the Thousand Islands regency
-in the north) \cite{BPS_Jakarta_angka}; a map is given in
+in the north) \citep{BPS_Jakarta_angka}; a map is given in
 Figure~\ref{fig:region_names}. 
 
 As described in Section~\ref{sec:intro}, there are many challenges to calling
-for an ambulance in Jakarta, as captured in \cite{BriceSyaribahNoor2022Esui}.
+for an ambulance in Jakarta, as captured in \citet{BriceSyaribahNoor2022Esui}.
 Based on this work the regional government of Jakarta invested in a new fleet
 of coordinated ambulances accessible via the single emergency number 119.
 This work, in collaboration with Ambulans 118 and the 119 Emergency Ambulance
@@ -1161,7 +1147,6 @@ This is expected as vehicle numbers are lower under the new proposals, as well
 as the allocations focussing on coverage rather than response times or survival.
 
 \begin{table}
-\begin{center}
 \begin{tabular}{rrrr}
 \toprule
 Allocation & Baseline & Grid 3km & Grid 5km \\
@@ -1178,7 +1163,6 @@ Percent Abandoned & 0.00\% & 0.52\% & 0.93\% \\
 \end{tabular}
 \caption{Calculated KPIs for the current and proposed grid allocations.}
 \label{tbl:current_grid_results}
-\end{center}
 \end{table}
 
 
@@ -1193,7 +1177,7 @@ by the Indonesian Government.
 
 We consider four different demand scenarios, developed by considering the
 result of our cross-sectional study of patients attending EDs in Jakarta
-\cite{BriceSyaribahNoor2022Esui}. As part of the survey, randomly selected
+\citep{BriceSyaribahNoor2022Esui}. As part of the survey, randomly selected
 patients arriving at each emergency department were asked whether they had
 used an ambulance to attend, and reasons for not using an ambulance. For those
 patients who were categorised by the medical staff as emergency and for whom
@@ -1216,7 +1200,7 @@ Other &3.5 \\
 \bottomrule
 \end{tabular}
 \caption{Barriers to use of an ambulance service in Jakarta, from
-         \cite{BriceSyaribahNoor2022Esui}.}
+         \citet{BriceSyaribahNoor2022Esui}.}
 \label{table:survey_results}
 \end{table}
 
@@ -1244,7 +1228,7 @@ these barriers in turn:
         45.4\% of emergency patients to now use an ambulance. 
 \end{itemize}
 
-Guided by our findings in \cite{BriceSyaribahNoor2022Esui}, recent changes
+Guided by our findings in \citet{BriceSyaribahNoor2022Esui}, recent changes
 mean that the 119 services is now free to use for Jakarta residents, so
 certainly the highest demand (\textbf{D45}) scenario is plausible in the near
 future. After discussions with our partners, it was agreed that for each of
@@ -1305,14 +1289,12 @@ difference between the currently used allocation and the better allocation,
 showing that these KPIs may not be good approximations of survival.
 
 \begin{table}
-\begin{center}
 \resizebox{\textwidth}{!}{%
 \input{tbl/current_vs_optimised.tex}%
 }
 \caption{Calculated KPIs for the current and improved allocations under the
 four possible demand scenarios.}
 \label{tbl:current_optimal_compare}
-\end{center}
 \end{table}
 
 
@@ -1473,39 +1455,6 @@ to the results given in Table~\ref{tbl:current_grid_results}, the derived
 allocations give lower ambulance and RRV utilisations, lower mean response
 times, and a higher percentage of patients seen within target.
 
-% As experiments were run across all demand scenarios, we can see how much more
-% resources would be required, if optimally located, to achieve a similar level
-% of service as is currently offered, when demand increases.
-% Table~\ref{tbl:equivalent} shows, for each demand scenario, the minimum
-% resource level and vehicle type breakdown required to meet the current level
-% in each of the following KPIs: mean response time, MESLMHPHF objective, and
-% percentage of calls abandoned. For example, in order to maintain the current
-% 0.00\% abandonment, under the scenario \textbf{D19} the city would require
-% 76 EAs and 0 RRVs.
-
-% \begin{table}
-% \begin{center}
-% \resizebox{\textwidth}{!}{%
-% \begin{tabular}{cccc}
-% \toprule
-% Demand Scenario & Mean Response Time &  MESLMHPHF objective & Percent Abandoned \\
-% \midrule
-% \textbf{D13} & 116 (116, 0)  & 60, (36, 72) & 76, (76, 0) \\
-% \textbf{D19} & 120 (70, 150) & 60, (40, 60) & 94, (94, 0) \\
-% \textbf{D34} & 92 (55, 111)  & 60, (43, 51) & $>$ 124 \\
-% \textbf{D45} & 76 (52, 72)   & 60, (52, 24) & $>$ 124 \\
-% \midrule
-% Current Level & 17.69 minutes & 98.34\% & 0.00\% \\
-% \bottomrule
-% \end{tabular}%
-% }
-% \caption{Resources required to maintain current KPI levels when optimising
-%          locations under the four demand scenarios.}
-% \label{tbl:equivalent}
-% \end{center}
-% \end{table}
-
-
 
 \section{Discussion \& Conclusions}\label{sec:discussion}
 This paper has described the development of EMS demand and capacity models and
@@ -1521,7 +1470,7 @@ speciality and through using different survival function profiles, an expected
 overall survival was given. This was used within a optimisation processes, with
 an evolutionary metaheuristic, to find vehicle fleet allocations that maximised
 expected survival. This expected survival function extends previous work in
-\cite{Knight2012918} to include more than one vehicle type. A particular novelty
+\citet{Knight2012918} to include more than one vehicle type. A particular novelty
 here was numerically solving implicit utilisation relationships,
 equations~\ref{eqn:utilisations_primary} and~\ref{eqn:utilisations_secondary},
 to calculate the expected survival, as an alternative to busy fractions and
@@ -1563,7 +1512,7 @@ motorbikes is very important, given RRVs can access areas that cannot easily
 or quickly be accessed by ambulances. Results from both the optimisation and
 simulation research showed that the RRVs can help increase the overall
 survival and reduce the response times, especially crucial when responding to
-life threatening events such as cardiac arrests \cite{holmen2020shortening}. 
+life threatening events such as cardiac arrests \citep{holmen2020shortening}. 
 
 The results of our research also suggest that allocation strategies may not be
 intuitive to ambulance service managers, further emphasising the value of a
@@ -1572,7 +1521,7 @@ allocation to maximise geographic coverage, with ambulances equally spread
 across the city. This was shown to be sub-optimal because neighbourhoods have
 different population densities and characteristics. For example, the number of
 daily commuters in Jakarta is considerably high during day time due to work
-and education \cite{BPS_Jakarta_migrasi}. Municipalities where trading,
+and education \citep{BPS_Jakarta_migrasi}. Municipalities where trading,
 educational institutions, and offices are concentrated may become more
 populated during day time. The model has quantified the deterioration in
 response times and patient outcomes should a fixed grid system be implemented,
@@ -1589,8 +1538,8 @@ depend on changing demand volumes in neighbourhoods by time of the day.
 The data used for ambulance demand covered one year from 1 January to 31
 December 2019, prior the COVID-19 pandemic. Recent studies related to
 ambulance demand indicate that the  pandemic has severely impacted on the
-utilisation of EMS, for examples in call volumes \cite{csan2021effects} and in
-specific medical conditions such as trauma \cite{azbel2021effects}, and
+utilisation of EMS, for examples in call volumes \citep{csan2021effects} and in
+specific medical conditions such as trauma \citep{azbel2021effects}, and
 possibly still continue to affect demand. Ambulance providers, such as 118 and
 119, may use our modelling tools to incorporate future demand data and
 re-evaluate resource needs. To aid this, we are currently working on
@@ -1598,7 +1547,7 @@ interfacing the simulation and optimisation into a single easy to use decision
 support tool with a dashboard (data visualiser). 
 
 Studies have shown that the quality in pre-hospital data collection varies
-considerably in Indonesia \cite{hooper2019_datacollection}. We encountered
+considerably in Indonesia \citep{hooper2019_datacollection}. We encountered
 similar challenges and have suggested to 119 and the Indonesian Government
 that they should continue to strive to improve the coverage and quality of
 data collection. Future work could explore in more depth unmet demand that is
@@ -1625,20 +1574,26 @@ they serve, including the exploration of the roll-out of 119 beyond Jakarta to
 other regions of Indonesia. 
 
 
-\section*{Acknowledgements}
-The study was funded by EPSRC with grant no: EP/T003197/1. We would like to
-express our sincere gratitude to Indonesian emergency ambulance providers
-including 118 and 119 for their support, insights and provision of data. In
-particular we wish to thank Professor Aryono Djuned Pusponegoro and Ms Asti
-Puspita Rini, Founder and Director of 118 Ambulance Service Foundation and Dr
-Winarto, Head of the 119 Ambulance Service in Jakarta.
+\section*{Funding}
+This work was supported by the Engineering \& Physical Sciences Research Council
+(EPSRC) [grant number EP/T003197/1].
 
+\section*{Acknowledgements}
+We would like to express our sincere gratitude to Indonesian emergency ambulance
+providers including 118 and 119 for their support, insights and provision of
+data. In particular we wish to thank Professor Aryono Djuned Pusponegoro and Ms
+Asti Puspita Rini, Founder and Director of 118 Ambulance Service Foundation and
+Dr Winarto, Head of the 119 Ambulance Service in Jakarta.
+
+
+\newpage
 
 \appendix
 
 \section{Annotated Objective Function}\label{apx:annotated}
 \includegraphics[width=\textwidth]{img/annotate}
 
+\newpage
 
 \section{Model Parameters}\label{apx:parameters}
 Call arrival rates $\lambda_{pk}$ are derived from 2019 demand data split by
@@ -1648,8 +1603,14 @@ travel times are found using Google Maps API, while time-dependent traffic
 delays are found from the TomTom website and given in
 Table~\ref{tbl:delay_factors}.
 
-\begin{table}
-\begin{center}
+\begin{figure}[b]
+\centering
+  \includegraphics[width=0.45\textwidth]{img/time_on_site_fit.pdf}
+    \caption{Comparison between the sampled time on site and the lognormal fit.}
+  \label{fig:lognorm_fit}
+\end{figure}
+
+\begin{table}[b]
 \begin{tabular}{ccccc}
 \toprule
 $h$ & 0000-0500 & 0500-1500 & 1500-1800 & 1800-0000 \\
@@ -1658,10 +1619,10 @@ $d_h$ & 0.98 & 0.66 & 0.59 & 0.77 \\
 $\tilde{d}_h$ & 1.96 & 0.91 & 0.83 & 1.16 \\
 \bottomrule
 \end{tabular}
-\end{center}
 \caption{Primary and secondary delay factors.}
 \label{tbl:delay_factors}
 \end{table}
+
 
 The other models are parameterised in the following way:
 \begin{itemize}
@@ -1679,28 +1640,20 @@ The other models are parameterised in the following way:
         ambulance, and 15 minutes for an RRV.
 \end{itemize}
 
-\begin{figure}[ht]
-\centering
-  \includegraphics[width=0.45\textwidth]{img/time_on_site_fit.pdf}
-    \caption{Comparison between the sampled time on site and the lognormal fit.}
-  \label{fig:lognorm_fit}
-\end{figure}
-
 
 \section{Exploration of Optimisation Hyperparameters}\label{apx:hyperparameters}
 Figure~\ref{fig:hyperparameters_exploration} shows the performance of the
 evolutionary metaheuristic algorithm under different values of the
 hyperparameters $N$, $\kappa$, $m_0$, and $c$.
 
-\begin{figure}[ht]
+\begin{figure}
 \centering
-\includegraphics[width=0.7\textwidth]{img/hyperparameter_exploration}
+\includegraphics[width=0.9\textwidth]{img/hyperparameter_exploration}
 \caption{Comparison between optimisation performance for low, medium, and high
 values of $N$, $\kappa$, $m_0$, and $c$. Optimisation is run on demand
 scenario \textbf{D19}, for a resource level of 75.}
 \label{fig:hyperparameters_exploration}
 \end{figure}
-
 
 \section{Improved Allocations for Current Vehicle Numbers}
 Figures~\ref{fig:optimal_current_allocation_13},
@@ -1741,8 +1694,10 @@ and~\ref{fig:optimal_current_allocation_45} show the improved allocations for
 \end{center}
 \end{figure}
 
+\newpage
 
 % \bibliographystyle{plainnat}
+% \bibliographystyle{abbrvnat}
 \bibliographystyle{apalike}
 % AUTHOR: Include your bib file here
 \bibliography{literature}
