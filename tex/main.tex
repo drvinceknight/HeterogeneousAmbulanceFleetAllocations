@@ -1,13 +1,19 @@
 \documentclass[numbers,webpdf,imaman]{ima-authoring-template}%
 
+
 \usepackage{soul}
 \usepackage{latexsym}
-\usepackage{subcaption}
 \usepackage{graphicx}
+\usepackage{caption}
+\makeatletter
+\renewcommand*\l@subsubsection[2]{{}{}{}} %
+\makeatother
+\usepackage{subcaption}
 \usepackage{mathptmx}
 \usepackage{placeins}
 % \usepackage{fullpage}
 \usepackage[left=16mm, right=16mm, top=23mm, bottom=23mm]{geometry}
+
 %
 %****************************************************************************
 % AUTHOR: You may want to use some of these packages. (Optional)
@@ -19,7 +25,6 @@
 \usepackage{booktabs}
 \usepackage{epsfig}
 
-\usepackage{caption}
 \usepackage{standalone}
 \usepackage{tikz}
 \usetikzlibrary{arrows}
@@ -27,8 +32,8 @@
 \usetikzlibrary{calc}
 \usetikzlibrary{shapes}
 
-% \usepackage[round]{natbib}
-% \usepackage[linesnumbered,lined,ruled,commentsnumbered]{algorithm2e}
+%\usepackage[round]{natbib}
+%\usepackage[linesnumbered,lined,ruled,commentsnumbered]{algorithm2e}
 
 \newcommand{\specialcellr}[2][r]{%
   \begin{tabular}[#1]{@{}r@{}}#2\end{tabular}}
