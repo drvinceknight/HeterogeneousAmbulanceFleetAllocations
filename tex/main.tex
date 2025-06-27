@@ -1388,7 +1388,11 @@ Section~\ref{sec:compare_exp_and_sim} discusses this in more detail.}
 \textcolor{red}{As desired, the optimisation heuristic has indeed improved the
 allocation as measured by the MESLMHPHF objective function. In particular A1 patients 
 are benefiting from the improved
-allocations, as these are the patients most sensitive to small fluctuations in
+allocations} \textcolor{blue}{as measured by the MESLMHPHF objective function,
+though not by the simulation. Why the simulation might not capture this is
+hypothesised in Section~\ref{sec:compare_exp_and_sim}. This measured improvement
+is due to these patients being more} \textcolor{red}{sensitive to small
+fluctuations in
 response time, due to their survival function Equation~\ref{eqn:survival_curve}.
 Also, using a better allocation does increase the survival,
 and that the drop in survival due to demand increases is not as severe when
@@ -1439,6 +1443,12 @@ Table~\ref{tbl:current_optimal_compare}. Therefore the distributions chosen to
 model travel times can have a large impact on the survival measures, in this
 case the naive Triangular distribution.
 
+\textcolor{blue}{Therefore we present two separate models to measure overall
+survival, both of which have drawbacks in terms of capturing the stochasticity
+of the system. We present both as a holistic view of the system, and suggest the
+true outcomes lie somewhere in between the two measures. As the heuristic
+improves the outcomes in one measure and does no harm in the other, we
+anticipate that this procedure will improve patient outcomes.}
 This leads to a number of avenues of future work to improve this and overcome
 this effect. Variability could be explicitly modelled within the MESLMHPHF, such
 that it is not only maximising \textit{expected} survival, but considers some
@@ -1662,7 +1672,14 @@ for greater complexity such as temporal demand, and is able to capture a
 greater range of KPIs. Crucially, using mixed methodology such as this allowed
 for independent evaluation of the output of one using the other; but also
 insights from an initial run of the simulation gave helped parametrise and
-justify assumptions of the optimisation.
+justify assumptions of the optimisation. 
+
+\textcolor{blue}{Combinations of models allow for robust conclusions to be drawn
+about the system, by considering the specific attributes of each modelling
+approach. Here, the MESLMHPHF is quick to run, but can fail to capture
+stochasticity, while the simulation is parametrised using expert opinions that
+can effect its robustness. Taking both into account offers a better
+approximation and more insight.}
 
 A key feature of both models, and their novelty, is the consideration of
 heterogeneous fleets. In a highly populated area such as Jakarta (around
