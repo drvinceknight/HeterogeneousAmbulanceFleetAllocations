@@ -95,42 +95,42 @@
 \copyrightstatement{Published by Oxford University Press on behalf of the Institute of Mathematics and its Applications. All rights reserved.}
 \firstpage{1}
 
-\title[Optimising Heterogeneous Ambulance Fleet Allocations in Jakarta]{Optimising Heterogeneous Ambulance Fleet Allocations in Jakarta}
+\title[On the Optimisation of Heterogeneous Ambulance Fleet Allocations]{On the Optimisation of Heterogeneous Ambulance Fleet Allocations}
 
 
-% \author{
-% Geraint Ian Palmer*, Mark Tuson, Vincent Knight, Paul Harper, and Sarie Brice
-% \address{
-%     \orgdiv{School of Mathematics},
-%     \orgname{Cardiff University},
-%     \orgaddress{\street{Abacws},
-%     \postcode{CF24 4AG},
-%     \state{Cardiff, Wales},
-%     \country{United Kingdom}
-% }}}
-% \author{Leanne Smith
-% \address{
-%     \orgname{Welsh Ambulance Services NHS Trust},
-%     \orgaddress{\street{Beacon House},
-%     \postcode{NP44 3AB},
-%     \state{Cwmbran, Wales},
-%     \country{United Kingdom}
-% }}}
-% \author{Daniel Gartner
-% \address{
-%     \orgname{Aneurin Bevan University Health Board},
-%     \orgaddress{\street{Lodge Road},
-%     \postcode{NP18 3XQ},
-%     \state{Caerleon, Wales},
-%     \country{United Kingdom}
-% }}}
+\author{
+Geraint Ian Palmer*, Mark Tuson, Vincent Knight, Paul Harper, and Sarie Brice
+\address{
+    \orgdiv{School of Mathematics},
+    \orgname{Cardiff University},
+    \orgaddress{\street{Abacws},
+    \postcode{CF24 4AG},
+    \state{Cardiff, Wales},
+    \country{United Kingdom}
+}}}
+\author{Leanne Smith
+\address{
+    \orgname{Welsh Ambulance Services NHS Trust},
+    \orgaddress{\street{Beacon House},
+    \postcode{NP44 3AB},
+    \state{Cwmbran, Wales},
+    \country{United Kingdom}
+}}}
+\author{Daniel Gartner
+\address{
+    \orgname{Aneurin Bevan University Health Board},
+    \orgaddress{\street{Lodge Road},
+    \postcode{NP18 3XQ},
+    \state{Caerleon, Wales},
+    \country{United Kingdom}
+}}}
 
 
-% \corresp[*]{Corresponding author: \href{email:palmergi1@cardiff.ac.uk}{palmergi1@cardiff.ac.uk}}
+\corresp[*]{Corresponding author: \href{email:palmergi1@cardiff.ac.uk}{palmergi1@cardiff.ac.uk}}
 
-\received{Date}{0}{Year}
-\revised{Date}{0}{Year}
-\accepted{Date}{0}{Year}
+\received{24}{1}{2024}
+% \revised{Date}{0}{Year}
+\accepted{1}{7}{2025}
 
 \abstract{Ambulance services have a duty of care to the clinical outcomes of the
 population they serve, and therefore aim to maximise the chances of survival and
@@ -605,7 +605,7 @@ in Equation~\ref{eqn:beta}, while $R_{p a_1 a_2}$ indicates if a primary vehicle
 at $a_1$ can reach $p$ quicker than a secondary vehicle at $a_2$, defined in
 Equation~\ref{eqn:R}. In order for these to define an ordering
 it is assumed that no two distinct ambulance locations are exactly equidistant
-from a pickup location. \textcolor{red}{In both Equation~\ref{eqn:beta} and~\ref{eqn:R}, $\leq$ are used rather than $<$; in Equation~\ref{eqn:beta} will be equivalent, as we assume no two ambulance locations are equidistant; while in Equation~\ref{eqn:R}, in the case of a primary and secondary vehicle having equal travel times, then the primary vehicle will have priority.}
+from a pickup location. In both Equation~\ref{eqn:beta} and~\ref{eqn:R}, $\leq$ are used rather than $<$; in Equation~\ref{eqn:beta} will be equivalent, as we assume no two ambulance locations are equidistant; while in Equation~\ref{eqn:R}, in the case of a primary and secondary vehicle having equal travel times, then the primary vehicle will have priority.
 Note that here these parameters are defined using
 travel times, but can be generalised to account for any type of preference,
 including for example proximity, importance, or efficiency.
@@ -1147,8 +1147,8 @@ patient `specialities' ($k \in \mathcal{K}$) were agreed based on clinical need
   \item \textbf{A1 - High priority emergency patients}: critical patients who
   require immediate life-saving assistance with a target ambulance response
   time of 8 minutes. In our data set there were 168 identified calls that met
-        this criterion. \textcolor{red}{As in~\cite{Knight2012918},
-        equation~(\ref{eqn:survival_curve}) is here used to measure survival of these patients.}
+        this criterion. As in~\cite{Knight2012918},
+        equation~(\ref{eqn:survival_curve}) is here used to measure survival of these patients.
   \item \textbf{A2 - Other emergency patients}: urgent patients that require
   assistance with a target response time of 15 minutes. In our data set there
   were 23,784 calls of this type.
@@ -1235,7 +1235,7 @@ Running the simulation and MESLMHPHF objective function of expected survival for
 both the current and the two proposed grid allocations gives the results shown
 in Table~\ref{tbl:current_grid_results}. The simulation was run over half a
 year, with a month warm up time, over five replications. 
-\textcolor{red}{The variability over the replications is very small, and we have included 90\% conficence intervals around the mean response times to demonstrate this.}
+The variability over the replications is very small, and we have included 90\% conficence intervals around the mean response times to demonstrate this.
 We observe that the
 two proposed grid allocations perform much worse than the current allocation as
 measured by mean response time, survival, and percentage of calls abandoned.
@@ -1252,7 +1252,7 @@ Number of RRVs & 13 & 0 & 0 \\
 Ambulance Utilisation & 30.99\% & 36.58\% & 35.79\% \\
 RRV Utilisation & 22.47\% & - & - \\[1.5mm]
 \multirow{2}{*}{Mean Response Time (mins)} & 17.69 & 22.29 & 24.05 \\
- & \textcolor{red}{($\pm$ 0.07)} & \textcolor{red}{($\pm$ 0.06)} & \textcolor{red}{($\pm$ 0.03)} \\[1.5mm]
+ & ($\pm$ 0.07) & ($\pm$ 0.06) & ($\pm$ 0.03) \\[1.5mm]
 StDev Response Time (mins) & 6.98 & 8.02 & 7.94 \\
 MESLMHPHF Objective & 98.34\% & 87.95\% & 85.64\% \\
 MESLMHPHF A1 Objective & 26.05\% & 13.64\% & 12.23\% \\
@@ -1378,7 +1378,7 @@ $H$ & 200 & Number of generations.\\
 
 Table~\ref{tbl:current_optimal_compare} compares the MESLMHPHF objective
 function value and simulation derived KPIs between the current and the optimised
-allocations, for each demand scenario\textcolor{red}{, along with 90\% confidence intervals over the trials}. It can be seen that, as expected, as
+allocations, for each demand scenario, along with 90\% confidence intervals over the trials. It can be seen that, as expected, as
 demand increases then utilisation of primary and secondary vehicles increase, as
 the ambulance service is busier. Similarly, mean response time increases with
 demand, this is due to the vehicles being busier, and therefore less chance that
@@ -1386,28 +1386,26 @@ the most optimally placed vehicle is dispatched. This is confirmed by the
 percentage of calls abandoned increasing with demand, showing ambulance
 unavailability.
 
-\textcolor{red}{The value of the MESLMHPHF objective function and
+The value of the MESLMHPHF objective function and
 the observed survival, as given by the simulation model, do not match.
-Section~\ref{sec:compare_exp_and_sim} discusses this in more detail.}
+Section~\ref{sec:compare_exp_and_sim} discusses this in more detail.
 
-\textcolor{red}{As desired, the optimisation heuristic has indeed improved the
+As desired, the optimisation heuristic has indeed improved the
 allocation as measured by the MESLMHPHF objective function. In particular A1 patients 
 are benefiting from the improved
-allocations} \textcolor{blue}{as measured by the MESLMHPHF objective function,
+allocations as measured by the MESLMHPHF objective function,
 though not by the simulation. Why the simulation might not capture this is
 hypothesised in Section~\ref{sec:compare_exp_and_sim}. This measured improvement
-is due to these patients being more} \textcolor{red}{sensitive to small
-fluctuations in
+is due to these patients being more sensitive to small fluctuations in
 response time, due to their survival function Equation~\ref{eqn:survival_curve}.
 Also, using a better allocation does increase the survival,
 and that the drop in survival due to demand increases is not as severe when
 using an improved allocation in comparison to the current allocation, although
-more numerical evidence would be helpful here. This
-improved robustness 
+more numerical evidence would be helpful here. This improved robustness 
 not only validates the heuristic but also highlights
 the research contribution of Section~\ref{sec:utilisation} as an approach to
 handle the recursive relationship between an allocation \(x\) and the utilisation
-rates.}
+rates.
 
 It is worth noting that for the simulation based KPIs (mean response times and
 percent abandoned), there is not much
@@ -1448,12 +1446,12 @@ Table~\ref{tbl:current_optimal_compare}. Therefore the distributions chosen to
 model travel times can have a large impact on the survival measures, in this
 case the naive Triangular distribution.
 
-\textcolor{blue}{Therefore we present two separate models to measure overall
+Therefore we present two separate models to measure overall
 survival, both of which have drawbacks in terms of capturing the stochasticity
 of the system. We present both as a holistic view of the system, and suggest the
 true outcomes lie somewhere in between the two measures. As the heuristic
 improves the outcomes in one measure and does no harm in the other, we
-anticipate that this procedure will improve patient outcomes.}
+anticipate that this procedure will improve patient outcomes.
 This leads to a number of avenues of future work to improve this and overcome
 this effect. Variability could be explicitly modelled within the MESLMHPHF, such
 that it is not only maximising \textit{expected} survival, but considers some
@@ -1679,12 +1677,12 @@ for independent evaluation of the output of one using the other; but also
 insights from an initial run of the simulation gave helped parametrise and
 justify assumptions of the optimisation. 
 
-\textcolor{blue}{Combinations of models allow for robust conclusions to be drawn
+Combinations of models allow for robust conclusions to be drawn
 about the system, by considering the specific attributes of each modelling
 approach. Here, the MESLMHPHF is quick to run, but can fail to capture
 stochasticity, while the simulation is parametrised using expert opinions that
 can effect its robustness. Taking both into account offers a better
-approximation and more insight.}
+approximation and more insight.
 
 A key feature of both models, and their novelty, is the consideration of
 heterogeneous fleets. In a highly populated area such as Jakarta (around
@@ -1773,6 +1771,12 @@ other regions of Indonesia.
 \section*{Funding}
 This work was supported by the Engineering \& Physical Sciences Research Council
 (EPSRC) [grant number EP/T003197/1].
+
+
+\section*{Data Availability}
+The data and code underlying this article are openly available in two Github repositories. The simulation can be found at \url{https://github.com/MarkTuson/ambulance_simulation}, and the MESLMHPHF and optimisation can be found at \url{https://github.com/drvinceknight/HeterogeneousAmbulanceFleetAllocations}.
+
+
 
 \section*{Acknowledgements}
 We would like to express our sincere gratitude to Indonesian emergency ambulance
